@@ -1,12 +1,14 @@
+using ApplicationSettings;
 using TMPro;
 using UnityEngine;
 
 public class SettingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI fpsInput;
-    public void OnCreate()
+
+    public void Init()
     {
-        Application.targetFrameRate = 60;
+
     }
 
     public void Accept()
@@ -14,6 +16,6 @@ public class SettingUI : MonoBehaviour
         int fps = 60;
         if (!int.TryParse(fpsInput.text.Substring(0,fpsInput.text.Length-1), out fps))
             Debug.LogWarning("Неправильный формат ввода кадров в секунду " + fpsInput.text);
-        Application.targetFrameRate = fps;
+        SettingManager.Instance.SetFrameRate(fps);
     }
 }

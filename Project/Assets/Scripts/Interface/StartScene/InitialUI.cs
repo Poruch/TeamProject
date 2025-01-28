@@ -53,9 +53,10 @@ public class InitialUI : MonoBehaviour
                 DefaultUI = false;            
         }
     }
-    private void Awake()
+    public void Init(LanguageConfig config)
     {
-        settings.GetComponent<SettingUI>().OnCreate();
+        settings.GetComponent<SettingUI>().Init();
+        saves.GetComponent<SaveUI>().Init();
     }
     public void StartGame()
     {
@@ -67,7 +68,7 @@ public class InitialUI : MonoBehaviour
         Settings = true;
     }
 
-    public void OpendDefoult()
+    public void OpendDefault()
     {
         DefaultUI = true;
     }
