@@ -1,6 +1,6 @@
 using System;
 
-namespace Mytypes
+namespace MyTypes
 {
     [Serializable]
     public struct PointSruct 
