@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             var instance = Instantiate(bullet,transform.position + Vector3.right,Quaternion.identity);
-            instance.GetComponent<Bullet>().Dir = direction;
+            
         }
     }
 }

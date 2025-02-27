@@ -3163,7 +3163,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841223019}
         m_TargetAssemblyTypeName: InitialUI, Assembly-CSharp
-        m_MethodName: OpendDefoult
+        m_MethodName: OpendDefault
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

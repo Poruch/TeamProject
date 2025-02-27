@@ -1,24 +1,27 @@
 ﻿namespace MyTypes
 {
-    public struct Timer
+    public class Timer
     {
         public Timer(float time)
         {
             Time = time;
             DeltaTime = 0;
-            istime = false;
+            isTime = false;
+            isStoped = false;
         }
 
         public float Time;
         public float DeltaTime;
-        private bool istime;
-        public bool isTime
+        private bool isTime;
+        private bool isStoped;
+
+        public bool IsTime
         {
             get
             {
-                if (istime)
+                if (isTime)
                 {
-                    istime = false;
+                    isTime = false;
                     DeltaTime = 0;
                     return true;
                 }
@@ -26,6 +29,10 @@
                     return false;
             }
         }
+
+        public bool IsStoped { get => isStoped; set => isStoped = value; }
+
+
         /// <summary>
         /// usable in Update func
         /// </summary>
@@ -33,14 +40,15 @@
         {
             if (DeltaTime >= Time)
             {
-                istime = true;
+                isTime = true;
             }
-            DeltaTime += UnityEngine.Time.deltaTime;
+            if(!IsStoped)
+                DeltaTime += UnityEngine.Time.deltaTime;
         }
         public void Reset()
         {
             DeltaTime = 0;
-            istime = false;
+            isTime = false;
         }
         public float Сompleted_at()
         {
