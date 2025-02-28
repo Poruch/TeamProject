@@ -29,7 +29,10 @@ namespace Assets.Scripts.Accessory
         {
             destroyed.Add(gameObject, timer);
         }
-
+        public void Destroy(GameObject gameObject)
+        {
+            GameObject.Destroy(gameObject);
+        }
         private void Update()
         {
             var keys = destroyed.Keys.ToArray();

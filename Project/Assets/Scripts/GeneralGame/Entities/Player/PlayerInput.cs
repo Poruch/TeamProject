@@ -12,7 +12,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             control = new PlayerControls();
             control.Enable();
         }
-
+        private void OnEnable()
+        {
+            control.Enable();
+        }
         public Vector2 Direction
         {
             get
@@ -24,6 +27,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         private void Update()
         {
 
+        }
+
+        private void OnDisable()
+        {
+            control.Disable();
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2873928836501453442}
   - component: {fileID: -4819169749181055390}
   m_Layer: 0
-  m_Name: Rocket
+  m_Name: Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3046042879194623302}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2482014, y: -0.1993516, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 9152458954827477316, guid: 656cece48e84e6a4ba86093a1f2e153f, type: 3}
+  m_Sprite: {fileID: 9150006078612464371, guid: d3f2901719de62140bac20a0cdc881ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   shellRadius: 0.01
   contactFilter:
     useTriggers: 0
@@ -182,4 +182,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.234375
+  m_Radius: 0.96608126
