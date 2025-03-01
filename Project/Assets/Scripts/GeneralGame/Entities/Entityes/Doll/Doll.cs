@@ -1,10 +1,12 @@
 using Assets.Scripts.GeneralGame.Entities.Creatures;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-
-public class Doll : MonoBehaviour, IPhysical
+/// <summary>
+/// Сущность кукла, регистрирует попадания по себе
+/// </summary>
+public class Doll : Entity
 {
-    public void Collide()
+    public override void Collide()
     {
         Debug.Log("Кукла атакована");
     }

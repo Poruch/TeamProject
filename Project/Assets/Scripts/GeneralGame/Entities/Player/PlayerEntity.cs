@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Accessory;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
+    // Система физического взаимодействия для игрока
     internal class PlayerEntity : Entity
     {
         private void Start()
@@ -26,6 +23,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         private void Update()
         {
             transform.position += new Vector3(Dir.x, Dir.y, 0) * Speed * 0.1f;
+        }
+
+        public override void Collide()
+        {
+            Destroyer.Instance.Destroy(gameObject);
         }
     }
 }

@@ -5,35 +5,54 @@ using UnityEngine;
 
 namespace Assets.Scripts.Accessory
 {
-    public class Destroyer : MonoBehaviour
+    /// <summary>
+    /// Класс предназначеный для удаления объектов, использует паттерн синглтон
+    /// </summary>
+    public class Destroyer
     {
         int countInstanse = 0;
         static Destroyer instance;
-        public static Destroyer Instance { get => instance; }
+        public static Destroyer Instance 
+        { 
+            get 
+            { 
+                if(instance == null)
+                    instance = new Destroyer();
+                return instance;
+            }
+        }
 
         Dictionary<GameObject,Timer> destroyed = new Dictionary<GameObject,Timer>();
-
-        private void Awake()
+        private Destroyer()
         {
             countInstanse++;
-            if (instance == null)
-                instance = this;
             if (countInstanse > 1)
                 Debug.LogWarning("Destroyer should not be more one");
         }
-        private void Start()
-        {
-            
-        }
+        /// <summary>
+        /// Удаляет объект по истечению таймера
+        /// </summary>
+        /// <param name="gameObject"> Объект который удалиться когда таймер дойдет до конца</param>
+        /// <param name="timer"> таймер</param>
         public void Destroy(GameObject gameObject, Timer timer)
         {
             destroyed.Add(gameObject, timer);
         }
+
+
+        /// <summary>
+        /// Удаляет объект
+        /// </summary>
+        /// <param name="gameObject"></param>
         public void Destroy(GameObject gameObject)
         {
             GameObject.Destroy(gameObject);
         }
-        private void Update()
+
+        /// <summary>
+        /// Используется в методе Update unity для подсчета времени
+        /// </summary>
+        public void Update()
         {
             var keys = destroyed.Keys.ToArray();
             foreach (GameObject @object in keys) 

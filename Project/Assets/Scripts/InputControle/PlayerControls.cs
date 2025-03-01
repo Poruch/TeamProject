@@ -94,6 +94,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Iteract"",
+            ""id"": ""e9ef0ae3-2ee2-4995-94a9-0235f6bd6276"",
+            ""actions"": [
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""02dfe3dd-c8ce-4a68-93a5-fa7dcbd87008"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e412a8f9-ab5d-42b1-9f23-2e18387bf0c0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -101,11 +129,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        // Iteract
+        m_Iteract = asset.FindActionMap("Iteract", throwIfNotFound: true);
+        m_Iteract_Attack = m_Iteract.FindAction("Attack", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
         UnityEngine.Debug.Assert(!m_Movement.enabled, "This will cause a leak and performance issues, PlayerControls.Movement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Iteract.enabled, "This will cause a leak and performance issues, PlayerControls.Iteract.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -209,8 +241,58 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Iteract
+    private readonly InputActionMap m_Iteract;
+    private List<IIteractActions> m_IteractActionsCallbackInterfaces = new List<IIteractActions>();
+    private readonly InputAction m_Iteract_Attack;
+    public struct IteractActions
+    {
+        private @PlayerControls m_Wrapper;
+        public IteractActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Attack => m_Wrapper.m_Iteract_Attack;
+        public InputActionMap Get() { return m_Wrapper.m_Iteract; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(IteractActions set) { return set.Get(); }
+        public void AddCallbacks(IIteractActions instance)
+        {
+            if (instance == null || m_Wrapper.m_IteractActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_IteractActionsCallbackInterfaces.Add(instance);
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+        }
+
+        private void UnregisterCallbacks(IIteractActions instance)
+        {
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+        }
+
+        public void RemoveCallbacks(IIteractActions instance)
+        {
+            if (m_Wrapper.m_IteractActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IIteractActions instance)
+        {
+            foreach (var item in m_Wrapper.m_IteractActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_IteractActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public IteractActions @Iteract => new IteractActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IIteractActions
+    {
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

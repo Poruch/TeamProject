@@ -1,10 +1,16 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
+    /// <summary>
+    /// Класс для создания объекта игрока и связывания его систем
+    /// </summary>
     internal class Player
     {
+
+        // Системы персонажа
         SpriteRenderer spriteRenderer;
         GameObject playerGameObject;
         PlayerEntity playerEntity;
@@ -16,20 +22,26 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerGameObject = new GameObject();
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
-            playerInput = playerGameObject.AddComponent<PlayerInput>();
             gun = playerGameObject.AddComponent<Gun>();
             spriteRenderer = playerGameObject.AddComponent<SpriteRenderer>();
+            playerInput = new PlayerInput();
             spriteRenderer.sprite = config.Sprite;
         }
 
+        /// <summary>
+        /// Действия который происходят каждый кадр
+        /// </summary>
         public void Update()
         {
             playerEntity.Dir = playerInput.Direction;
         }
 
-        public void SetPos(Vector2 position)
+        public Vector2 Position
         {
-            playerGameObject.transform.position = position;
-        }
+            set
+            {
+                playerGameObject.transform.position = value;
+            }
+        } 
     }
 }

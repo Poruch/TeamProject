@@ -4,7 +4,9 @@ using MyTypes;
 using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Creatures;
 
-
+/// <summary>
+/// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
+/// </summary>
 public class PhysicsBullet : Entity
 {
     public Vector2 dir = Vector2.right;
@@ -39,6 +41,10 @@ public class PhysicsBullet : Entity
     {
         
     }
+
+    /// <summary>
+    /// Просчет столкновений
+    /// </summary>
     private void FixedUpdate()
     {
         Vector2 move = dir;
@@ -46,7 +52,7 @@ public class PhysicsBullet : Entity
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
         {
-            IPhysical doll = hitBuffer[i].collider.gameObject.GetComponent<IPhysical>();
+            Entity doll = hitBuffer[i].collider.gameObject.GetComponent<Entity>();
             if (doll != null)
             {
                 doll.Collide();
@@ -54,6 +60,10 @@ public class PhysicsBullet : Entity
             }
         }
     }
+
+    /// <summary>
+    /// Движение
+    /// </summary>
     private void Update()
     {
         transform.position += new Vector3(dir.x, dir.y, 0) * 0.2f;

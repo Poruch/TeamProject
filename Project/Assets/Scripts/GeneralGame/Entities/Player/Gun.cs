@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-
+    //Полностью поменять!!!!!!
     [SerializeField] GameObject bullet;
+
+
     private void Update()
     {
         Vector2 direction = Vector2.right;

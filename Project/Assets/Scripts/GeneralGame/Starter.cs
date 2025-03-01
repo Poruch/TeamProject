@@ -1,8 +1,11 @@
-using Assets.Scripts.GeneralGame.Entities.Creatures.Environment;
 using MyTypes;
 using UnityEngine;
-using Assets.Scripts.GeneralGame.Entities.Player;
 using Assets.Scripts.GeneralGame;
+
+
+/// <summary>
+/// Объект который будет изначально на сцене создавать игру
+/// </summary>
 public class Starter : MonoBehaviour
 {
     Timer timer = new Timer(4);
@@ -21,6 +24,10 @@ public class Starter : MonoBehaviour
         gameManager = new GameManager(config);
     }
 
+
+    /// <summary>
+    /// Основной цикл игры 
+    /// </summary>
     private void Update()
     {
         gameManager.Update();
