@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
@@ -10,6 +11,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     internal class Player
     {
         public bool isLife = true; 
+
         // Системы персонажа
         SpriteRenderer spriteRenderer;
         GameObject playerGameObject;
@@ -19,13 +21,21 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
         public Player(PlayerConfig config)
         {
-            playerGameObject = new GameObject();
+            playerGameObject = new GameObject("Player");
+
+            playerInput = new PlayerInput();            
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
             playerEntity.OnCollide.AddListener(() => { isLife = false; });
-            gun = playerGameObject.AddComponent<Gun>();
+            playerEntity.Speed = config.Speed;
+
+            gun = new Gun(playerGameObject,config.Bullet,0.5f);
+
+            playerInput.OnAttack.AddListener(gun.StartAttack);
+            playerInput.InAttack.AddListener(gun.ProcessingAttack); 
+            playerInput.AfterAttack.AddListener(gun.StopAttack);
+
             spriteRenderer = playerGameObject.AddComponent<SpriteRenderer>();
-            playerInput = new PlayerInput();
             spriteRenderer.sprite = config.Sprite;
         }
 
@@ -35,6 +45,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public void Update()
         {
             playerEntity.Dir = playerInput.Direction;
+            gun.Update();
+            playerInput.Update();            
         }
 
         public Vector2 Position

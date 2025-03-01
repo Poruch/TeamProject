@@ -1,34 +1,43 @@
-﻿using Assets.Scripts.Accessory;
-using System;
-using System.Runtime.CompilerServices;
+﻿//#define MyTest
+using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
+using MyTypes;
 using UnityEngine;
 using UnityEngine.Events;
+
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
     // Система физического взаимодействия для игрока
-    internal class PlayerEntity : Entity
+    internal class PlayerEntity : Moveable
     {
-        UnityEvent onCollide;
+        Timer timer = new Timer(1);
+        UnityEvent onCollide = new UnityEvent();
         private void Start()
         {
             gameObject.layer = 3;
-            gameObject.AddComponent<CircleCollider2D>();
+            gameObject.AddComponent<CircleCollider2D>();            
         }
 
-        [SerializeField]
-        private float speed = 1.0f;
+        
+    
 
-        Vector2 dir;
-
-        public Vector2 Dir { get => dir; set => dir = value; }
-        public float Speed { get => speed; set => speed = value; }
+        Vector2 lastPos = Vector2.zero;
+        
         public UnityEvent OnCollide { get => onCollide; set => onCollide = value; }
 
         private void Update()
         {
-            transform.position += new Vector3(Dir.x, Dir.y, 0) * Speed * 0.1f;
+#if MyTest
+            if (timer.IsTime)
+            {
+                Debug.Log((lastPos - Position).magnitude);
+                lastPos = transform.position;
+            }
+            timer.Tick();
+#endif
         }
+
+        
 
         
         public override void Collide()

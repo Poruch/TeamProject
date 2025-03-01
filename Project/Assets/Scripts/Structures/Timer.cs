@@ -1,19 +1,29 @@
-﻿namespace MyTypes
+﻿using UnityEngine;
+
+namespace MyTypes
 {
     public class Timer
     {
-        public Timer(float time)
+        public Timer(float time, bool isTime = false)
         {
             Time = time;
             DeltaTime = 0;
-            isTime = false;
-            isStoped = false;
+            this.isTime = isTime;
+            isStopped = false;
+        }
+
+        public Timer(Timer timer)
+        {
+            Time = timer.Time;
+            DeltaTime = timer.DeltaTime;
+            isTime = timer.isTime;
+            isStopped = timer.isStopped;
         }
 
         public float Time;
         public float DeltaTime;
         private bool isTime;
-        private bool isStoped;
+        private bool isStopped;
 
         public bool IsTime
         {
@@ -30,7 +40,7 @@
             }
         }
 
-        public bool IsStoped { get => isStoped; set => isStoped = value; }
+        public bool IsStopped { get => isStopped; set => isStopped = value; }
 
 
         /// <summary>
@@ -42,7 +52,7 @@
             {
                 isTime = true;
             }
-            if(!IsStoped)
+            if(!IsStopped)
                 DeltaTime += UnityEngine.Time.deltaTime;
         }
         public void Reset()

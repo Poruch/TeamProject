@@ -1,4 +1,3 @@
-using Assets.Scripts.GeneralGame.Entities.Creatures;
 using UnityEngine;
 
 
@@ -9,6 +8,18 @@ public class Entity : MonoBehaviour
 {
 
     protected Rigidbody2D rb2d;
+    
+    protected Vector2 Position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = value;
+        }
+    }
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -22,4 +33,6 @@ public class Entity : MonoBehaviour
     {
         
     }
+
+    
 }

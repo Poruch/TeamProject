@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerConfig : ScriptableObject
 {
     [SerializeField]
-    GameObject player;
+    GameObject bullet;
 
     [SerializeField]
     Sprite sprite;
@@ -16,7 +16,7 @@ public class PlayerConfig : ScriptableObject
     [SerializeField] float speed;
     [SerializeField] float atkSpeed;
 
-    public GameObject Player { get => player; }
+    public GameObject Bullet { get => bullet; }
     public float Hp { get => hp; set => hp = value; }
     public float Speed { get => speed; set => speed = value; }
     public float AtkSpeed { get => atkSpeed; set => atkSpeed = value; }

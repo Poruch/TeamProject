@@ -2,21 +2,19 @@ using Assets.Scripts.Accessory;
 using UnityEngine;
 using MyTypes;
 using System.Collections.Generic;
-using Assets.Scripts.GeneralGame.Entities.Creatures;
+using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
+using UnityEngine.XR;
 
 /// <summary>
 /// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
 /// </summary>
-public class PhysicsBullet : Entity
+public class PhysicsBullet : Moveable
 {
-    public Vector2 dir = Vector2.right;
-
     [SerializeField]
     LayerMask mask;
 
     [SerializeField]
     float shellRadius = 0.01f;
-
 
     [SerializeField]
     protected ContactFilter2D contactFilter;
@@ -30,25 +28,17 @@ public class PhysicsBullet : Entity
     {
         contactFilter.SetLayerMask(mask);
         contactFilter.useLayerMask = true;
-        Destroyer.Instance.Destroy(gameObject,new Timer(10));        
+        Destroyer.Instance.Destroy(gameObject,new Timer(20));        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
-    private void OnDestroy()
-    {
-        
-    }
 
     /// <summary>
     /// Просчет столкновений
     /// </summary>
-    private void FixedUpdate()
+    protected override void AddFixedUpdate()
     {
-        Vector2 move = dir;
         float distance = move.magnitude;
+        
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
         {
@@ -59,13 +49,5 @@ public class PhysicsBullet : Entity
                 Destroyer.Instance.Destroy(gameObject);
             }
         }
-    }
-
-    /// <summary>
-    /// Движение
-    /// </summary>
-    private void Update()
-    {
-        transform.position += new Vector3(dir.x, dir.y, 0) * 0.2f;
     }
 }

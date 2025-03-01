@@ -34,7 +34,7 @@ public class Starter : MonoBehaviour
         if(timer.IsTime)
         {
             var met =Instantiate(meteor,new Vector3(10, Random.Range(-6,6), 0),Quaternion.identity).GetComponent<PhysicsBullet>();
-            met.dir = Vector2.left;
+            met.Dir = Vector2.left;
         }    
         timer.Tick();
     }
