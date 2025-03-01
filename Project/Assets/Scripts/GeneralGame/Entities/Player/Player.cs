@@ -9,7 +9,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     /// </summary>
     internal class Player
     {
-
+        public bool isLife = true; 
         // Системы персонажа
         SpriteRenderer spriteRenderer;
         GameObject playerGameObject;
@@ -22,6 +22,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerGameObject = new GameObject();
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
+            playerEntity.OnCollide.AddListener(() => { isLife = false; });
             gun = playerGameObject.AddComponent<Gun>();
             spriteRenderer = playerGameObject.AddComponent<SpriteRenderer>();
             playerInput = new PlayerInput();
