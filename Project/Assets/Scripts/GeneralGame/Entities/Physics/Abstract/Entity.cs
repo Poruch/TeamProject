@@ -9,7 +9,7 @@ public class Entity : MonoBehaviour
 
     protected Rigidbody2D rb2d;
     
-    protected Vector2 Position
+    public Vector2 Position
     {
         get
         {

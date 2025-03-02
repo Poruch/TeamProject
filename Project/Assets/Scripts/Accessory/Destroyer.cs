@@ -10,7 +10,7 @@ namespace Assets.Scripts.Accessory
     /// </summary>
     public class Destroyer
     {
-        int countInstanse = 0;
+        int countInstance = 0;
         static Destroyer instance;
         public static Destroyer Instance 
         { 
@@ -25,8 +25,8 @@ namespace Assets.Scripts.Accessory
         Dictionary<GameObject,Timer> destroyed = new Dictionary<GameObject,Timer>();
         private Destroyer()
         {
-            countInstanse++;
-            if (countInstanse > 1)
+            countInstance++;
+            if (countInstance > 1)
                 Debug.LogWarning("Destroyer should not be more one");
         }
         /// <summary>

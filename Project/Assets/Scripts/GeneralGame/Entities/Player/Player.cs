@@ -14,6 +14,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
         // Системы персонажа
         SpriteRenderer spriteRenderer;
+        public Vector2 Position
+        {
+            get => playerEntity.Position;
+            set => playerEntity.Position = value;
+        }
         GameObject playerGameObject;
         PlayerEntity playerEntity;
         PlayerInput playerInput;
@@ -49,12 +54,5 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerInput.Update();            
         }
 
-        public Vector2 Position
-        {
-            set
-            {
-                playerGameObject.transform.position = value;
-            }
-        } 
     }
 }

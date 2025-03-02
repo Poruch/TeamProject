@@ -46,8 +46,14 @@ public class PhysicsBullet : Moveable
             if (doll != null)
             {
                 doll.Collide();
-                Destroyer.Instance.Destroy(gameObject);
+                OnCollide();
             }
         }
     }
+
+    protected virtual void OnCollide()
+    {
+        Destroyer.Instance.Destroy(gameObject);
+    }
+    
 }

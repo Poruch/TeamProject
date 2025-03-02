@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Player;
+using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame
 {
@@ -9,11 +10,19 @@ namespace Assets.Scripts.GeneralGame
     internal class GameManager
     {
         Player player;
+
+        Vector2 leftDownBorder;
+        Vector2 rightUpBorder;
         public GameManager(GeneralGameConfig config)
         {
             player = new Player(config.PlayerConfig);
             player.Position = config.StartPosition;
 
+            var camera = Camera.main;
+
+            leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
+            rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
+           
         }
 
         /// <summary>
@@ -23,6 +32,9 @@ namespace Assets.Scripts.GeneralGame
         {
             player.Update();
             Destroyer.Instance.Update();
+
+            player.Position = new Vector2(Mathf.Clamp(player.Position.x,leftDownBorder.x,rightUpBorder.x),
+                                          Mathf.Clamp(player.Position.y,leftDownBorder.y,rightUpBorder.y));
         }
 
     }
