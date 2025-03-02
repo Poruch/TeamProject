@@ -2,9 +2,9 @@ using UnityEngine;
 using Assets.Scripts.Accessory;
 public class ExplosionAnimation : StateMachineBehaviour
 {
-   
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Destroyer.Instance.Destroy(animator.gameObject);
     }

@@ -30,10 +30,15 @@ public class Gun
     {
         if (timerAfterAttack.IsTime)
         {
-            PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right, Quaternion.identity)
+            PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.down * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = atkSpeed * 100;
+            physicsBullet.Speed = 20;
+
+            physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.up * 0.5f, Quaternion.identity)
+                 .GetComponent<PhysicsBullet>();
+            physicsBullet.Dir = Vector2.right;
+            physicsBullet.Speed = 20;
         }
     }
 
@@ -43,10 +48,15 @@ public class Gun
         if (timer.IsTime)
         {
             timerAfterAttack.IsStopped = true;
-            PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right, Quaternion.identity)
+            PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.down * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = atkSpeed * 100;
+            physicsBullet.Speed = 20;
+
+            physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.up * 0.5f, Quaternion.identity)
+                 .GetComponent<PhysicsBullet>();
+            physicsBullet.Dir = Vector2.right;
+            physicsBullet.Speed = 20;
         }
         timer.Tick();
     }
