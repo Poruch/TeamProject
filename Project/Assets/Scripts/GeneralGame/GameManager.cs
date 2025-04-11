@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Player;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Assets.Scripts.GeneralGame
     internal class GameManager
     {
         Player player;
-
+        EnemyManager enemyManager;
         Vector2 leftDownBorder;
         Vector2 rightUpBorder;
         public GameManager(GeneralGameConfig config)
@@ -22,7 +23,11 @@ namespace Assets.Scripts.GeneralGame
 
             leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
             rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
-           
+
+            enemyManager = new EnemyManager();
+            enemyManager.AddEnemy("Default", config.EnemyConfig);
+            enemyManager.CreateEnemy("Default");
+
         }
 
         /// <summary>

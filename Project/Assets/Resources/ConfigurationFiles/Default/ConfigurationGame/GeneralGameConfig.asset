@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GeneralGameConfig
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: bd3e4b7028b4bd1438ad6deebd5eaad6, type: 2}
+  enemyConfig: {fileID: 11400000, guid: b00892741e067ef45a75a78ec0890949, type: 2}
   startPosition: {x: 0, y: 0}
