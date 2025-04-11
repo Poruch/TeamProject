@@ -21,6 +21,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         {
             if (!enemiesBlueprints.ContainsKey(name)) return null;
             int num = enemies.Count;
+            enemies.Add(new Enemy(enemiesBlueprints[name]));
             return enemies[num];
         }
 
