@@ -2,6 +2,9 @@ using System;
 
 namespace MyTypes
 {
+    /// <summary>
+    /// Структура для хранения максимального текущего значения (например, ХП)
+    /// </summary>
     [Serializable]
     public struct PointSruct 
     {

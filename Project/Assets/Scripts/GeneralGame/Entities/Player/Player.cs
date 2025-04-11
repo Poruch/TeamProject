@@ -27,6 +27,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public Player(PlayerConfig config)
         {
             playerGameObject = new GameObject("Player");
+            playerGameObject.transform.localScale *= 1.5f;
 
             playerInput = new PlayerInput();            
 

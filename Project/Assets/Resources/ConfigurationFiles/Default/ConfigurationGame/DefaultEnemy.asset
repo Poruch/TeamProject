@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Default
   bullet: {fileID: 3046042879194623302, guid: 2d46d52efc5f11b4fa7026992b2f1f9a, type: 3}
-  sprite: {fileID: -481173995765227706, guid: 2bbcbeb1fcd1f0b42a3749b764b72b06, type: 3}
+  sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
   hp: 0
   speed: 0
   atkSpeed: 0

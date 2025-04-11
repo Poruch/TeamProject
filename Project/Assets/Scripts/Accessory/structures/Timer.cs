@@ -2,6 +2,9 @@
 
 namespace MyTypes
 {
+    /// <summary>
+    /// Структура для подсчета прошедшего времени 
+    /// </summary>
     public class Timer
     {
         public Timer(float time, bool isTime = false)
@@ -55,11 +58,13 @@ namespace MyTypes
             if(!IsStopped)
                 DeltaTime += UnityEngine.Time.deltaTime;
         }
+
         public void Reset()
         {
             DeltaTime = 0;
             isTime = false;
         }
+
         public float Сompleted_at()
         {
             return DeltaTime / Time;

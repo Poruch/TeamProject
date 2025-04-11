@@ -24,10 +24,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         public Enemy(EnemyConfig config)
         {
             EnemyGameObject = new GameObject(config.Name);
+            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
 
             enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
             enemyEntity.OnCollide.AddListener(() => { isLife = false; });
             enemyEntity.Speed = config.Speed;
+            enemyEntity.Position = new Vector2(7, 0);
 
             spriteRenderer = EnemyGameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = config.Sprite;
