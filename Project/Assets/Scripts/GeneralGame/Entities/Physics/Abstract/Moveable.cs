@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using MyTypes;
 namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
 {
 
@@ -8,12 +8,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
 /// </summary>
     public class Moveable :Entity
     {
-
+        [SerializeField]
         Vector2 dir;
-        private float speed = 1.0f;
-
-        public Vector2 Dir { get => dir; set => dir = value; }        
-        public float Speed { get => speed; set => speed = value; }
+        [SerializeField]
+        private PointStruct speed = new PointStruct(1.0f);
+        public Vector2 Dir { get => dir; set => dir = value; }
+        public PointStruct Speed { get => speed; set => speed = value; }
 
         /// <summary>
         /// Действие между тем как посчитался вектор следующего движения и добавления его к позиции
@@ -25,7 +25,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
         protected Vector2 move;
         private void FixedUpdate()
         {
-            move = Dir * Speed * 0.02f;
+            move = Dir * Speed.currentPoint * 0.02f;
             AddFixedUpdate();
             Position += move;
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using MyTypes;
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
@@ -33,9 +34,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
             playerEntity.OnCollide.AddListener(() => { isLife = false; });
-            playerEntity.Speed = config.Speed;
+            playerEntity.Speed = new PointStruct(config.Speed);
 
             gun = new Gun(playerGameObject,config.Bullet,0.05f);
+
+            playerInput.OnStartMove.AddListener(()=> {
+                if(playerInput.Direction == Vector2.zero)
+                    playerEntity.Speed.Reset();
+            });
+            playerInput.InMove.AddListener(() => 
+            {
+                playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 30);
+            });
+
 
             playerInput.OnAttack.AddListener(gun.StartAttack);
             playerInput.InAttack.AddListener(gun.ProcessingAttack); 

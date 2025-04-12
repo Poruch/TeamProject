@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Player;
+using MyTypes;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame
@@ -29,10 +30,11 @@ namespace Assets.Scripts.GeneralGame
             enemyManager.CreateEnemy("Default");
 
         }
-
+        Timer timer = new Timer(3f);
         /// <summary>
         /// Основной игровой цикл
         /// </summary>
+        
         public void Update()
         {
             player.Update();
@@ -40,6 +42,11 @@ namespace Assets.Scripts.GeneralGame
 
             player.Position = new Vector2(Mathf.Clamp(player.Position.x,leftDownBorder.x,rightUpBorder.x),
                                           Mathf.Clamp(player.Position.y,leftDownBorder.y,rightUpBorder.y));
+            enemyManager.Update();
+            if (enemyManager.CountEnemies == 0)
+                timer.Tick();
+                if(timer.IsTime)
+                enemyManager.CreateEnemy("Default");
         }
 
     }

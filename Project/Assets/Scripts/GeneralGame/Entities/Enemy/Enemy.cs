@@ -1,6 +1,9 @@
-﻿
+﻿using System.Collections.Generic;
 using UnityEngine;
-
+using MyTypes;
+using NUnit.Framework;
+using UnityEngine.Events;
+using Assets.Scripts.Accessory;
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     /// <summary>
@@ -8,31 +11,56 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     /// </summary>
     internal class Enemy
     {
-        public bool isLife = true;
+        private bool isLife = true;
+        public bool IsLife
+        {
+            set
+            {
+                isLife = value;
+                if (!isLife)
+                    OnDeth.Invoke();
+            }
+            get => isLife;
+        }
+        UnityEvent onDeth = new UnityEvent();
+        PointStruct hp = new PointStruct(100);
+
         public Vector2 Position
         {
             get => enemyEntity.Position;
             set => enemyEntity.Position = value;
         }
-        
+        public UnityEvent OnDeth { get => onDeth; set => onDeth = value; }
+
         // Системы врага
         SpriteRenderer spriteRenderer;        
         GameObject EnemyGameObject;
         EnemyEntity enemyEntity;
-
-
-        public Enemy(EnemyConfig config)
+        EnemyGun enemyGun;
+        EnemyController enemyController;
+        public Enemy(EnemyConfig config, string name)
         {
-            EnemyGameObject = new GameObject(config.Name);
+            EnemyGameObject = new GameObject(name);
+            EnemyGameObject.layer = 6;
             EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
 
             enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
-            enemyEntity.OnCollide.AddListener(() => { isLife = false; });
-            enemyEntity.Speed = config.Speed;
+            enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
+            enemyEntity.Speed = new PointStruct(config.Speed);
             enemyEntity.Position = new Vector2(7, 0);
+            enemyEntity.Position.Normalize();
+
+            enemyController = new EnemyController(enemyEntity);
 
             spriteRenderer = EnemyGameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = config.Sprite;
+
+            enemyGun = new EnemyGun(EnemyGameObject, new List<GunDot>()
+            {
+                new GunDot(config.Bullet,new Timer(0.5f),new Vector2(0,0)),
+                new GunDot(config.Bullet,new Timer(0.2f),new Vector2(0,3)),
+                new GunDot(config.Bullet,new Timer(0.2f),new Vector2(0,-3)),
+            });
         }
 
         /// <summary>
@@ -40,8 +68,17 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         /// </summary>
         public void Update()
         {
-            
+            if (hp.isEmpty())
+                IsLife = false;
+            if (!isLife) return;
+            enemyGun.Update();
+            enemyController.Update();
         }
 
+
+        public void Destroy()
+        {
+            Destroyer.Instance.Destroy(EnemyGameObject);
+        }
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 
 namespace MyTypes
 {
@@ -6,9 +8,9 @@ namespace MyTypes
     /// Структура для хранения максимального текущего значения (например, ХП)
     /// </summary>
     [Serializable]
-    public struct PointSruct 
+    public class PointStruct
     {
-        public PointSruct(float maxPoint)
+        public PointStruct(float maxPoint)
         {
             MaxPoint = maxPoint;
             currentPoint = MaxPoint;
@@ -25,11 +27,16 @@ namespace MyTypes
         }
         public void Reset()
         {
+            currentPoint = 0;
+        }
+        public void Recover()
+        {
             currentPoint = MaxPoint;
         }
         public bool isEmpty()
         {
             return currentPoint == 0;
         }
+
     }
 }

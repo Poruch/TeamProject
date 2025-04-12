@@ -33,12 +33,12 @@ public class Gun
             PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.down * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = 20;
+            physicsBullet.Speed = new PointStruct(20);
 
             physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.up * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = 20;
+            physicsBullet.Speed = new PointStruct(20);
         }
     }
 
@@ -51,12 +51,12 @@ public class Gun
             PhysicsBullet physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.down * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = 20;
+            physicsBullet.Speed = new PointStruct(20);
 
             physicsBullet = GameObject.Instantiate(bullet, player.transform.position + Vector3.right + Vector3.up * 0.5f, Quaternion.identity)
                  .GetComponent<PhysicsBullet>();
             physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = 20;
+            physicsBullet.Speed = new PointStruct(20);
         }
         timer.Tick();
     }

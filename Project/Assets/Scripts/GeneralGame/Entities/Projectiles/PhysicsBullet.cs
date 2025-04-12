@@ -28,7 +28,7 @@ public class PhysicsBullet : Moveable
     {
         contactFilter.SetLayerMask(mask);
         contactFilter.useLayerMask = true;
-        Destroyer.Instance.Destroy(gameObject,new Timer(20));        
+        Destroyer.Instance.Destroy(gameObject,new Timer(20 / Speed.MaxPoint));        
     }
 
 
@@ -50,7 +50,10 @@ public class PhysicsBullet : Moveable
             }
         }
     }
-
+    public void SetContact(LayerMask newMask)
+    {
+        contactFilter.SetLayerMask(newMask);
+    }
     protected virtual void OnCollide()
     {
         Destroyer.Instance.Destroy(gameObject);

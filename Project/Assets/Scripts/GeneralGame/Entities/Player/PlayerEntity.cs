@@ -15,7 +15,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         private void Start()
         {
             gameObject.layer = 3;
-            gameObject.AddComponent<CircleCollider2D>();            
+            gameObject.AddComponent<CircleCollider2D>().radius = 0.5f;  
+            
         }
 
         
