@@ -27,7 +27,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(10);
+        PointStruct hp = new PointStruct(100);
 
         
         public Vector2 Position
@@ -47,15 +47,18 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public Player(PlayerConfig config)
         {
             ///
+            //Creating player game object
             playerGameObject = new GameObject("Player");
             playerGameObject.transform.localScale *= 1.5f;
             playerAnimationController = playerGameObject.AddComponent<PlayerAnimationController>();
             ///
 
+            //player animation
             playerAnimationController.SetConfig(config);
             playerAnimationController.OnCompleteDeathAnimation.AddListener(() => { OnDeath.Invoke(); });
 
 
+            // player physics
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
             playerEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
             playerEntity.Speed = new PointStruct(config.Speed);
@@ -64,13 +67,14 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             ///
             playerInput = new PlayerInput();
 
-            //
+            // Gunning
             gun = new Gun(playerGameObject, config.Bullet, 0.05f);
             playerInput.OnAttack.AddListener(gun.StartAttack);
             playerInput.InAttack.AddListener(gun.ProcessingAttack);
             playerInput.AfterAttack.AddListener(gun.StopAttack);
             //
 
+            // Move methods
             playerInput.OnStartMove.AddListener(()=> {
                 if(playerInput.Direction == Vector2.zero)
                     playerEntity.Speed.Reset();

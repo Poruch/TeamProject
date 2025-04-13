@@ -22,7 +22,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             }
             get => isLife;
         }
-        UnityEvent onDeth = new UnityEvent();
+        UnityEvent onDeath = new UnityEvent();
         PointStruct hp = new PointStruct(100);
 
         public Vector2 Position
@@ -30,7 +30,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             get => enemyEntity.Position;
             set => enemyEntity.Position = value;
         }
-        public UnityEvent OnDeth { get => onDeth; set => onDeth = value; }
+        public UnityEvent OnDeth { get => onDeath; set => onDeath = value; }
 
         // Системы врага
         SpriteRenderer spriteRenderer;        

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts.Accessory
 {
     /// <summary>
-    /// Класс предназначеный для удаления объектов, использует паттерн синглтон
+    /// Класс предназначенный для удаления объектов, использует паттерн синглтон
     /// </summary>
     public class Destroyer
     {

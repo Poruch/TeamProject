@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
+
+    /// <summary>
+    /// Class responsible enemy movement 
+    /// </summary>
     internal class EnemyController
     {
         EnemyEntity enemyEntity;
