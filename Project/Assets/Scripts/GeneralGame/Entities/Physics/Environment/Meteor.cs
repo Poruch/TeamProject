@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Accessory;
+using MyTypes;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
@@ -12,8 +9,24 @@ namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
     /// </summary>
     internal class Meteor : PhysicsBullet
     {
-        //Сделать чтобы он крутился пока летел
 
-        //Сделать анимацию разлетания
+        protected override void AddFixedUpdate()
+        {
+            base.AddFixedUpdate();
+            transform.Rotate(new Vector3(0, 0, 180) * Time.fixedDeltaTime);
+        }
+        
+        Animator animator;
+        protected override void AddAwake()
+        {
+            base.AddAwake();
+            animator = GetComponent<Animator>();
+        }
+        protected override void OnCollide()
+        {
+            //base.OnCollide();
+            animator.SetBool("IsDestroy", true);
+            SetContact(0);
+        }
     }
 }

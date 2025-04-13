@@ -20,6 +20,10 @@ public class Entity : MonoBehaviour
             transform.position = value;
         }
     }
+    protected virtual void AddAwake()
+    {
+
+    }
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -27,6 +31,7 @@ public class Entity : MonoBehaviour
             rb2d= gameObject.AddComponent<Rigidbody2D>();
         rb2d.bodyType = RigidbodyType2D.Kinematic;
         rb2d.useFullKinematicContacts = false;
+        AddAwake();
     }
 
     public virtual void Collide()

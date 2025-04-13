@@ -23,7 +23,7 @@ public class PhysicsBullet : Moveable
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
     protected Vector2 lastDelta = Vector2.zero;
-    private void Start()
+    protected override void AddAwake()
     {
         contactFilter.SetLayerMask(mask);
         contactFilter.useLayerMask = true;
