@@ -1,5 +1,4 @@
-using Assets.Scripts.GeneralGame.Entities.Creatures;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
 /// <summary>
 /// Сущность кукла, регистрирует попадания по себе
