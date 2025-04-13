@@ -27,7 +27,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(100);
+        PointStruct hp = new PointStruct(10);
 
         
         public Vector2 Position
@@ -82,9 +82,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             });
             ///
 
-            hp.OnEmpty.AddListener(() => IsLife = false);
-
-            
+            hp.OnEmpty.AddListener(() => IsLife = false);            
         }
         
         /// <summary>

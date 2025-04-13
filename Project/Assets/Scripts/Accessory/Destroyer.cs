@@ -52,6 +52,15 @@ namespace Assets.Scripts.Accessory
         /// <summary>
         /// Используется в методе Update unity для подсчета времени
         /// </summary>
+        public void DestroyAll()
+        {
+            var keys = destroyed.Keys.ToArray();
+            foreach (GameObject @object in keys)
+            {
+                GameObject.Destroy(@object);
+                destroyed.Remove(@object);
+            }
+        }
         public void Update()
         {
             var keys = destroyed.Keys.ToArray();

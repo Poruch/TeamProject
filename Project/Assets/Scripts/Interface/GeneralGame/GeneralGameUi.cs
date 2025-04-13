@@ -10,7 +10,8 @@ public class GeneralGameUi : MonoBehaviour
     GameObject pauseMenu;
     UnityEvent onPauseGame = new UnityEvent();
     UnityEvent onPauseExit = new UnityEvent();
-
+    [SerializeField]
+    GameObject deathScreen;
     public bool IsPause
     {
         get
@@ -45,6 +46,7 @@ public class GeneralGameUi : MonoBehaviour
         pauseButtons[2].onClick.AddListener(ExitGame);
 
         pauseMenu.SetActive(false);
+        deathScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -56,6 +58,16 @@ public class GeneralGameUi : MonoBehaviour
     UnityEvent onGameRestart = new UnityEvent();
     UnityEvent onExit = new UnityEvent();
 
+    public void OpenDeathScreen()
+    {
+        deathScreen.SetActive(true);
+        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+    }
+    public void CloseDeathScreen()
+    {
+        deathScreen.SetActive(false);
+        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+    }
     public UnityEvent OnGameRestart { get => onGameRestart; set => onGameRestart = value; }
     public UnityEvent OnExit { get => onExit; set => onExit = value; }
     public UnityEvent OnPauseGame { get => onPauseGame; set => onPauseGame = value; }

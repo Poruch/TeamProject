@@ -35,8 +35,7 @@ namespace Assets.Scripts.GeneralGame
         bool isPause = false;
         public void Awake()
         {
-            player = new Player(config.PlayerConfig);
-            player.Position = config.StartPosition;
+            CreatePlayer();
 
             var camera = Camera.main;
 
@@ -45,15 +44,6 @@ namespace Assets.Scripts.GeneralGame
 
             enemyManager = new EnemyManager();
             enemyManager.AddEnemy("Default", config.EnemyConfig);
-            //enemyManager.CreateEnemy("Default");
-
-
-            player.OnDeath.AddListener(()=>
-            {
-                player.Destroy();
-                ui.IsPause = true;
-                uiInput.OnPauseExit.RemoveAllListeners();
-            });
 
 
             uiInput = new UiInput();
@@ -61,23 +51,20 @@ namespace Assets.Scripts.GeneralGame
             uiInput.OnPause.AddListener(() => ui.IsPause = true);
             uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
 
-            ui.OnPauseGame.AddListener(() =>
-            {
-                Moveable.IsPause = true;
-                isPause = true;
-            });
-            ui.OnPauseExit.AddListener(() =>
-            {
-                Moveable.IsPause = false;
-                isPause = false;
-            });
+            ui.OnPauseGame.AddListener(OnPause);
+            ui.OnPauseExit.AddListener(OnContinue);
 
 
             ui.OnGameRestart.AddListener(() =>
             {
                 enemyManager.DestroyAll();
+                Destroyer.Instance.DestroyAll();
                 player.Destroy();
-                player = new Player(config.PlayerConfig);
+                CreatePlayer();   
+
+                ui.CloseDeathScreen();
+                ui.IsPause = false;
+                ui.OnPauseGame.AddListener(OnPause);
             });
 
             ui.OnExit.AddListener(() =>
@@ -86,13 +73,37 @@ namespace Assets.Scripts.GeneralGame
                 Moveable.IsPause = false;
                 SceneManager.LoadScene("StartScreen");
             });
-        }
-        Timer timer = new Timer(3f);
+        }        
 
+        private void CreatePlayer()
+        {
+            player = new Player(config.PlayerConfig);
+            player.Position = config.StartPosition;
+
+            player.OnDeath.AddListener(() =>
+            {
+                player.Destroy();
+                ui.IsPause = true;
+                ui.OpenDeathScreen();
+                uiInput.OnPauseExit.RemoveAllListeners();
+            });
+        }
+
+
+        private void OnPause()
+        {
+            Moveable.IsPause = true;
+            isPause = true;
+        }
+
+        private void OnContinue()
+        {
+            Moveable.IsPause = false;
+            isPause = false;
+        }
         /// <summary>
         /// Основной игровой цикл
-        /// </summary>
-        
+        /// </summary>        
         public void Update()
         {
             if (isPause) return;
@@ -110,12 +121,7 @@ namespace Assets.Scripts.GeneralGame
                 player.Position = new Vector2(Mathf.Clamp(player.Position.x, leftDownBorder.x, rightUpBorder.x),
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
-
-            enemyManager.Update();
-            if (enemyManager.CountEnemies == 0)
-                timer.Tick();
-                if(timer.IsTime)
-                enemyManager.CreateEnemy("Default");
+            enemyManager.Update();           
 
             Destroyer.Instance.Update();
         }

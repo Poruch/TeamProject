@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+using MyTypes;
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     internal class EnemyManager
@@ -47,6 +47,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             }
             enemies.Clear();
         }
+
+        Timer timer = new Timer(3f);
         public void Update()
         {
             var enem = new List<Enemy>(enemies.Values);
@@ -57,6 +59,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                 if (curr is not null)
                     i++;
             }
+            if (enemies.Count == 0)
+                timer.Tick();
+            if (timer.IsTime)
+                CreateEnemy("Default");
         }
     }
 }
