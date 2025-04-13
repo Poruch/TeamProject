@@ -4,25 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
+using UnityEngine.Events;
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
     internal class PlayerAnimationController : MonoBehaviour
     {
-        Animator animator;        
+        [SerializeField]
+        Animator animator;
+        [SerializeField]
         SpriteRenderer spriteRenderer;
 
         public void SetConfig(PlayerConfig config)
         {
             animator = gameObject.AddComponent<Animator>();
+            spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+
 
             animator.runtimeAnimatorController = config.Animator;
             spriteRenderer.sprite = config.Sprite;
 
 
-            for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; i++)
+            for (int i = 0; i < Animator.runtimeAnimatorController.animationClips.Length; i++)
             {
-                AnimationClip clip = animator.runtimeAnimatorController.animationClips[i];
+                AnimationClip clip = Animator.runtimeAnimatorController.animationClips[i];
                 
                 AnimationEvent animationStartEvent = new AnimationEvent();
                 animationStartEvent.time = 0;
@@ -41,16 +45,23 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             }
 
         }
+        UnityEvent onCompleteDeathAnimation = new UnityEvent();
+
+        public UnityEvent OnCompleteDeathAnimation { get => onCompleteDeathAnimation; set => onCompleteDeathAnimation = value; }
+        public Animator Animator { get => animator; set => animator = value; }
+        public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer = value; }
+
         public void AnimationStartHandler(string name)
         {
-            Debug.Log($"{name} animation start.");
+            //Debug.Log($"{name} animation start.");
         }
         public void AnimationCompleteHandler(string name)
         {
-            Debug.Log($"{name} animation complete.");
-            OnDeath.Invoke();
+            
+            if(name == "DestroyShipAnimation")
+            {
+                OnCompleteDeathAnimation.Invoke();
+            }
         }
-
-
     }
 }

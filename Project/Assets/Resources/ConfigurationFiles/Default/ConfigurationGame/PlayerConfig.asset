@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 3046042879194623302, guid: 2d46d52efc5f11b4fa7026992b2f1f9a, type: 3}
   sprite: {fileID: -583579982551491017, guid: 44378bc5e09dea14c8b45e5ff63c9f03, type: 3}
+  animator: {fileID: 9100000, guid: a15018782f672c348849d3768930e786, type: 2}
   hp: 0
   speed: 10
   atkSpeed: 0

@@ -96,6 +96,7 @@ namespace Assets.Scripts.GeneralGame
         public void Update()
         {
             if (isPause) return;
+
             if (meteorTimer.IsTime)
             {
                 var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
@@ -109,13 +110,14 @@ namespace Assets.Scripts.GeneralGame
                 player.Position = new Vector2(Mathf.Clamp(player.Position.x, leftDownBorder.x, rightUpBorder.x),
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
-            Destroyer.Instance.Update();
 
             enemyManager.Update();
             if (enemyManager.CountEnemies == 0)
                 timer.Tick();
                 if(timer.IsTime)
                 enemyManager.CreateEnemy("Default");
+
+            Destroyer.Instance.Update();
         }
 
     }

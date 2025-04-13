@@ -10,7 +10,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     /// <summary>
     /// Класс для создания объекта игрока и связывания его систем
     /// </summary>
-    internal class Player : Object
+    internal class Player
     {
         private bool isLife = true;
         
@@ -21,8 +21,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 isLife = value;
                 if (!isLife)
                 {
-                    animator.SetBool("IsDestroy",true);                                        
-                    //OnDeath.Invoke();
+                    playerAnimationController.Animator.SetBool("IsDestroy",true);    
                 }
             }
             get => isLife;
@@ -41,17 +40,21 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         // Системы персонажа
         GameObject playerGameObject;
         PlayerEntity playerEntity;
-        PlayerInput playerInput;
+        PlayerInput playerInput;        
         PlayerAnimationController playerAnimationController;
-
         Gun gun;
 
         public Player(PlayerConfig config)
         {
             ///
             playerGameObject = new GameObject("Player");
-            playerGameObject.transform.localScale *= 1.5f;      
+            playerGameObject.transform.localScale *= 1.5f;
+            playerAnimationController = playerGameObject.AddComponent<PlayerAnimationController>();
             ///
+
+            playerAnimationController.SetConfig(config);
+            playerAnimationController.OnCompleteDeathAnimation.AddListener(() => { OnDeath.Invoke(); });
+
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
             playerEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
@@ -80,8 +83,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             ///
 
             hp.OnEmpty.AddListener(() => IsLife = false);
-
-            playerAnimationController.SetConfig(config);         
 
             
         }
