@@ -63,7 +63,7 @@ public class Gun
 
     public virtual void StopAttack()
     {
-        if (timerAfterAttack.Ñompleted_at() < timer.Ñompleted_at())
+        if (timerAfterAttack.GetRatio() < timer.GetRatio())
         {
             timerAfterAttack = new Timer(timer);
         }

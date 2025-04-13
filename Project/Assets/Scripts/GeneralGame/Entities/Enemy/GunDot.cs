@@ -1,13 +1,20 @@
 ﻿
 using MyTypes;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
+    [Serializable]
     internal class GunDot
     {
+        [SerializeField]
         GameObject bullet;
+
+        [SerializeField]
         Timer timer;
+
+        [SerializeField]
         Vector2 position;
 
         public GunDot(GameObject bullet, Timer timer, Vector2 position)

@@ -18,19 +18,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             {
                 isLife = value;
                 if (!isLife)
-                    OnDeth.Invoke();
+                    OnDeath.Invoke();
             }
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
         PointStruct hp = new PointStruct(100);
-
+        
         public Vector2 Position
         {
             get => enemyEntity.Position;
             set => enemyEntity.Position = value;
         }
-        public UnityEvent OnDeth { get => onDeath; set => onDeath = value; }
+        public UnityEvent OnDeath { get => onDeath; set => onDeath = value; }
 
         // Системы врага
         SpriteRenderer spriteRenderer;        
@@ -58,12 +58,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             spriteRenderer = enemyGameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = config.Sprite;
 
-            enemyGun = new EnemyGun(enemyGameObject, new List<GunDot>()
-            {
-                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,0)),
-                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,3)),
-                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,-3)),
-            });
+            enemyGun = new EnemyGun(enemyGameObject, config.GunDots);
         }
 
         /// <summary>

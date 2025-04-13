@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MyTypes
 {
     /// <summary>
     /// Структура для подсчета прошедшего времени 
     /// </summary>
+    [Serializable]
     public class Timer
     {
         public Timer(float time, bool isTime = false)
@@ -24,6 +26,7 @@ namespace MyTypes
         }
 
         public float Time;
+        [NonSerialized]
         public float DeltaTime;
         private bool isTime;
         private bool isStopped;
@@ -65,7 +68,7 @@ namespace MyTypes
             isTime = false;
         }
 
-        public float Сompleted_at()
+        public float GetRatio()
         {
             return DeltaTime / Time;
         }

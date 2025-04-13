@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine;
 using MyTypes;
+using System;
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     internal class EnemyEntity : Moveable

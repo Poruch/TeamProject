@@ -45,7 +45,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             string individualName = name + $"_{num}";
 
             enemies.Add(individualName, new Enemy(enemiesBlueprints[name], individualName));
-            enemies[individualName].OnDeth.AddListener(()=>DestroyEnemy(individualName));
+            enemies[individualName].OnDeath.AddListener(()=>DestroyEnemy(individualName));
             return enemies[individualName];
         }
 
