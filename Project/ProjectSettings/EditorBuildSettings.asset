@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScrollShooter.unity
     guid: f2b1913f326957e43a0d7f7d0d8b287f
+  - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: 72d0454defc95604ebe5d716d04b150d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 28dcc8576d1dfd8419755a72f1585b71, type: 3}
   m_UseUCBPForAssetBundles: 0
