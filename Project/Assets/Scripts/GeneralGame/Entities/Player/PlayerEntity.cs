@@ -38,9 +38,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 #endif
         }
 
-        
-
-        
         public override void Collide()
         {
             onCollide.Invoke();

@@ -3,20 +3,18 @@ using Assets.Scripts.GeneralGame.Entities.Creatures.Environment;
 using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.Player;
-using DataManage;
 using MyTypes;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GeneralGame
 {
     /// <summary>
-    /// Класс с основным игровым циклом и основными игровымии объектами
+    /// Класс с основным игровым циклом и основными игровыми объектами
     /// </summary>
     internal class GameManager : MonoBehaviour
     {
-        Timer meteoreTimer = new Timer(4);
+        Timer meteorTimer = new Timer(4);
 
         [SerializeField]
         GameObject meteor = null;
@@ -50,25 +48,25 @@ namespace Assets.Scripts.GeneralGame
             //enemyManager.CreateEnemy("Default");
 
 
-            player.OnDeth.AddListener(()=>
+            player.OnDeath.AddListener(()=>
             {
                 player.Destroy();
                 ui.IsPause = true;
-                uiInput.OnPauseExite.RemoveAllListeners();
+                uiInput.OnPauseExit.RemoveAllListeners();
             });
 
 
             uiInput = new UiInput();
 
             uiInput.OnPause.AddListener(() => ui.IsPause = true);
-            uiInput.OnPauseExite.AddListener(() => ui.IsPause = false);
+            uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
 
             ui.OnPauseGame.AddListener(() =>
             {
                 Moveable.IsPause = true;
                 isPause = true;
             });
-            ui.OnPauseExite.AddListener(() =>
+            ui.OnPauseExit.AddListener(() =>
             {
                 Moveable.IsPause = false;
                 isPause = false;
@@ -98,12 +96,12 @@ namespace Assets.Scripts.GeneralGame
         public void Update()
         {
             if (isPause) return;
-            if (meteoreTimer.IsTime)
+            if (meteorTimer.IsTime)
             {
                 var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
                 met.Dir = Vector2.left;
             }
-            meteoreTimer.Tick();
+            meteorTimer.Tick();
 
             if (player.IsLife)
             {

@@ -36,8 +36,7 @@ public class PhysicsBullet : Moveable
     /// </summary>
     protected override void AddFixedUpdate()
     {
-        float distance = lastDelta.magnitude;
-        
+        float distance = lastDelta.magnitude;        
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
         {
@@ -45,17 +44,16 @@ public class PhysicsBullet : Moveable
             if (doll != null)
             {
                 doll.Collide();
-                OnCollide();
+                OnCollide(doll.gameObject);
             }
         }
-
         lastDelta = move;
     }
     public void SetContact(LayerMask newMask)
     {
         contactFilter.SetLayerMask(newMask);
     }
-    protected virtual void OnCollide()
+    protected virtual void OnCollide(GameObject otherGameObject)
     {
         Destroyer.Instance.Destroy(gameObject);
     }

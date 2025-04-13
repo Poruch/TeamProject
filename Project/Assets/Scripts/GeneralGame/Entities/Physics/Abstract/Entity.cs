@@ -24,6 +24,7 @@ public class Entity : MonoBehaviour
     {
 
     }
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();

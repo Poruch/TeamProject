@@ -7,9 +7,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles
         [SerializeField]
         GameObject Explosion;
 
-        protected override void OnCollide()
+        protected override void OnCollide(GameObject otherGameObject)
         {
-            base.OnCollide();
+            base.OnCollide(otherGameObject);
             Instantiate(Explosion,transform.position,Quaternion.identity);
         }
     }

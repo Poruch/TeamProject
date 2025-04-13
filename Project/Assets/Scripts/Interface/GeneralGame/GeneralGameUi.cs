@@ -9,7 +9,7 @@ public class GeneralGameUi : MonoBehaviour
     [SerializeField]
     GameObject pauseMenu;
     UnityEvent onPauseGame = new UnityEvent();
-    UnityEvent onPauseExite = new UnityEvent();
+    UnityEvent onPauseExit = new UnityEvent();
 
     public bool IsPause
     {
@@ -25,7 +25,7 @@ public class GeneralGameUi : MonoBehaviour
             }
             else
             {
-                OnPauseExite.Invoke();
+                OnPauseExit.Invoke();
             }
             pauseMenu.SetActive(value);
         }
@@ -59,7 +59,7 @@ public class GeneralGameUi : MonoBehaviour
     public UnityEvent OnGameRestart { get => onGameRestart; set => onGameRestart = value; }
     public UnityEvent OnExit { get => onExit; set => onExit = value; }
     public UnityEvent OnPauseGame { get => onPauseGame; set => onPauseGame = value; }
-    public UnityEvent OnPauseExite { get => onPauseExite; set => onPauseExite = value; }
+    public UnityEvent OnPauseExit { get => onPauseExit; set => onPauseExit = value; }
 
     public void RestartGame()
     {

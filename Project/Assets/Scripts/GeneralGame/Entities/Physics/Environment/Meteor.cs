@@ -9,7 +9,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
     /// </summary>
     internal class Meteor : PhysicsBullet
     {
-
         protected override void AddFixedUpdate()
         {
             base.AddFixedUpdate();
@@ -22,9 +21,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
             base.AddAwake();
             animator = GetComponent<Animator>();
         }
-        protected override void OnCollide()
+        protected override void OnCollide(GameObject otherGameObject)
         {
-            //base.OnCollide();
             animator.SetBool("IsDestroy", true);
             SetContact(0);
         }

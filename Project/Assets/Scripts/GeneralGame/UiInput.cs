@@ -13,11 +13,11 @@ namespace Assets.Scripts.GeneralGame
         UiInputControl control;
 
         UnityEvent onPause = new UnityEvent();
-        UnityEvent onPauseExite = new UnityEvent();
+        UnityEvent onPauseExit = new UnityEvent();
 
 
         public UnityEvent OnPause { get => onPause; set => onPause = value; }
-        public UnityEvent OnPauseExite { get => onPauseExite; set => onPauseExite = value; }
+        public UnityEvent OnPauseExit { get => onPauseExit; set => onPauseExit = value; }
 
         public UiInput()
         {
@@ -27,27 +27,18 @@ namespace Assets.Scripts.GeneralGame
         }
 
         bool paused = false;
-        bool isPressDown = true;
         private void PausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            //if (isPressDown)
-            //{
-                if (!paused)
-                {
-                    OnPause.Invoke();
-                    paused = true;
-                }
-                else
-                {
-                    OnPauseExite.Invoke();
-                    paused = false;
-                }                
-                //isPressDown = false;
-            //}
-            //else
-            //{
-            //    isPressDown = true;
-            //}
+            if (!paused)
+            {
+                OnPause.Invoke();
+                paused = true;
+            }
+            else
+            {
+                OnPauseExit.Invoke();
+                paused = false;
+            }         
         }
 
 
