@@ -1,8 +1,8 @@
 ﻿
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using MyTypes;
+using UnityEngine.Events;
+using Assets.Scripts.Accessory;
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
@@ -11,7 +11,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     /// </summary>
     internal class Player
     {
-        public bool isLife = true; 
+        private bool isLife = true;
+        public bool IsLife
+        {
+            set
+            {
+                isLife = value;
+                if (!isLife)
+                    OnDeth.Invoke();
+            }
+            get => isLife;
+        }
+        UnityEvent onDeth = new UnityEvent();
+        PointStruct hp = new PointStruct(100);
 
         // Системы персонажа
         SpriteRenderer spriteRenderer;
@@ -20,6 +32,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             get => playerEntity.Position;
             set => playerEntity.Position = value;
         }
+        public UnityEvent OnDeth { get => onDeth; set => onDeth = value; }
+
         GameObject playerGameObject;
         PlayerEntity playerEntity;
         PlayerInput playerInput;
@@ -33,7 +47,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerInput = new PlayerInput();            
 
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
-            playerEntity.OnCollide.AddListener(() => { isLife = false; });
+            playerEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
             playerEntity.Speed = new PointStruct(config.Speed);
 
             gun = new Gun(playerGameObject,config.Bullet,0.05f);
@@ -42,11 +56,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 if(playerInput.Direction == Vector2.zero)
                     playerEntity.Speed.Reset();
             });
-            playerInput.InMove.AddListener(() => 
+            playerInput.InMove.AddListener(() =>
             {
+                playerEntity.Dir = playerInput.Direction;
                 playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 30);
             });
 
+            hp.OnEmpty.AddListener(() => IsLife = false);
 
             playerInput.OnAttack.AddListener(gun.StartAttack);
             playerInput.InAttack.AddListener(gun.ProcessingAttack); 
@@ -61,10 +77,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         /// </summary>
         public void Update()
         {
-            playerEntity.Dir = playerInput.Direction;
             gun.Update();
             playerInput.Update();            
         }
-
+        public void Destroy()
+        {
+            Destroyer.Instance.Destroy(playerGameObject);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InitialUI : MonoBehaviour 
 {
@@ -60,7 +61,8 @@ public class InitialUI : MonoBehaviour
     }
     public void StartGame()
     {
-        Saves = true;        
+        Saves = true;
+        SceneManager.LoadScene("ScrollShooter");
     }
 
     public void OpenSettings() 

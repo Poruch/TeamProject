@@ -3,7 +3,6 @@ using UnityEngine;
 using MyTypes;
 using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
-using UnityEngine.XR;
 
 /// <summary>
 /// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
@@ -23,7 +22,7 @@ public class PhysicsBullet : Moveable
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
-
+    protected Vector2 lastDelta = Vector2.zero;
     private void Start()
     {
         contactFilter.SetLayerMask(mask);
@@ -37,7 +36,7 @@ public class PhysicsBullet : Moveable
     /// </summary>
     protected override void AddFixedUpdate()
     {
-        float distance = move.magnitude;
+        float distance = lastDelta.magnitude;
         
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
@@ -49,6 +48,8 @@ public class PhysicsBullet : Moveable
                 OnCollide();
             }
         }
+
+        lastDelta = move;
     }
     public void SetContact(LayerMask newMask)
     {

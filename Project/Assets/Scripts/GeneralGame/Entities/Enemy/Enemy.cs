@@ -34,32 +34,35 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         // Системы врага
         SpriteRenderer spriteRenderer;        
-        GameObject EnemyGameObject;
+        GameObject enemyGameObject;
         EnemyEntity enemyEntity;
         EnemyGun enemyGun;
         EnemyController enemyController;
+
         public Enemy(EnemyConfig config, string name)
         {
-            EnemyGameObject = new GameObject(name);
-            EnemyGameObject.layer = 6;
-            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+            enemyGameObject = new GameObject(name);
+            enemyGameObject.layer = 6;
+            enemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
 
-            enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
+            enemyEntity = enemyGameObject.AddComponent<EnemyEntity>();
             enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
             enemyEntity.Speed = new PointStruct(config.Speed);
             enemyEntity.Position = new Vector2(7, 0);
             enemyEntity.Position.Normalize();
 
+            hp.OnEmpty.AddListener(() => IsLife = false);
+
             enemyController = new EnemyController(enemyEntity);
 
-            spriteRenderer = EnemyGameObject.AddComponent<SpriteRenderer>();
+            spriteRenderer = enemyGameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = config.Sprite;
 
-            enemyGun = new EnemyGun(EnemyGameObject, new List<GunDot>()
+            enemyGun = new EnemyGun(enemyGameObject, new List<GunDot>()
             {
-                new GunDot(config.Bullet,new Timer(0.5f),new Vector2(0,0)),
-                new GunDot(config.Bullet,new Timer(0.2f),new Vector2(0,3)),
-                new GunDot(config.Bullet,new Timer(0.2f),new Vector2(0,-3)),
+                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,0)),
+                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,3)),
+                new GunDot(config.Bullet,new Timer(0.1f),new Vector2(0,-3)),
             });
         }
 
@@ -68,9 +71,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         /// </summary>
         public void Update()
         {
-            if (hp.isEmpty())
-                IsLife = false;
-            if (!isLife) return;
             enemyGun.Update();
             enemyController.Update();
         }
@@ -78,7 +78,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         public void Destroy()
         {
-            Destroyer.Instance.Destroy(EnemyGameObject);
+            Destroyer.Instance.Destroy(enemyGameObject);
         }
     }
 }

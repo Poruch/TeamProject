@@ -21,7 +21,6 @@ public class Starter : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = new GameManager(config);
     }
 
 

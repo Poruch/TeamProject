@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using Unity.VisualScripting;
-
+using UnityEngine.Events;
 namespace MyTypes
 {
     /// <summary>
@@ -15,12 +15,34 @@ namespace MyTypes
             MaxPoint = maxPoint;
             currentPoint = MaxPoint;
         }
+        [NonSerialized]
+        UnityEvent onEmpty = new UnityEvent();
         public readonly float MaxPoint;
         public float currentPoint;
+
+        public UnityEvent OnEmpty { get => onEmpty; set => onEmpty = value; }
+
+        /// <summary>
+        /// Fall point on absolute value
+        /// </summary>
+        /// <param name="count"></param>
         public void Reduce(float count)
         {
-            currentPoint = Math.Clamp(currentPoint - MathF.Abs(count), 0, MaxPoint);
+            currentPoint -= count;
+            if (currentPoint <= 0)
+            {
+                currentPoint = 0;
+                OnEmpty.Invoke();
+            }
+            
+            if(currentPoint > MaxPoint)
+                currentPoint = MaxPoint;
         }
+
+        /// <summary>
+        /// Grow point on absolute value
+        /// </summary>
+        /// <param name="count"></param>
         public void Increase(float count)
         {
             currentPoint = Math.Clamp(currentPoint + MathF.Abs(count), 0, MaxPoint);
@@ -37,6 +59,11 @@ namespace MyTypes
         {
             return currentPoint == 0;
         }
+        public float GetRatio()
+        {
+            return currentPoint / MaxPoint;
+        }
+
 
     }
 }

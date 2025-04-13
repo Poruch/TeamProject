@@ -1,0 +1,34 @@
+{
+    "name": "UiInputControl",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "5d3ca5ed-749b-4c78-9254-7952a6e62c5a",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "17ffeeb2-bf4a-4cbb-980f-b079a8aec59e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "56b6b44d-b154-4405-ae1a-7f469730bbad",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

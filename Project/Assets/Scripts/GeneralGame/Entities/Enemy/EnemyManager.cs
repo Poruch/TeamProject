@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Accessory;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
@@ -37,7 +38,15 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             enemies.Remove(name);
         }
 
-
+        public void DestroyAll()
+        {
+            var names = enemies.Keys;
+            foreach (string name in names)
+            {
+                enemies[name].Destroy();
+            }
+            enemies.Clear();
+        }
         public void Update()
         {
             var enem = new List<Enemy>(enemies.Values);

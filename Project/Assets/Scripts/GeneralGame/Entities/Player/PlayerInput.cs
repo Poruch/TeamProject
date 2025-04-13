@@ -34,6 +34,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         }
 
 
+
+
+
         public Vector2 Direction
         {
             get => control.Movement.Move.ReadValue<Vector2>();            
@@ -65,8 +68,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 isSwitch = false;
                 AfterAttack.Invoke();
             }
-
         }
+
+
+
 
     }
 }

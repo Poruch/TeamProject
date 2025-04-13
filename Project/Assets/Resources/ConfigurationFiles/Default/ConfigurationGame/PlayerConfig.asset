@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   bullet: {fileID: 3046042879194623302, guid: 2d46d52efc5f11b4fa7026992b2f1f9a, type: 3}
-  sprite: {fileID: -481173995765227706, guid: 2bbcbeb1fcd1f0b42a3749b764b72b06, type: 3}
+  sprite: {fileID: -583579982551491017, guid: 44378bc5e09dea14c8b45e5ff63c9f03, type: 3}
   hp: 0
   speed: 10
   atkSpeed: 0
