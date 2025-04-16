@@ -7,7 +7,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     internal class EnemyEntity : Moveable
     {
-        Timer timer = new Timer(1);
+        //Timer timer = new Timer(1);
         UnityEvent onCollide = new UnityEvent();
         private void Start()
         {

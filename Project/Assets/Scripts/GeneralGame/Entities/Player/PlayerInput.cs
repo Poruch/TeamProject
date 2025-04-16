@@ -25,10 +25,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         {
             control = new PlayerControls();
             control.Enable();
-            control.Movement.Move.performed += Move_performed;            
+            control.Movement.Move.performed += MovePerformed;            
         }
 
-        private void Move_performed(InputAction.CallbackContext obj)
+        private void MovePerformed(InputAction.CallbackContext obj)
         {
             OnStartMove.Invoke();
         }

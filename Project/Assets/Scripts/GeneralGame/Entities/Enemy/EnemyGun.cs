@@ -27,7 +27,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                     move.Dir = Vector2.left;
                     //move.SetContact(3);
                 }
-                dot.Timer.Tick();
             }
         }
         

@@ -64,7 +64,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerEntity.Speed = new PointStruct(config.Speed);
 
 
-            ///
+            //Привязка системы ввода к другим системам
             playerInput = new PlayerInput();
 
             // Gunning
@@ -84,7 +84,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 playerEntity.Dir = playerInput.Direction;
                 playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 30);
             });
-            ///
+            //
 
             hp.OnEmpty.AddListener(() => IsLife = false);            
         }
@@ -94,7 +94,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         /// </summary>
         public void Update()
         {
-            gun.Update();
             playerInput.Update();            
         }
         public void Destroy()

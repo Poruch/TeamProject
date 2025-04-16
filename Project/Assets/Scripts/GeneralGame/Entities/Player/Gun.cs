@@ -1,3 +1,4 @@
+using Assets.Scripts.GeneralGame;
 using MyTypes;
 using System.Collections;
 using UnityEngine;
@@ -18,8 +19,8 @@ public class Gun
     {
         this.player = player;
         this.atkSpeed = atkSpeed;
-        timer = new Timer(atkSpeed);
-        timerAfterAttack = new Timer(atkSpeed,true);
+        timer = TimeManager.Instance.CreateTimer(atkSpeed);
+        timerAfterAttack = TimeManager.Instance.CreateTimer(atkSpeed,true);
         this.bullet = bullet;   
 
         
@@ -58,21 +59,15 @@ public class Gun
             physicsBullet.Dir = Vector2.right;
             physicsBullet.Speed = new PointStruct(20);
         }
-        timer.Tick();
     }
 
     public virtual void StopAttack()
     {
         if (timerAfterAttack.GetRatio() < timer.GetRatio())
         {
-            timerAfterAttack = new Timer(timer);
+            timerAfterAttack = TimeManager.Instance.CreateTimer(timer);
         }
         timerAfterAttack.IsStopped = false;
         timer.Reset();
-    }
-
-    public void Update()
-    {
-        timerAfterAttack.Tick();
     }
 }

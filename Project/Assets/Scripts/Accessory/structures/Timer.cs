@@ -7,9 +7,9 @@ namespace MyTypes
     /// Структура для подсчета прошедшего времени 
     /// </summary>
     [Serializable]
-    public class Timer
+    public abstract class Timer
     {
-        public Timer(float time, bool isTime = false)
+        protected Timer(float time, bool isTime = false)
         {
             Time = time;
             DeltaTime = 0;
@@ -17,7 +17,7 @@ namespace MyTypes
             isStopped = false;
         }
 
-        public Timer(Timer timer)
+        protected Timer(Timer timer)
         {
             Time = timer.Time;
             DeltaTime = timer.DeltaTime;
@@ -52,7 +52,7 @@ namespace MyTypes
         /// <summary>
         /// usable in Update func
         /// </summary>
-        public void Tick()
+        protected void Tick()
         {
             if (DeltaTime >= Time)
             {

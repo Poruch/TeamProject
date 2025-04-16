@@ -3,6 +3,7 @@ using UnityEngine;
 using MyTypes;
 using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
+using Assets.Scripts.GeneralGame;
 
 /// <summary>
 /// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
@@ -27,7 +28,7 @@ public class PhysicsBullet : Moveable
     {
         contactFilter.SetLayerMask(mask);
         contactFilter.useLayerMask = true;
-        Destroyer.Instance.Destroy(gameObject,new Timer(20 / Speed.MaxPoint));        
+        Destroyer.Instance.Destroy(gameObject,TimeManager.Instance.CreateTimer(20 / Speed.MaxPoint));        
     }
 
 

@@ -72,10 +72,10 @@ namespace Assets.Scripts.Accessory
                     destroyed.Remove(@object);
                 }
             }
-            foreach (Timer timer in destroyed.Values)
-            {                               
-                timer.Tick();
-            }
+            //foreach (Timer timer in destroyed.Values)
+            //{                               
+            //    timer.Tick();
+            //}
         }
 
 

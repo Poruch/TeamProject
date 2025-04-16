@@ -14,7 +14,7 @@ namespace Assets.Scripts.GeneralGame
     /// </summary>
     internal class GameManager : MonoBehaviour
     {
-        Timer meteorTimer = new Timer(4);
+        Timer meteorTimer = TimeManager.Instance.CreateTimer(4);
 
         [SerializeField]
         GameObject meteor = null;
@@ -65,6 +65,7 @@ namespace Assets.Scripts.GeneralGame
                 ui.CloseDeathScreen();
                 ui.IsPause = false;
                 ui.OnPauseGame.AddListener(OnPause);
+                TimeManager.Instance.AllReset();
             });
 
             ui.OnExit.AddListener(() =>
@@ -113,7 +114,6 @@ namespace Assets.Scripts.GeneralGame
                 var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
                 met.Dir = Vector2.left;
             }
-            meteorTimer.Tick();
 
             if (player.IsLife)
             {
@@ -124,6 +124,7 @@ namespace Assets.Scripts.GeneralGame
             enemyManager.Update();           
 
             Destroyer.Instance.Update();
+            TimeManager.Instance.Update();
         }
 
     }

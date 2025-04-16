@@ -80,7 +80,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
 
 
-        Timer timer = new Timer(3f);
+        Timer timer = TimeManager.Instance.CreateTimer(3f);
         public void Update()
         {
             var _enemies = new List<Enemy>(enemies.Values);
@@ -92,7 +92,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                     i++;
             }
             if (enemies.Count == 0)
-                timer.Tick();
+                timer.IsStopped = false;
+            else
+                timer.IsStopped = true;
+
             if (timer.IsTime)
                 CreateEnemy("Default");
         }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     // Система физического взаимодействия для игрока
     internal class PlayerEntity : Moveable
     {
-        Timer timer = new Timer(1);
+        Timer timer = TimeManager.Instance.CreateTimer(1);
         UnityEvent onCollide = new UnityEvent();
         private void Start()
         {

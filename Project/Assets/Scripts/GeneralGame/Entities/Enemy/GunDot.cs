@@ -12,20 +12,33 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         GameObject bullet;
 
         [SerializeField]
+        float atkSpeed;
+
+        [SerializeField]
         Timer timer;
 
         [SerializeField]
         Vector2 position;
 
-        public GunDot(GameObject bullet, Timer timer, Vector2 position)
+        public GunDot(GameObject bullet, float atkSpeed, Vector2 position)
         {
             Bullet = bullet;
-            Timer = timer;
+            AtkSpeed = atkSpeed;
             Position = position;
+            timer = TimeManager.Instance.CreateTimer(1/AtkSpeed);
         }
 
         public GameObject Bullet { get => bullet; set => bullet = value; }
-        public Timer Timer { get => timer; set => timer = value; }
+        public Timer Timer
+        {
+            get
+            {
+                if (timer == null)
+                    timer = TimeManager.Instance.CreateTimer(1 / AtkSpeed);
+                return timer;
+            }
+        }
         public Vector2 Position { get => position; set => position = value; }
+        public float AtkSpeed { get => atkSpeed; set => atkSpeed = value; }
     }
 }
