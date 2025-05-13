@@ -10,6 +10,7 @@ public class GeneralGameUi : MonoBehaviour
     GameObject pauseMenu;
     UnityEvent onPauseGame = new UnityEvent();
     UnityEvent onPauseExit = new UnityEvent();
+
     [SerializeField]
     GameObject deathScreen;
     public bool IsPause
@@ -44,6 +45,7 @@ public class GeneralGameUi : MonoBehaviour
 
         pauseButtons[0].onClick.AddListener(RestartGame);
         pauseButtons[2].onClick.AddListener(ExitGame);
+        pauseButtons[3].onClick.AddListener(OpenManual);
 
         pauseMenu.SetActive(false);
         deathScreen.SetActive(false);
@@ -57,7 +59,15 @@ public class GeneralGameUi : MonoBehaviour
 
     UnityEvent onGameRestart = new UnityEvent();
     UnityEvent onExit = new UnityEvent();
-
+    public void OpenManual()
+    {
+        string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";
+        var proc = new System.Diagnostics.Process();
+        proc.StartInfo.FileName = commandText;
+        proc.StartInfo.UseShellExecute = true;
+        proc.Start();
+        IsPause = true;
+    }
     public void OpenDeathScreen()
     {
         deathScreen.SetActive(true);

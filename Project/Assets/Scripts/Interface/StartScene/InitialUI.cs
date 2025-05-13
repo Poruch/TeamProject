@@ -7,7 +7,7 @@ public class InitialUI : MonoBehaviour
     [SerializeField] GameObject defaultUI;
     [SerializeField] GameObject settings;
     [SerializeField] GameObject backButton;
-
+    [SerializeField] GameObject manualButton;
     GameObject CurrentActive;
     private bool DefaultUI
     {
@@ -80,4 +80,12 @@ public class InitialUI : MonoBehaviour
         Application.Quit();
     }
 
+    public void OpenManual()
+    {
+        string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";
+        var proc = new System.Diagnostics.Process();
+        proc.StartInfo.FileName = commandText;
+        proc.StartInfo.UseShellExecute = true;
+        proc.Start();
+    }
 }

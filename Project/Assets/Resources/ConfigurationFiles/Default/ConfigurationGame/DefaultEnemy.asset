@@ -15,25 +15,20 @@ MonoBehaviour:
   enemyName: Default
   sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
   gunDots:
-  - bullet: {fileID: 3046042879194623302, guid: a5de6eb60630c4a45927632aca76a6e1, type: 3}
-    timer:
-      Time: 5
+  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 2
     position: {x: 0, y: 0}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    timer:
-      Time: 0.2
+    atkSpeed: 10
     position: {x: 0, y: 2}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    timer:
-      Time: 0.2
+    atkSpeed: 10
     position: {x: 0, y: -2}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    timer:
-      Time: 1
+    atkSpeed: 5
     position: {x: 0, y: 3}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    timer:
-      Time: 1
+    atkSpeed: 5
     position: {x: 0, y: -3}
   hp: 0
   speed: 0

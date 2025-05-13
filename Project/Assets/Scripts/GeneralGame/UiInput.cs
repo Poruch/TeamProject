@@ -11,7 +11,7 @@ namespace Assets.Scripts.GeneralGame
     internal class UiInput
     {
         UiInputControl control;
-
+        GeneralGameUi generalGameUi;
         UnityEvent onPause = new UnityEvent();
         UnityEvent onPauseExit = new UnityEvent();
 
@@ -19,27 +19,40 @@ namespace Assets.Scripts.GeneralGame
         public UnityEvent OnPause { get => onPause; set => onPause = value; }
         public UnityEvent OnPauseExit { get => onPauseExit; set => onPauseExit = value; }
 
-        public UiInput()
+        public UiInput(GeneralGameUi general)
         {
+
+            generalGameUi = general;
             control = new UiInputControl();
             control.Menu.Pause.performed += PausePerformed;
+            control.Menu.Manual.performed += ManualPerformed;
             control.Enable();
         }
 
-        bool paused = false;
+        private void ManualPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";
+	        var proc = new System.Diagnostics.Process();
+ 	        proc.StartInfo.FileName = commandText;
+ 	        proc.StartInfo.UseShellExecute = true;
+ 	        proc.Start();
+            PausePerformed(obj);
+        }
+
         private void PausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (!paused)
+            if (!generalGameUi.IsPause)
             {
                 OnPause.Invoke();
-                paused = true;
+                generalGameUi.IsPause = true;
             }
             else
             {
                 OnPauseExit.Invoke();
-                paused = false;
+                generalGameUi.IsPause = false;
             }         
         }
+
 
 
     }

@@ -46,10 +46,10 @@ namespace Assets.Scripts.GeneralGame
             enemyManager.AddEnemy("Default", config.EnemyConfig);
 
 
-            uiInput = new UiInput();
+            uiInput = new UiInput(ui);
 
-            uiInput.OnPause.AddListener(() => ui.IsPause = true);
-            uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
+            //uiInput.OnPause.AddListener(() => ui.IsPause = true);
+            //uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
 
             ui.OnPauseGame.AddListener(OnPause);
             ui.OnPauseExit.AddListener(OnContinue);
