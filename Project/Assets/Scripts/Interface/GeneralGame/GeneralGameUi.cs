@@ -8,12 +8,18 @@ public class GeneralGameUi : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     GameObject pauseMenu;
-    UnityEvent onPauseGame = new UnityEvent();
-    UnityEvent onPauseExit = new UnityEvent();
+
+    //События при открытии и закрытии интерфейса паузы
+    UnityEvent onOpenUI = new UnityEvent();
+    UnityEvent onCloseUI = new UnityEvent();
 
     [SerializeField]
     GameObject deathScreen;
-    public bool IsPause
+
+    /// <summary>
+    /// При передаче true открывает интерфейс, при false закрывает
+    /// </summary>
+    public bool IsOpen
     {
         get
         {
@@ -23,18 +29,18 @@ public class GeneralGameUi : MonoBehaviour
         {
             if (value)
             {
-                OnPauseGame.Invoke();
+                OnOpenUI.Invoke();
             }
             else
             {
-                OnPauseExit.Invoke();
+                OnCloseUI.Invoke();
             }
             pauseMenu.SetActive(value);
         }
     }
     public void OpenPauseMenu()
     {
-        OnPauseGame.Invoke();
+        OnOpenUI.Invoke();
         pauseMenu.SetActive(true);
     }
 
@@ -51,11 +57,6 @@ public class GeneralGameUi : MonoBehaviour
         deathScreen.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     UnityEvent onGameRestart = new UnityEvent();
     UnityEvent onExit = new UnityEvent();
@@ -80,8 +81,8 @@ public class GeneralGameUi : MonoBehaviour
     }
     public UnityEvent OnGameRestart { get => onGameRestart; set => onGameRestart = value; }
     public UnityEvent OnExit { get => onExit; set => onExit = value; }
-    public UnityEvent OnPauseGame { get => onPauseGame; set => onPauseGame = value; }
-    public UnityEvent OnPauseExit { get => onPauseExit; set => onPauseExit = value; }
+    public UnityEvent OnOpenUI { get => onOpenUI; set => onOpenUI = value; }
+    public UnityEvent OnCloseUI { get => onCloseUI; set => onCloseUI = value; }
 
     public void RestartGame()
     {

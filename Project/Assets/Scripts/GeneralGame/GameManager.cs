@@ -19,7 +19,7 @@ namespace Assets.Scripts.GeneralGame
         [SerializeField]
         GameObject meteor = null;
         [SerializeField]
-        GeneralGameUi ui = null;
+        GeneralGameUi pauseUi = null;
         UiInput uiInput = null;
 
 
@@ -51,11 +51,12 @@ namespace Assets.Scripts.GeneralGame
             //uiInput.OnPause.AddListener(() => ui.IsPause = true);
             //uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
 
-            ui.OnPauseGame.AddListener(OnPause);
-            ui.OnPauseExit.AddListener(OnContinue);
+            //Привязка событий открытия интерфейса
+            pauseUi.OnOpenUI.AddListener(PauseGame);
+            pauseUi.OnCloseUI.AddListener(ContinueGame);
 
-
-            ui.OnGameRestart.AddListener(() =>
+            //Событие при рестарте игры
+            pauseUi.OnGameRestart.AddListener(() =>
             {
                 enemyManager.DestroyAll();
                 Destroyer.Instance.DestroyAll();
@@ -68,7 +69,8 @@ namespace Assets.Scripts.GeneralGame
                 TimeManager.Instance.AllReset();
             });
 
-            ui.OnExit.AddListener(() =>
+            //Событие при выходе из игры
+            pauseUi.OnExit.AddListener(() =>
             {
                 isPause = false;
                 Moveable.IsPause = false;
@@ -76,6 +78,7 @@ namespace Assets.Scripts.GeneralGame
             });
         }        
 
+        //Создает объект игрока
         private void CreatePlayer()
         {
             player = new Player(config.PlayerConfig);
@@ -84,43 +87,54 @@ namespace Assets.Scripts.GeneralGame
             player.OnDeath.AddListener(() =>
             {
                 player.Destroy();
-                ui.IsPause = true;
-                ui.OpenDeathScreen();
+                pauseUi.IsOpen = true;
+                pauseUi.OpenDeathScreen();
                 uiInput.OnPauseExit.RemoveAllListeners();
             });
         }
 
 
-        private void OnPause()
+        /// <summary>
+        /// Ставит игру на паузу, только со стороны геймплей
+        /// </summary>
+        private void PauseGame()
         {
             Moveable.IsPause = true;
             isPause = true;
         }
 
-        private void OnContinue()
+        /// <summary>
+        /// Уберает игру с паузы, только со стороны геймплей
+        /// </summary>
+        private void ContinueGame()
         {
             Moveable.IsPause = false;
             isPause = false;
         }
+
+
         /// <summary>
         /// Основной игровой цикл
         /// </summary>        
         public void Update()
         {
             if (isPause) return;
-
+            //Сначала идут объекты оружения 
             if (meteorTimer.IsTime)
             {
                 var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
                 met.Dir = Vector2.left;
             }
 
+            //Объект игрока
             if (player.IsLife)
             {
                 player.Update();
                 player.Position = new Vector2(Mathf.Clamp(player.Position.x, leftDownBorder.x, rightUpBorder.x),
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
+
+            //Объекты врагов
             enemyManager.Update();           
 
             Destroyer.Instance.Update();
