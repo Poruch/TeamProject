@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.Entities.Creatures.Environment;
 using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.Player;
@@ -7,7 +6,7 @@ using MyTypes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.GeneralGame
+namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
     /// <summary>
     /// Класс с основным игровым циклом и основными игровыми объектами
@@ -18,6 +17,7 @@ namespace Assets.Scripts.GeneralGame
 
         [SerializeField]
         GameObject meteor = null;
+        //
         [SerializeField]
         GeneralGameUi pauseUi = null;
         UiInput uiInput = null;
@@ -42,41 +42,25 @@ namespace Assets.Scripts.GeneralGame
             leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
             rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
 
-            enemyManager = new EnemyManager();
-            enemyManager.AddEnemy("Default", config.EnemyConfig);
+            enemyManager = new EnemyManager(config.EnemyConfig);
 
-
-            uiInput = new UiInput(ui);
-
-            //uiInput.OnPause.AddListener(() => ui.IsPause = true);
-            //uiInput.OnPauseExit.AddListener(() => ui.IsPause = false);
-
+            uiInput = new UiInput(pauseUi);
+            StartGame();
             //Привязка событий открытия интерфейса
             pauseUi.OnOpenUI.AddListener(PauseGame);
             pauseUi.OnCloseUI.AddListener(ContinueGame);
-
             //Событие при рестарте игры
-            pauseUi.OnGameRestart.AddListener(() =>
-            {
-                enemyManager.DestroyAll();
-                Destroyer.Instance.DestroyAll();
-                player.Destroy();
-                CreatePlayer();   
-
-                ui.CloseDeathScreen();
-                ui.IsPause = false;
-                ui.OnPauseGame.AddListener(OnPause);
-                TimeManager.Instance.AllReset();
-            });
-
+            pauseUi.OnGameRestart.AddListener(StartGame);
             //Событие при выходе из игры
-            pauseUi.OnExit.AddListener(() =>
-            {
+            pauseUi.OnExit.AddListener(() => {
                 isPause = false;
                 Moveable.IsPause = false;
                 SceneManager.LoadScene("StartScreen");
             });
+           
         }        
+
+
 
         //Создает объект игрока
         private void CreatePlayer()
@@ -89,8 +73,21 @@ namespace Assets.Scripts.GeneralGame
                 player.Destroy();
                 pauseUi.IsOpen = true;
                 pauseUi.OpenDeathScreen();
-                uiInput.OnPauseExit.RemoveAllListeners();
+                uiInput.OnWownPauseExit.RemoveAllListeners();
             });
+        }
+
+        private void StartGame()
+        {
+            enemyManager.DestroyAll();
+            Destroyer.Instance.DestroyAll();
+            player.Destroy();
+            CreatePlayer();
+
+            pauseUi.CloseDeathScreen();
+            pauseUi.IsOpen = false;
+            pauseUi.OnOpenUI.AddListener(PauseGame);
+            TimeManager.Instance.AllReset();
         }
 
 
@@ -137,6 +134,7 @@ namespace Assets.Scripts.GeneralGame
             //Объекты врагов
             enemyManager.Update();           
 
+            //Службы которые используются в коде
             Destroyer.Instance.Update();
             TimeManager.Instance.Update();
         }

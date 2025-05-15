@@ -2,6 +2,9 @@
 
 namespace Assets.Scripts.GeneralGame.Entities.Projectiles
 {
+    /// <summary>
+    /// Здесь должен быть класс самонаводящейся ракеты, как получить координаты всех противников?
+    /// </summary>
     internal class SmartRocket : PhysicsBullet
     {
         [SerializeField]

@@ -29,6 +29,7 @@ namespace Assets.Scripts.Accessory
             if (countInstance > 1)
                 Debug.LogWarning("Destroyer should not be more one");
         }
+
         /// <summary>
         /// Удаляет объект по истечению таймера
         /// </summary>

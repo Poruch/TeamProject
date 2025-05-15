@@ -10,12 +10,15 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     /// </summary>
     internal class EnemyManager
     {
+        EnemyConfig enemyConfig;
         static int countAllEnemies = 0;
+
         Dictionary<string,Enemy> enemies = new Dictionary<string, Enemy>();
         Dictionary<string,EnemyConfig> enemiesBlueprints = new Dictionary<string,EnemyConfig>();   
-        public EnemyManager() 
+        public EnemyManager(EnemyConfig config) 
         {
-
+            enemyConfig = config;            
+            AddEnemy("Default", config);
         }
         
         public int CountEnemies => enemies.Count;

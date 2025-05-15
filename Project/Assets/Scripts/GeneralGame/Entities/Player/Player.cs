@@ -26,6 +26,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             }
             get => isLife;
         }
+
         UnityEvent onDeath = new UnityEvent();
         PointStruct hp = new PointStruct(100);
 
@@ -76,8 +77,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
             // Move methods
             playerInput.OnStartMove.AddListener(()=> {
-                if(playerInput.Direction == Vector2.zero)
+                if (playerInput.Direction == Vector2.zero)
+                {
                     playerEntity.Speed.Reset();
+                    playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 10);
+                }
             });
             playerInput.InMove.AddListener(() =>
             {

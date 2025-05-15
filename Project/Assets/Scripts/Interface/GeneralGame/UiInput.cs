@@ -12,12 +12,13 @@ namespace Assets.Scripts.GeneralGame
     {
         UiInputControl control;
         GeneralGameUi generalGameUi;
-        UnityEvent onPause = new UnityEvent();
-        UnityEvent onPauseExit = new UnityEvent();
+
+        UnityEvent onDownPause = new UnityEvent();
+        UnityEvent onDownPauseExit = new UnityEvent();
 
 
-        public UnityEvent OnPause { get => onPause; set => onPause = value; }
-        public UnityEvent OnPauseExit { get => onPauseExit; set => onPauseExit = value; }
+        public UnityEvent OnDownPause { get => onDownPause; set => onDownPause = value; }
+        public UnityEvent OnWownPauseExit { get => onDownPauseExit; set => onDownPauseExit = value; }
 
         public UiInput(GeneralGameUi general)
         {
@@ -41,15 +42,15 @@ namespace Assets.Scripts.GeneralGame
 
         private void PausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (!generalGameUi.IsPause)
+            if (!generalGameUi.IsOpen)
             {
-                OnPause.Invoke();
-                generalGameUi.IsPause = true;
+                OnDownPause.Invoke();
+                generalGameUi.IsOpen = true;
             }
             else
             {
-                OnPauseExit.Invoke();
-                generalGameUi.IsPause = false;
+                OnWownPauseExit.Invoke();
+                generalGameUi.IsOpen = false;
             }         
         }
 

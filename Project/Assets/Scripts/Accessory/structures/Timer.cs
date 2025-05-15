@@ -26,6 +26,7 @@ namespace MyTypes
         }
 
         public float Time;
+
         [NonSerialized]
         public float DeltaTime;
         private bool isTime;

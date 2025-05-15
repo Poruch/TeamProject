@@ -30,20 +30,23 @@ public class GeneralGameUi : MonoBehaviour
             if (value)
             {
                 OnOpenUI.Invoke();
+                OpenPauseMenu();
             }
             else
             {
                 OnCloseUI.Invoke();
+                ClosePauseMenu();
             }
-            pauseMenu.SetActive(value);
         }
     }
     public void OpenPauseMenu()
     {
-        OnOpenUI.Invoke();
         pauseMenu.SetActive(true);
     }
-
+    public void ClosePauseMenu()
+    {
+        pauseMenu.SetActive(false);
+    }
     List<Button> pauseButtons;
     void Start()
     {
@@ -53,8 +56,8 @@ public class GeneralGameUi : MonoBehaviour
         pauseButtons[2].onClick.AddListener(ExitGame);
         pauseButtons[3].onClick.AddListener(OpenManual);
 
-        pauseMenu.SetActive(false);
-        deathScreen.SetActive(false);
+        CloseDeathScreen();
+        ClosePauseMenu();
     }
 
 
@@ -67,7 +70,7 @@ public class GeneralGameUi : MonoBehaviour
         proc.StartInfo.FileName = commandText;
         proc.StartInfo.UseShellExecute = true;
         proc.Start();
-        IsPause = true;
+        IsOpen = true;
     }
     public void OpenDeathScreen()
     {

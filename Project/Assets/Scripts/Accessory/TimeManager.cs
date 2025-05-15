@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace Assets.Scripts.GeneralGame
 {
+    /// <summary>
+    /// Класс для создания и управления всеми таймерами, использует паттерн одиночка
+    /// </summary>
     internal class TimeManager
     {
         List<TimerConstruct> timers = new List<TimerConstruct>();
@@ -24,6 +27,7 @@ namespace Assets.Scripts.GeneralGame
         {
 
         }
+
         public Timer CreateTimer(float time,bool isTime = false)
         {
             TimerConstruct timer = new TimerConstruct(time, isTime);
@@ -50,6 +54,7 @@ namespace Assets.Scripts.GeneralGame
                 timer.Reset();
             }
         }
+
         private class TimerConstruct : Timer
         {
             public TimerConstruct(float time,bool isTime) : base(time,isTime) { }
