@@ -27,7 +27,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             Position = position;
             timer = TimeManager.Instance.CreateTimer(1/AtkSpeed);
         }
-
+        public GunDot(GunDot gunDot) 
+        {
+            Bullet = gunDot.Bullet;
+            AtkSpeed = gunDot.AtkSpeed;
+            Position = gunDot.Position;
+            timer = TimeManager.Instance.CreateTimer(gunDot.Timer);
+        }
         public GameObject Bullet { get => bullet; set => bullet = value; }
         public Timer Timer
         {

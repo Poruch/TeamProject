@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
         }
         set
         {
-            transform.position = value;
+            transform.position = new Vector3(value.x,value.y);
         }
     }
     protected virtual void AddAwake()

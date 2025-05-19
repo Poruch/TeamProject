@@ -1,6 +1,6 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MyTypes;
+using UnityEngine;
 
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
@@ -12,7 +12,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     {
         EnemyConfig enemyConfig;
         static int countAllEnemies = 0;
-
         Dictionary<string,Enemy> enemies = new Dictionary<string, Enemy>();
         Dictionary<string,EnemyConfig> enemiesBlueprints = new Dictionary<string,EnemyConfig>();   
         public EnemyManager(EnemyConfig config) 
@@ -44,12 +43,15 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             if (!enemiesBlueprints.ContainsKey(name)) return null;
             int num = countAllEnemies;
             countAllEnemies++;
-
             string individualName = name + $"_{num}";
 
-            enemies.Add(individualName, new Enemy(enemiesBlueprints[name], individualName));
-            enemies[individualName].OnDeath.AddListener(()=>DestroyEnemy(individualName));
-            return enemies[individualName];
+            Enemy newEnemy = new Enemy(enemiesBlueprints[name], new Vector2(Random.Range(0, 10), Random.Range(-3, 3)), individualName);
+
+            enemies.Add(individualName, newEnemy);
+
+            newEnemy.OnDeath.AddListener(()=>DestroyEnemy(individualName));
+
+            return newEnemy;
         }
 
 
@@ -94,10 +96,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                 if (curr is not null)
                     i++;
             }
-            if (enemies.Count == 0)
-                timer.IsStopped = false;
-            else
-                timer.IsStopped = true;
+            //if (enemies.Count == 0)
+                //timer.IsStopped = false;
+            //else
+                //timer.IsStopped = true;
 
             if (timer.IsTime)
                 CreateEnemy("Default");

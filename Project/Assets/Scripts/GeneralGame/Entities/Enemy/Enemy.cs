@@ -23,7 +23,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(100);
+        PointStruct hp = new PointStruct(50);
         
         public Vector2 Position
         {
@@ -39,7 +39,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         EnemyGun enemyGun;
         EnemyController enemyController;
 
-        public Enemy(EnemyConfig config, string name)
+        public Enemy(EnemyConfig config,Vector2 position, string name)
         {
             enemyGameObject = new GameObject(name);
             enemyGameObject.layer = 6;
@@ -48,7 +48,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             enemyEntity = enemyGameObject.AddComponent<EnemyEntity>();
             enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
             enemyEntity.Speed = new PointStruct(config.Speed);
-            enemyEntity.Position = new Vector2(7, 0);
+
+            enemyEntity.Position = position;
+
             enemyEntity.Position.Normalize();
 
             hp.OnEmpty.AddListener(() => IsLife = false);

@@ -80,13 +80,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 if (playerInput.Direction == Vector2.zero)
                 {
                     playerEntity.Speed.Reset();
-                    playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 10);
+                    //playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 10);
                 }
             });
             playerInput.InMove.AddListener(() =>
             {
                 playerEntity.Dir = playerInput.Direction;
-                playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 30);
+                playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 20);
             });
             //
 

@@ -2,6 +2,7 @@
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using MyTypes;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
@@ -12,7 +13,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         GameObject parent;
         public EnemyGun(GameObject parent,IEnumerable<GunDot> gunDots) 
         {
-            dots = new List<GunDot>(gunDots);
+            dots = new List<GunDot>();
+            foreach (GunDot g in gunDots)
+            {
+                dots.Add(new GunDot(g));
+            }
             this.parent = parent;
         }
 
