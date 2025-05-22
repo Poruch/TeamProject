@@ -14,10 +14,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         static int countAllEnemies = 0;
         Dictionary<string,Enemy> enemies = new Dictionary<string, Enemy>();
         Dictionary<string,EnemyConfig> enemiesBlueprints = new Dictionary<string,EnemyConfig>();   
-        public EnemyManager(EnemyConfig config) 
+        public EnemyManager()//EnemyConfig config) 
         {
-            enemyConfig = config;            
-            AddEnemy("Default", config);
+            //enemyConfig = config;            
+            //AddEnemy("Default", config);
         }
         
         public int CountEnemies => enemies.Count;
@@ -96,10 +96,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                 if (curr is not null)
                     i++;
             }
-            //if (enemies.Count == 0)
-                //timer.IsStopped = false;
-            //else
-                //timer.IsStopped = true;
 
             if (timer.IsTime)
                 CreateEnemy("Default");

@@ -9,8 +9,9 @@ using UnityEngine;
 public class EnemyConfig : ScriptableObject
 {
     [SerializeField]
-    string enemyName;    
-
+    string enemyName;
+    [SerializeField]
+    int enemyLevel;
     [SerializeField]
     Sprite sprite;
 
@@ -25,6 +26,7 @@ public class EnemyConfig : ScriptableObject
     public Sprite Sprite { get => sprite; set => sprite = value; }
     public string Name { get => enemyName; set => enemyName = value; }
     public float AtkSpeed1 { get => AtkSpeed; set => AtkSpeed = value; }
+    public int EnemyLevel { get => enemyLevel; set => enemyLevel = value; }
     internal List<GunDot> GunDots { get => gunDots; set => gunDots = value; }
 }
 

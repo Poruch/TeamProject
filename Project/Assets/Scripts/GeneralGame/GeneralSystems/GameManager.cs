@@ -26,8 +26,9 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         [SerializeField]
         GeneralGameConfig config;
 
+        LevelSystem levelSystem = null;
         Player player;
-        EnemyManager enemyManager;
+       
         Vector2 leftDownBorder;
         Vector2 rightUpBorder;
 
@@ -36,13 +37,14 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         public void Awake()
         {
             CreatePlayer();
+            levelSystem = new LevelSystem(config.LevelConfig);
 
             var camera = Camera.main;
 
             leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
             rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
 
-            enemyManager = new EnemyManager(config.EnemyConfig);
+           
 
             uiInput = new UiInput(pauseUi);
             StartGame();
@@ -79,7 +81,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         private void StartGame()
         {
-            enemyManager.DestroyAll();
+            
             Destroyer.Instance.DestroyAll();
             player.Destroy();
             CreatePlayer();
@@ -101,7 +103,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         }
 
         /// <summary>
-        /// Уберает игру с паузы, только со стороны геймплей
+        /// Убирает игру с паузы, только со стороны геймплей
         /// </summary>
         private void ContinueGame()
         {
@@ -116,7 +118,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         public void Update()
         {
             if (isPause) return;
-            //Сначала идут объекты оружения 
+            //Сначала идут объекты окружения 
             if (meteorTimer.IsTime)
             {
                 var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
@@ -131,8 +133,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
 
-            //Объекты врагов
-            enemyManager.Update();           
+            //Уровень
+            levelSystem.Update();           
 
             //Службы которые используются в коде
             Destroyer.Instance.Update();
