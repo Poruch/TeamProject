@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using MyTypes;
+using System.Xml.Linq;
+using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.LevelControls;
 using UnityEngine;
 
 
@@ -14,6 +16,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         static int countAllEnemies = 0;
         Dictionary<string,Enemy> enemies = new Dictionary<string, Enemy>();
         Dictionary<string,EnemyConfig> enemiesBlueprints = new Dictionary<string,EnemyConfig>();   
+        Dictionary<int, List<string>> enemiesByLevel = new Dictionary<int, List<string>>();
         public EnemyManager()//EnemyConfig config) 
         {
             //enemyConfig = config;            
@@ -31,6 +34,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         public void AddEnemy(string name, EnemyConfig config)
         {
             enemiesBlueprints.Add(name, config);
+            if (enemiesByLevel.ContainsKey(config.EnemyLevel))
+                enemiesByLevel[config.EnemyLevel].Add(name);
+            else
+            {
+                enemiesByLevel.Add(config.EnemyLevel,new List<string>() { name });
+            }
         }
 
         /// <summary>
@@ -38,23 +47,31 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Enemy CreateEnemy(string name)
+        private Enemy CreateEnemy(string name, Vector2 position)
         {
             if (!enemiesBlueprints.ContainsKey(name)) return null;
             int num = countAllEnemies;
             countAllEnemies++;
             string individualName = name + $"_{num}";
-
-            Enemy newEnemy = new Enemy(enemiesBlueprints[name], new Vector2(Random.Range(0, 10), Random.Range(-3, 3)), individualName);
-
+            Enemy newEnemy = new Enemy(enemiesBlueprints[name], position, individualName);
             enemies.Add(individualName, newEnemy);
-
-            newEnemy.OnDeath.AddListener(()=>DestroyEnemy(individualName));
-
+            newEnemy.OnDeath.AddListener(() => DestroyEnemy(individualName));
             return newEnemy;
         }
-
-
+        private Enemy CreateEnemyByLevel(int enemyLevel, Vector2 position)
+        {
+            if (!enemiesByLevel.ContainsKey(enemyLevel)) return null;
+            var enemiesNames = enemiesByLevel[enemyLevel];
+            string name = enemiesNames[Random.Range(0, enemiesNames.Count)];
+            return CreateEnemy(name, position);
+        }
+        public void CreateEnemyWave(EnemySpawDot[] dots)
+        {
+            for (int i = 0; i < dots.Length; i++)
+            {
+                CreateEnemyByLevel(dots[i].EnemyLevel,dots[i].Position);
+            }
+        }
         /// <summary>
         /// Destroy enemy with key-name
         /// </summary>
@@ -83,9 +100,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         }
 
 
-
-
-        Timer timer = TimeManager.Instance.CreateTimer(3f);
         public void Update()
         {
             var _enemies = new List<Enemy>(enemies.Values);
@@ -96,9 +110,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                 if (curr is not null)
                     i++;
             }
-
-            if (timer.IsTime)
-                CreateEnemy("Default");
         }
     }
 }

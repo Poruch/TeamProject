@@ -1,6 +1,6 @@
 using Assets.Scripts.GeneralGame;
 using MyTypes;
-using System.Collections;
+using Assets.Scripts.Accessory;
 using UnityEngine;
 
 

@@ -1,4 +1,4 @@
-﻿using MyTypes;
+﻿using Assets.Scripts.Accessory;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 

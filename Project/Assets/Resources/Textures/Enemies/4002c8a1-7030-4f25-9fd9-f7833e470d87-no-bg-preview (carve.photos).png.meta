@@ -150,6 +150,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -584,7 +597,26 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_0: 2772864467025373715
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_1: -5037981412856181169
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_10: 7951854485324594680
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_11: -3807040970481327563
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_12: -109185723542730604
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_13: 5170222145597362732
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_14: -5782879046578851815
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_15: 8120548962405790917
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_16: 7097944338568291639
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_17: -6461239684429659274
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_18: -8450460449515856699
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_2: -1877080194353740730
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_3: 2065111989475482469
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_4: -6059790250091709271
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_5: 6706786413780522675
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_6: -5260026028585315416
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_7: -3932100038516903375
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_8: 518042274238342530
+      4002c8a1-7030-4f25-9fd9-f7833e470d87-no-bg-preview (carve.photos)_9: -3711175934469744829
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

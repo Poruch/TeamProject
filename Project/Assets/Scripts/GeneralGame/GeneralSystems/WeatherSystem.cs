@@ -1,14 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Accessory;
+using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
     //Система для смены погоды
     internal class WeatherSystem
     {
+        Timer meteorTimer = TimeManager.Instance.CreateTimer(4);
+        GameObject meteor = null;
 
+        public WeatherSystem() 
+        {
+            meteor = (GameObject)Resources.Load("Prefabs/Meteor");
+            if (meteor == null)
+                Debug.Log("Error miss meteor prefab");
+        }
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// Здесь должно быть что то другое, но пока так
+        /// 
+        /// 
+        /// 
+        /// </summary>
+
+        public void Update()
+        {
+            if (meteorTimer.IsTime)
+            {
+                var met = GameObject.Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
+                met.Dir = Vector2.left;
+            }
+        }
     }
 }

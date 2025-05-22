@@ -1,6 +1,6 @@
 ﻿//#define MyTest
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
-using MyTypes;
+using Assets.Scripts.Accessory;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -11,6 +11,6 @@ public class LevelConfig : ScriptableObject
     [SerializeField]
     Level[] levels;
     public EnemyConfig[] Enemies { get => enemies; set => enemies = value; }
-    internal Level[] Levels { get => level; set => level = value; }
+    internal Level[] Levels { get => levels; set => levels = value; }
 }
 

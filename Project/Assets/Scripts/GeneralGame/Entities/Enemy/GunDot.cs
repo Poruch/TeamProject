@@ -1,5 +1,4 @@
-﻿
-using MyTypes;
+﻿using Assets.Scripts.Accessory;
 using System;
 using UnityEngine;
 

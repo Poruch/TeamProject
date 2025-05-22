@@ -8,12 +8,22 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     internal class Level
     {
         [SerializeField]
-        Sprite backGround;
+        Sprite backGroundSprite;
         [SerializeField] 
         Wave[] waves;
-        public Level() 
-        {
 
+        int currentWave = 0;
+
+        public void SetActive(SpriteRenderer backGroundRenderer)
+        {
+            currentWave = 0;
+            backGroundRenderer.sprite = backGroundSprite;
+        }
+        public EnemySpawDot[] GetWaveSpawners()
+        {
+            if (currentWave > waves.Length)
+                return null;
+            return waves[currentWave++].GetEnemySpawnDots();
         }
 
     }

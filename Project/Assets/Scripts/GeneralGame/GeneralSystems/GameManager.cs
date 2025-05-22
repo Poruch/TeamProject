@@ -13,22 +13,20 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     /// </summary>
     internal class GameManager : MonoBehaviour
     {
-        Timer meteorTimer = TimeManager.Instance.CreateTimer(4);
-
-        [SerializeField]
-        GameObject meteor = null;
+        
         //
         [SerializeField]
-        GeneralGameUi pauseUi = null;
+        GeneralGameUi pauseUi = null;        
         UiInput uiInput = null;
 
-
+        [SerializeField]
+        GameObject backGround;
         [SerializeField]
         GeneralGameConfig config;
 
         LevelSystem levelSystem = null;
         Player player;
-       
+
         Vector2 leftDownBorder;
         Vector2 rightUpBorder;
 
@@ -37,16 +35,17 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         public void Awake()
         {
             CreatePlayer();
-            levelSystem = new LevelSystem(config.LevelConfig);
 
             var camera = Camera.main;
 
             leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
-            rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
-
-           
+            rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);           
 
             uiInput = new UiInput(pauseUi);
+
+            levelSystem = new LevelSystem(config.LevelConfig);
+            levelSystem.SetBackGroundRenderer(backGround.GetComponent<SpriteRenderer>());
+
             StartGame();
             //Привязка событий открытия интерфейса
             pauseUi.OnOpenUI.AddListener(PauseGame);
@@ -81,11 +80,10 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         private void StartGame()
         {
-            
             Destroyer.Instance.DestroyAll();
             player.Destroy();
             CreatePlayer();
-
+            levelSystem.Clear();
             pauseUi.CloseDeathScreen();
             pauseUi.IsOpen = false;
             pauseUi.OnOpenUI.AddListener(PauseGame);
@@ -119,11 +117,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         {
             if (isPause) return;
             //Сначала идут объекты окружения 
-            if (meteorTimer.IsTime)
-            {
-                var met = Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
-                met.Dir = Vector2.left;
-            }
+            
 
             //Объект игрока
             if (player.IsLife)
@@ -132,7 +126,6 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 player.Position = new Vector2(Mathf.Clamp(player.Position.x, leftDownBorder.x, rightUpBorder.x),
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
-
             //Уровень
             levelSystem.Update();           
 

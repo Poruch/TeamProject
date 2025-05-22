@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MyTypes
+namespace Assets.Scripts.Accessory
 {
     /// <summary>
     /// Структура для подсчета прошедшего времени 
