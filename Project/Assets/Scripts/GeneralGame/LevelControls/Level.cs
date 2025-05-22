@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.GeneralGame.LevelControls;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
@@ -8,7 +9,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     {
         [SerializeField]
         Sprite backGround;
-        [SerializeField] int waveCount;
+        [SerializeField] 
+        Wave[] waves;
         public Level() 
         {
 
