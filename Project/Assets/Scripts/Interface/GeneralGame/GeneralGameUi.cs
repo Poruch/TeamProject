@@ -15,7 +15,8 @@ public class GeneralGameUi : MonoBehaviour
 
     [SerializeField]
     GameObject deathScreen;
-
+    [SerializeField]
+    GameObject winScreen;
     /// <summary>
     /// При передаче true открывает интерфейс, при false закрывает
     /// </summary>
@@ -80,6 +81,17 @@ public class GeneralGameUi : MonoBehaviour
     public void CloseDeathScreen()
     {
         deathScreen.SetActive(false);
+        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+    }
+
+    public void OpenWinScreen()
+    {
+        winScreen.SetActive(true);
+        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -150, 0);
+    }
+    public void CloseWinScreen()
+    {
+        winScreen.SetActive(false);
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
     }
     public UnityEvent OnGameRestart { get => onGameRestart; set => onGameRestart = value; }

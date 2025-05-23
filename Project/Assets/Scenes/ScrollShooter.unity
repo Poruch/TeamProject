@@ -985,8 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e897c8ad101a0841b753f7ab9546369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meteor: {fileID: 3046042879194623302, guid: a5de6eb60630c4a45927632aca76a6e1, type: 3}
   pauseUi: {fileID: 2057177623}
+  backGround: {fileID: 1192084205}
   config: {fileID: 11400000, guid: a0981437302a1c1459cfb809a41de775, type: 2}
 --- !u!1 &1498639885
 GameObject:

@@ -21,8 +21,11 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         }
         public EnemySpawDot[] GetWaveSpawners()
         {
-            if (currentWave > waves.Length)
+            if (currentWave >= waves.Length)
+            {
+                currentWave = 0;
                 return null;
+            }
             return waves[currentWave++].GetEnemySpawnDots();
         }
 

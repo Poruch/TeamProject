@@ -45,6 +45,13 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
             levelSystem = new LevelSystem(config.LevelConfig);
             levelSystem.SetBackGroundRenderer(backGround.GetComponent<SpriteRenderer>());
+            levelSystem.CompleteGame.AddListener(() =>
+            {
+                player.Destroy();
+                pauseUi.IsOpen = true;
+                pauseUi.OpenWinScreen();
+                uiInput.OnWownPauseExit.RemoveAllListeners();
+            });
 
             StartGame();
             //Привязка событий открытия интерфейса
@@ -85,6 +92,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             CreatePlayer();
             levelSystem.Clear();
             pauseUi.CloseDeathScreen();
+            pauseUi.CloseWinScreen();
             pauseUi.IsOpen = false;
             pauseUi.OnOpenUI.AddListener(PauseGame);
             TimeManager.Instance.AllReset();

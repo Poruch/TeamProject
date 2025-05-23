@@ -23,7 +23,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(50);
+        PointStruct hp = new PointStruct(10);
         
         public Vector2 Position
         {

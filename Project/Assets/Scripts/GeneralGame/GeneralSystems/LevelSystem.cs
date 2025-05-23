@@ -3,6 +3,7 @@ using Assets.Scripts.GeneralGame.Entities.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
@@ -11,6 +12,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     {
         //Уровни в игре
         List<Level> levels;
+        UnityEvent completeGame = new UnityEvent();
+
         int currentLevel = 0; 
 
         //Удаление или создание врагов
@@ -26,15 +29,19 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 enemyManager.AddEnemy(config.name, config);
             }
             levels = new List<Level>(levelConfig.Levels);
+            currentLevel = 0;
         }
         public void Clear()
         {
             enemyManager.DestroyAll();
-            //weatherSystem
             currentLevel = 0;
+            levels[currentLevel].SetActive(renderer);
         }
 
         SpriteRenderer renderer;
+
+        public UnityEvent CompleteGame { get => completeGame; set => completeGame = value; }
+
         public void SetBackGroundRenderer(SpriteRenderer renderer)
         {
             this.renderer = renderer;
@@ -45,14 +52,19 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             enemyManager.Update();
             if(enemyManager.CountEnemies == 0)
             {
-                levels[currentLevel].SetActive(renderer);
                 var spawners = levels[currentLevel].GetWaveSpawners();
                 if (spawners != null)
                     enemyManager.CreateEnemyWave(spawners);
                 else
                 {
-                    enemyManager.DestroyAll();
                     currentLevel++;
+                    if(currentLevel >= levels.Count)
+                    {
+                        CompleteGame.Invoke();
+                        return;
+                    }
+                    levels[currentLevel].SetActive(renderer);
+                    enemyManager.DestroyAll();
                 }
             }
         }
