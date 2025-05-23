@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fb51b56cfe4b904eafde0c053eb4fd5, type: 3}
   m_Name: DefaultVraf
   m_EditorClassIdentifier: 
-  enemyName: Default
+  enemyName: Vraf
+  enemyLevel: 0
   sprite: {fileID: -8450460449515856699, guid: 8fd734370e20d634dbd915c23b88500c, type: 3}
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}
     atkSpeed: 1
     position: {x: 0, y: 0}
-  hp: 0
+  hp: 30
   speed: 0
   AtkSpeed: 2

@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Assets.Scripts.Accessory.Destroyer">
+    <Position X="32" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAgAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\Accessory\Destroyer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Accessory.Timer">
+    <Position X="17.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACBAABAAAAAAAAAAAAEAAAABAQAAAAUQA=</HashCode>
+      <FileName>Assets\Scripts\Accessory\structures\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyTypes.PointStruct">
+    <Position X="19.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAECAAAAAiBAAAAAEAAAGAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\Accessory\structures\PointStruct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.TimeManager">
+    <Position X="17.75" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Assets.Scripts.GeneralGame.TimeManager.TimerConstruct" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Accessory\TimeManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Accessory\TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.UiInput">
+    <Position X="19.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACBAABACAAQAAAAEAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interface\GeneralGame\UiInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.Enemy">
+    <Position X="32" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAIAAAACCAwAAAAAIAAABDAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Enemy\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.EnemyController">
+    <Position X="26.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQBAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Enemy\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.EnemyEntity">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAACAAACAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Enemy\EnemyEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.EnemyGun">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Enemy\EnemyGun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.GunDot">
+    <Position X="21.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAgAAAAIAAAAAAAACAAABAgAAAUAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Enemy\GunDot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Enemy.EnemyManager">
+    <Position X="19.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAUAAEAIABEAAAAIAAAAAACAAAAAAAwBAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\GeneralSystems\EnemyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAEAgAAAAAAQAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Physics\Abstract\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Doll">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Physics\Doll\Doll.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gun">
+    <Position X="16" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAAAAAAAAAAAAAIBAAACABAFAAAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Player\Gun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhysicsBullet">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAggAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAEAIgBA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Projectiles\PhysicsBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="@PlayerControls" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="@PlayerControls.MovementActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\PlayerControls.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="@PlayerControls.IteractActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\PlayerControls.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Interface Name="@PlayerControls.IMovementActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\PlayerControls.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Interface>
+      <Interface Name="@PlayerControls.IIteractActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\PlayerControls.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Interface>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQACAAAAACAAABAAEAgACBADAAAgAmAEAAAgAADQIAA=</HashCode>
+      <FileName>Assets\Scripts\InputControle\PlayerControls.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="@UiInputControl" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="7" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="@UiInputControl.MenuActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\UiInputControl.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Interface Name="@UiInputControl.IMenuActions" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\InputControle\UiInputControl.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Interface>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACEACAACAAABAAAAAACBABAAAAAHAEAAAgEEBQAAA=</HashCode>
+      <FileName>Assets\Scripts\InputControle\UiInputControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GeneralGameUi">
+    <Position X="30" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEAAAwBEACAIECEAAAEABBABACAQAAAAAAIAAAQAgCA=</HashCode>
+      <FileName>Assets\Scripts\Interface\GeneralGame\GeneralGameUi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InitialUI">
+    <Position X="12.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAAAAAEAAEIAAABEQgAQCAAAACgAACAAAAEAA=</HashCode>
+      <FileName>Assets\Scripts\Interface\StartScene\InitialUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveUI">
+    <Position X="26.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interface\StartScene\SaveUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SettingUI">
+    <Position X="26.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interface\StartScene\SettingUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyConfig">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAQMAAAEAAAAAAAQBABAAAQAQAABgAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\ConfigurationGeneralGame\EnemyConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GeneralGameConfig">
+    <Position X="28.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAEAAAABAAAAAACAAAAAAAAAAAAAAACAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\ConfigurationGeneralGame\GeneralGameConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelConfig">
+    <Position X="21.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\ConfigurationGeneralGame\LevelConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerConfig">
+    <Position X="19.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAABABAAASAQABBgAAQQQAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\ConfigurationGeneralGame\PlayerConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GeneralConfig">
+    <Position X="24.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAEIAEA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\GeneralConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LanguageConfig">
+    <Position X="23" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\LanguageConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SavesConfig">
+    <Position X="24.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\SavesConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SettingsConfig">
+    <Position X="21.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjects\SettingsConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StarterFirstScene">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\StarterFirstScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Physics.Abstract.Moveable">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgiAAAICgAAAAAAABAAAAAQAAAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Physics\Abstract\Moveable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Creatures.Environment.Meteor">
+    <Position X="9" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Physics\Environment\Meteor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Player.Player">
+    <Position X="16" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABIAAAAKAAgAAAAQIAAAADAAAIAAABAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Player\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Player.PlayerAnimationController">
+    <Position X="23" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAAABAAAAAgCAAAAAAAAAAAAIAAAAAAAAAAAQAJAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Player\PlayerAnimationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Player.PlayerEntity">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAACAAACAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Player\PlayerEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Player.PlayerInput">
+    <Position X="16" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAABAYAAAAFACAQiAAgEIAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Player\PlayerInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Projectiles.Bullet">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Projectiles\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Projectiles.ProjectilePoolManager">
+    <Position X="24.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Projectiles\ProjectilePoolManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Projectiles.Rocket">
+    <Position X="7.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Projectiles\Rocket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Entities.Projectiles.SmartRocket">
+    <Position X="10.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Entities\Projectiles\SmartRocket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.GeneralSystems.GameManager">
+    <Position X="23" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQCAAkAgAAAFAAIAAAAIAAgIAAAAAABAAQAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\GeneralSystems\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.GeneralSystems.LevelSystem">
+    <Position X="28.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAABAAEgAAACAAEAAgAABAAAAABAgAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\GeneralSystems\LevelSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.GeneralSystems.WeatherSystem">
+    <Position X="23" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\GeneralSystems\WeatherSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.GeneralSystems.Level">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAAAABAAIAAAAI=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\LevelControls\Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.LevelControls.EnemySpawDot">
+    <Position X="21.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\LevelControls\EnemySpawDot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.LevelControls.Wave">
+    <Position X="26.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\LevelControls\Wave.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Weather.AsteroidRain">
+    <Position X="21.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Weather\AsteroidRain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.GeneralGame.Weather.Weather">
+    <Position X="21.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GeneralGame\Weather\Weather.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataManage.SaveLoader">
+    <Position X="24.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Saves\SaveLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataManage.SaveManager">
+    <Position X="17.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Saves\SaveManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ApplicationSettings.SettingManager">
+    <Position X="24.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAgAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SettingManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="DataManage.SaveFileInfo">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAgAAAAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Saves\SaveFileInfo.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

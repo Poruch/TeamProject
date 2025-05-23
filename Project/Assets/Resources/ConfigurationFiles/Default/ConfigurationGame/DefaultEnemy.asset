@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DefaultEnemy
   m_EditorClassIdentifier: 
   enemyName: Default
+  enemyLevel: 1
   sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
@@ -30,6 +31,6 @@ MonoBehaviour:
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
     atkSpeed: 5
     position: {x: 0, y: -3}
-  hp: 0
+  hp: 100
   speed: 0
   AtkSpeed: 2

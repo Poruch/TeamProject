@@ -41,6 +41,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         public Enemy(EnemyConfig config,Vector2 position, string name)
         {
+            hp = new PointStruct(config.Hp);
+
             enemyGameObject = new GameObject(name);
             enemyGameObject.layer = 6;
             enemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);

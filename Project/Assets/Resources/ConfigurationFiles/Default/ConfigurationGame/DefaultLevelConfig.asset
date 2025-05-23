@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 11400000, guid: 7fb1b7d6e005c314d9570d23f0b38cd1, type: 2}
+  - {fileID: 11400000, guid: b00892741e067ef45a75a78ec0890949, type: 2}
   levels:
   - backGroundSprite: {fileID: 6963322998463068953, guid: 3e0a3564190bbf246a6144d54122f4b9, type: 3}
     waves:
@@ -32,4 +33,4 @@ MonoBehaviour:
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
-    - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
+    - prefab: {fileID: 6558722684092217372, guid: 6ca4b2cada829784da438280e6bb635b, type: 3}
