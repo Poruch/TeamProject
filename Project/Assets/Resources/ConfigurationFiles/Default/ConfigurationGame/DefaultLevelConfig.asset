@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: DefaultLevelConfig
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 11400000, guid: b00892741e067ef45a75a78ec0890949, type: 2}
   - {fileID: 11400000, guid: 7fb1b7d6e005c314d9570d23f0b38cd1, type: 2}
   levels:
   - backGroundSprite: {fileID: 8429622947459334058, guid: e8fe42d3ef3ffc54bbff69c2e7c83a41, type: 3}
