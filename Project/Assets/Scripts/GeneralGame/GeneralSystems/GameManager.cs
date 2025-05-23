@@ -53,7 +53,10 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 uiInput.OnWownPauseExit.RemoveAllListeners();
             });
 
+            
             StartGame();
+
+
             //Привязка событий открытия интерфейса
             pauseUi.OnOpenUI.AddListener(PauseGame);
             pauseUi.OnCloseUI.AddListener(ContinueGame);
@@ -65,7 +68,30 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 Moveable.IsPause = false;
                 SceneManager.LoadScene("StartScreen");
             });
-           
+
+
+            levelSystem.OnLevelComplete.AddListener(()=> {
+                PauseGame();
+                pauseUi.OnLoadAnimationEnd.AddListener(() =>
+                {
+                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
+                    levelSystem.OnLevelStart.Invoke();
+                    player.Position = config.StartPosition;
+                    Destroyer.Instance.DestroyAll();
+                });
+
+                pauseUi.StartLoadAnimation(false);
+            });
+
+            levelSystem.OnLevelStart.AddListener(() => {    
+                pauseUi.OnLoadAnimationEnd.AddListener(() =>
+                {
+                    ContinueGame();
+                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
+                });
+                pauseUi.StartLoadAnimation(true);
+            });           
+            
         }        
 
 

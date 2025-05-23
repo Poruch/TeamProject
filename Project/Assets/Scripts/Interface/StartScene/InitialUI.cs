@@ -61,7 +61,7 @@ public class InitialUI : MonoBehaviour
     }
     public void StartGame()
     {
-        Saves = true;
+        //Saves = true;
         SceneManager.LoadScene("ScrollShooter");
     }
 

@@ -13,6 +13,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         //Уровни в игре
         List<Level> levels;
         UnityEvent completeGame = new UnityEvent();
+        UnityEvent onLevelComplete = new UnityEvent();
+        private UnityEvent onLevelStart = new UnityEvent();
 
         int currentLevel = 0; 
 
@@ -36,11 +38,17 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             enemyManager.DestroyAll();
             currentLevel = 0;
             levels[currentLevel].SetActive(renderer);
+            OnLevelStart.AddListener(() =>{
+                levels[currentLevel].SetActive(renderer);
+                enemyManager.DestroyAll();
+            });
         }
 
         SpriteRenderer renderer;
 
         public UnityEvent CompleteGame { get => completeGame; set => completeGame = value; }
+        public UnityEvent OnLevelComplete { get => onLevelComplete; set => onLevelComplete = value; }
+        public UnityEvent OnLevelStart { get => onLevelStart; set => onLevelStart = value; }
 
         public void SetBackGroundRenderer(SpriteRenderer renderer)
         {
@@ -63,8 +71,11 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                         CompleteGame.Invoke();
                         return;
                     }
-                    levels[currentLevel].SetActive(renderer);
-                    enemyManager.DestroyAll();
+
+                    OnLevelComplete.Invoke();
+
+
+                    //OnLevelStart.Invoke();
                 }
             }
         }

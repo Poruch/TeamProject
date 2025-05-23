@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -13,10 +15,15 @@ public class GeneralGameUi : MonoBehaviour
     UnityEvent onOpenUI = new UnityEvent();
     UnityEvent onCloseUI = new UnityEvent();
 
+    UnityEvent onLoadAnimationEnd = new UnityEvent();
+
     [SerializeField]
     GameObject deathScreen;
     [SerializeField]
     GameObject winScreen;
+
+    [SerializeField]
+    Image loadScreen;
     /// <summary>
     /// При передаче true открывает интерфейс, при false закрывает
     /// </summary>
@@ -94,10 +101,37 @@ public class GeneralGameUi : MonoBehaviour
         winScreen.SetActive(false);
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
     }
+
+    
+    public void StartLoadAnimation(bool right)
+    {
+        if(right)
+            loadScreen.fillOrigin = (int)Image.OriginHorizontal.Right;
+        else
+            loadScreen.fillOrigin = (int)Image.OriginHorizontal.Left;
+        loadScreen.fillAmount = 0;
+        StartCoroutine(LoadAnimation(right));
+    }
+    IEnumerator LoadAnimation(bool right)
+    {
+        float time = 0.1f;
+        int countIteration = 60;
+        for (int i = 0; i <= countIteration; i++)
+        {
+            if(right)
+                loadScreen.fillAmount = (1 - (float)i / countIteration);
+            else
+                loadScreen.fillAmount = (float)i / countIteration;
+            yield return null;//new WaitForSeconds(time / countIteration);
+        }
+        onLoadAnimationEnd.Invoke();
+    }
+
     public UnityEvent OnGameRestart { get => onGameRestart; set => onGameRestart = value; }
     public UnityEvent OnExit { get => onExit; set => onExit = value; }
     public UnityEvent OnOpenUI { get => onOpenUI; set => onOpenUI = value; }
     public UnityEvent OnCloseUI { get => onCloseUI; set => onCloseUI = value; }
+    public UnityEvent OnLoadAnimationEnd { get => onLoadAnimationEnd; set => onLoadAnimationEnd = value; }
 
     public void RestartGame()
     {
