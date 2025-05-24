@@ -19,6 +19,6 @@ MonoBehaviour:
   - bullet: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}
     atkSpeed: 1
     position: {x: 0, y: 0}
-  hp: 30
+  hp: 10
   speed: 0
   AtkSpeed: 2

@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.GeneralGame.Entities.Creatures.Environment;
 using Assets.Scripts.GeneralGame.Entities.Enemy;
-using System;
+using Assets.Scripts.Accessory;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -54,27 +54,39 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         {
             this.renderer = renderer;
         }
+
+        UnityEvent waveOverTime = new UnityEvent();
+        public const int WaveTime = 10;
+        Timer timerWave = TimeManager.Instance.CreateTimer(WaveTime);
+
+        public float CurrentWaveTime => timerWave.DeltaTime;
+        public UnityEvent WaveOverTime { get => waveOverTime; set => waveOverTime = value; }
+
         public void Update()
         {
             weatherSystem.Update();
             enemyManager.Update();
+            if (timerWave.IsTime)
+            {
+                WaveOverTime.Invoke();                
+            }
             if(enemyManager.CountEnemies == 0)
             {
                 var spawners = levels[currentLevel].GetWaveSpawners();
                 if (spawners != null)
+                {
                     enemyManager.CreateEnemyWave(spawners);
+                    timerWave.Reset();
+                }
                 else
                 {
                     currentLevel++;
-                    if(currentLevel >= levels.Count)
+                    if (currentLevel >= levels.Count)
                     {
                         CompleteGame.Invoke();
                         return;
                     }
-
                     OnLevelComplete.Invoke();
-
-
                     //OnLevelStart.Invoke();
                 }
             }

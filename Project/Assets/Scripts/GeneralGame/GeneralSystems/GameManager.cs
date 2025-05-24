@@ -3,8 +3,10 @@ using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.Player;
 using MyTypes;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
@@ -69,7 +71,25 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 SceneManager.LoadScene("StartScreen");
             });
 
+            //Счетчик фпс
+            pauseUi.CreateTextOutput((textWriter) => 
+            {
+                return ((int)(1 / Time.deltaTime)).ToString(); 
+            },
+            1,new Vector2(360,200),new Vector2(70,32));
 
+            //Счетчик времени
+            pauseUi.CreateTextOutput((textWriter) => {
+                var result = string.Format($"{{0:f2}}", levelSystem.CurrentWaveTime);
+                if(levelSystem.CurrentWaveTime / LevelSystem.WaveTime > 0.7f)
+                    textWriter.TextMeshProUGUI.color = Color.red;
+                else
+                    textWriter.TextMeshProUGUI.color = Color.white;
+                return result;
+            },
+            0, new Vector2(0, 200), new Vector2(200,50));
+
+            //События при зарешнеии/загрузке уровня
             levelSystem.OnLevelComplete.AddListener(()=> {
                 PauseGame();
                 pauseUi.OnLoadAnimationEnd.AddListener(() =>
@@ -82,7 +102,6 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
                 pauseUi.StartLoadAnimation(false);
             });
-
             levelSystem.OnLevelStart.AddListener(() => {    
                 pauseUi.OnLoadAnimationEnd.AddListener(() =>
                 {
@@ -90,8 +109,11 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                     pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
                 });
                 pauseUi.StartLoadAnimation(true);
-            });           
-            
+            });
+            //
+
+            levelSystem.WaveOverTime.AddListener(GameOver);
+
         }        
 
 
@@ -101,14 +123,15 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         {
             player = new Player(config.PlayerConfig);
             player.Position = config.StartPosition;
+            player.OnDeath.AddListener(GameOver);
+        }
 
-            player.OnDeath.AddListener(() =>
-            {
-                player.Destroy();
-                pauseUi.IsOpen = true;
-                pauseUi.OpenDeathScreen();
-                uiInput.OnWownPauseExit.RemoveAllListeners();
-            });
+        private void GameOver()
+        {
+            player.Destroy();
+            pauseUi.IsOpen = true;
+            pauseUi.OpenDeathScreen();
+            uiInput.OnWownPauseExit.RemoveAllListeners();
         }
 
         private void StartGame()

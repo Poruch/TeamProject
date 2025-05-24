@@ -1,16 +1,21 @@
+using Assets.Scripts.GeneralGame;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using Assets.Scripts.Accessory;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
+using Assets.Scripts.Interface.GeneralGame;
+using System.Diagnostics;
 
 public class GeneralGameUi : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     GameObject pauseMenu;
-
+    
     //События при открытии и закрытии интерфейса паузы
     UnityEvent onOpenUI = new UnityEvent();
     UnityEvent onCloseUI = new UnityEvent();
@@ -66,7 +71,38 @@ public class GeneralGameUi : MonoBehaviour
 
         CloseDeathScreen();
         ClosePauseMenu();
+        loadScreen.gameObject.SetActive(false);
     }
+
+
+    List<TextWriter> texts = new List<TextWriter>();
+    [SerializeField]
+    GameObject textInput;
+    public void CreateTextOutput(Func<TextWriter, string> output,int time, Vector2 coords, Vector2 size)
+    {
+        GameObject gameObject = Instantiate(textInput, Vector2.zero,Quaternion.identity);
+        gameObject.transform.SetParent(transform, false);
+        gameObject.transform.SetSiblingIndex(0);
+        RectTransform pos = gameObject.GetComponent<RectTransform>();
+        pos.sizeDelta = size;
+        pos.anchoredPosition = coords;
+        var writer = gameObject.GetComponent<TextWriter>();
+        writer.Instantiate(output,TimeManager.Instance.CreateTimer(time));
+        texts.Add(writer);
+    }
+
+    //[SerializeField]
+    //TextMeshProUGUI fps;
+    //Timer timer = TimeManager.Instance.CreateTimer(1,true);
+    //private void Update()
+    //{
+    //    if(timer.IsTime)
+    //        fps.text = ((int)(1 / Time.deltaTime)).ToString();
+    //}
+
+    //[SerializeField]
+    //TextMeshProUGUI waveTime;
+
 
 
     UnityEvent onGameRestart = new UnityEvent();
@@ -83,29 +119,34 @@ public class GeneralGameUi : MonoBehaviour
     public void OpenDeathScreen()
     {
         deathScreen.SetActive(true);
+        texts.ForEach(x => x.Disable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
     }
     public void CloseDeathScreen()
     {
         deathScreen.SetActive(false);
+        texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
     }
 
     public void OpenWinScreen()
     {
         winScreen.SetActive(true);
+        texts.ForEach(x => x.Disable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -150, 0);
     }
     public void CloseWinScreen()
     {
         winScreen.SetActive(false);
+        texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
     }
 
     
     public void StartLoadAnimation(bool right)
     {
-        if(right)
+        loadScreen.gameObject.SetActive(true);
+        if (right)
             loadScreen.fillOrigin = (int)Image.OriginHorizontal.Right;
         else
             loadScreen.fillOrigin = (int)Image.OriginHorizontal.Left;
@@ -114,8 +155,8 @@ public class GeneralGameUi : MonoBehaviour
     }
     IEnumerator LoadAnimation(bool right)
     {
-        float time = 0.1f;
-        int countIteration = 60;
+        //float time = 0.1f;
+        int countIteration = 100;
         for (int i = 0; i <= countIteration; i++)
         {
             if(right)
@@ -124,6 +165,7 @@ public class GeneralGameUi : MonoBehaviour
                 loadScreen.fillAmount = (float)i / countIteration;
             yield return null;//new WaitForSeconds(time / countIteration);
         }
+        loadScreen.gameObject.SetActive(false);
         onLoadAnimationEnd.Invoke();
     }
 
