@@ -433,7 +433,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/GeneralGame/GeneralSystems
+    - Assets/Scripts
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -443,16 +443,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/GeneralGame/GeneralSystems
+  - Assets/Resources/Textures/Enemies
   m_LastFoldersGridSize: -1
   m_LastProjectPath: F:\Unity\prodgects\TeamProject\Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 175}
-    m_SelectedIDs: fcb50000
-    m_LastClickedID: 46588
-    m_ExpandedIDs: 000000001ab400001cb400001eb4000020b4000022b4000024b4000026b4000028b40000
+    scrollPos: {x: 0, y: 171.5}
+    m_SelectedIDs: 9eb40000
+    m_LastClickedID: 46238
+    m_ExpandedIDs: 000000001eb4000020b4000022b4000024b4000026b4000028b400002ab400002cb400002eb40000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -509,8 +509,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000f4b20000acaf000088b3000074c9000096b80000d2b10000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000f4b20000acaf000088b3000074c9000096b80000d2b100002cb2000024bb0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -535,7 +535,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 9.5}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
