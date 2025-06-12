@@ -4,9 +4,9 @@ using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.Player;
 using MyTypes;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
@@ -14,8 +14,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     /// Класс с основным игровым циклом и основными игровыми объектами
     /// </summary>
     internal class GameManager : MonoBehaviour
-    {
-        
+    {       
         //
         [SerializeField]
         GeneralGameUi pauseUi = null;        
@@ -46,6 +45,12 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             uiInput = new UiInput(pauseUi);
 
             levelSystem = new LevelSystem(config.LevelConfig);
+            levelSystem.EnemyManager.OnCreateEnemy.AddListener((Enemy e) => 
+            {
+                var filler = pauseUi.CreateEnemyHeathBar(e.EnemyGameObject);
+                e.OnHPChange.AddListener(filler.OnValueChange);
+                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler.gameObject); });
+            });
             levelSystem.SetBackGroundRenderer(backGround.GetComponent<SpriteRenderer>());
             levelSystem.CompleteGame.AddListener(() =>
             {
@@ -72,47 +77,25 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             });
 
             //Счетчик фпс
-            pauseUi.CreateTextOutput((textWriter) => 
-            {
-                return ((int)(1 / Time.deltaTime)).ToString(); 
-            },
-            1,new Vector2(360,200),new Vector2(70,32));
+            //pauseUi.CreateTextOutput((textWriter) => 
+            //{
+            //    return ((int)(1 / Time.deltaTime)).ToString(); 
+            //},
+            //1,new Vector2(360,200),new Vector2(70,32));
 
             //Счетчик времени
             pauseUi.CreateTextOutput((textWriter) => {
                 var result = string.Format($"{{0:f2}}", levelSystem.CurrentWaveTime);
-                if(levelSystem.CurrentWaveTime / LevelSystem.WaveTime > 0.7f)
+                textWriter.TextMeshProUGUI.fontSize = 20;
+                if (levelSystem.CurrentWaveTime / LevelSystem.WaveTime > 0.7f)
                     textWriter.TextMeshProUGUI.color = Color.red;
                 else
                     textWriter.TextMeshProUGUI.color = Color.white;
                 return result;
             },
-            0, new Vector2(0, 200), new Vector2(200,50));
+            0, new Vector2(0, 190), new Vector2(200 * 0.75f, 50 * 0.75f));            
 
-            //События при зарешнеии/загрузке уровня
-            levelSystem.OnLevelComplete.AddListener(()=> {
-                PauseGame();
-                pauseUi.OnLoadAnimationEnd.AddListener(() =>
-                {
-                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
-                    levelSystem.OnLevelStart.Invoke();
-                    player.Position = config.StartPosition;
-                    Destroyer.Instance.DestroyAll();
-                });
-
-                pauseUi.StartLoadAnimation(false);
-            });
-            levelSystem.OnLevelStart.AddListener(() => {    
-                pauseUi.OnLoadAnimationEnd.AddListener(() =>
-                {
-                    ContinueGame();
-                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
-                });
-                pauseUi.StartLoadAnimation(true);
-            });
-            //
-
-            levelSystem.WaveOverTime.AddListener(GameOver);
+            
 
         }        
 
@@ -139,7 +122,38 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             Destroyer.Instance.DestroyAll();
             player.Destroy();
             CreatePlayer();
+            player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);
+            player.OnHPChange.AddListener(pauseUi.PlayerHeathBar.OnValueChange);
+            player.OnShieldChange.AddListener(pauseUi.PlayerShieldBar.OnValueChange);            
             levelSystem.Clear();
+
+
+            ///Не трогать этот кусок кода ради бога
+            //События при зарешнеии/загрузке уровня
+            levelSystem.OnLevelComplete.AddListener(() => {
+                PauseGame();
+                pauseUi.OnLoadAnimationEnd.AddListener(() =>
+                {
+                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
+                    levelSystem.OnLevelStart.Invoke(levelSystem.CurrentLevel);
+                    player.Position = config.StartPosition;
+                    Destroyer.Instance.DestroyAll();
+                });
+                pauseUi.StartLoadAnimation(false);
+            });
+            levelSystem.OnLevelStart.AddListener((int currentLevel) => {
+                pauseUi.OnLoadAnimationEnd.AddListener(() =>
+                {
+                    ContinueGame();
+                    pauseUi.OnLoadAnimationEnd.RemoveAllListeners();
+                });
+                pauseUi.StartLoadAnimation(true);
+                player.OnStartNewLevel(currentLevel);
+            });
+            player.OnStartNewLevel(0);
+            levelSystem.WaveOverTime.AddListener(GameOver);
+            //
+            pauseUi.ClearEnemyHealthBars();
             pauseUi.CloseDeathScreen();
             pauseUi.CloseWinScreen();
             pauseUi.IsOpen = false;

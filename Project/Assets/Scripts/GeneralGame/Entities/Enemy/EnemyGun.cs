@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using MyTypes;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                     PhysicsBullet move = GameObject.Instantiate(dot.Bullet, parent.transform.position + new Vector3(dot.Position.x, dot.Position.y), Quaternion.Euler(0, 0, 180)).GetComponent<PhysicsBullet>();
                     move.Speed = new PointStruct(10);
                     move.Dir = Vector2.left;
-                    //move.SetContact(3);
+                    Destroyer.Instance.Destroy(move.gameObject, TimeManager.Instance.CreateTimer(20 / move.Speed.MaxPoint));
                 }
             }
         }

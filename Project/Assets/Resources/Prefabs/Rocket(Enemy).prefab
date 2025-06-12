@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7870674047008071417}
   - component: {fileID: 8145282553259225245}
   - component: {fileID: 7779188777382671485}
-  - component: {fileID: 7964056000209100825}
+  - component: {fileID: 48497920668604122}
   m_Layer: 0
-  m_Name: Rocket 1
+  m_Name: Rocket(Enemy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.234375
---- !u!114 &7964056000209100825
+--- !u!114 &48497920668604122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,10 +162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8984210130473625433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f9fa625a098b04ea260f5af6623be1, type: 3}
+  m_Script: {fileID: 11500000, guid: 93c934092e7794943aabf1e5c6a79514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: {x: 0, y: 0}
+  dir: {x: -1, y: 0}
   speed:
     currentPoint: 1
   mask:

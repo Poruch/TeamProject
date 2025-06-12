@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 namespace Assets.Scripts.GeneralGame.Entities.Player
 {
@@ -58,7 +53,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public void AnimationCompleteHandler(string name)
         {
             
-            if(name == "DestroyShipAnimation")
+            if(name == "DestroyShipAnimation" && OnCompleteDeathAnimation != null)
             {
                 OnCompleteDeathAnimation.Invoke();
             }

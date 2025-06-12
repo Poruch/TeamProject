@@ -4,6 +4,7 @@ using MyTypes;
 using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame;
+using Assets.Scripts.GeneralGame.Entities.Projectiles;
 
 /// <summary>
 /// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
@@ -14,7 +15,7 @@ public class PhysicsBullet : Moveable
     LayerMask mask;
 
     [SerializeField]
-    float shellRadius = 0.01f;
+    protected float shellRadius = 0.01f;
 
     [SerializeField]
     protected ContactFilter2D contactFilter;
@@ -24,11 +25,11 @@ public class PhysicsBullet : Moveable
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
     protected Vector2 lastDelta = Vector2.zero;
+
     protected override void AddAwake()
     {
         contactFilter.SetLayerMask(mask);
-        contactFilter.useLayerMask = true;
-        Destroyer.Instance.Destroy(gameObject,TimeManager.Instance.CreateTimer(20 / Speed.MaxPoint));        
+        contactFilter.useLayerMask = true;        
     }
 
 
@@ -54,9 +55,9 @@ public class PhysicsBullet : Moveable
     {
         contactFilter.SetLayerMask(newMask);
     }
+
     protected virtual void OnCollide(GameObject otherGameObject)
     {
-        Destroyer.Instance.Destroy(gameObject);
+        
     }
-    
 }

@@ -20,22 +20,42 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         //Действие при движении
         UnityEvent inMove = new UnityEvent();
 
+        UnityEvent afterMove = new UnityEvent();
+
+
+        UnityEvent onChangeWeapon = new UnityEvent();
+
         PlayerControls control;
         public PlayerInput()
         {
             control = new PlayerControls();
             control.Enable();
-            control.Movement.Move.performed += MovePerformed;            
+            control.Movement.Move.performed += MovePerformed;
+            control.Iteract.ChangeWeapon.performed += ChangeWeaponPerformed;
+        }
+
+        public void Dispose()
+        {
+            control.Dispose();
+        }
+
+        public void SetEnable(bool isEnable)
+        {
+            if (isEnable)
+                control.Enable();
+            else
+                control.Disable();
+        }
+
+        private void ChangeWeaponPerformed(InputAction.CallbackContext obj)
+        {
+            OnChangeWeapon.Invoke();
         }
 
         private void MovePerformed(InputAction.CallbackContext obj)
         {
             OnStartMove.Invoke();
         }
-
-
-
-
 
         public Vector2 Direction
         {
@@ -48,6 +68,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public UnityEvent InAttack { get => inAttack; set => inAttack = value; }
         public UnityEvent AfterAttack { get => afterAttack; set => afterAttack = value; }
         public UnityEvent InMove { get => inMove; set => inMove = value; }
+        public UnityEvent OnChangeWeapon { get => onChangeWeapon; set => onChangeWeapon = value; }
 
         bool isSwitch = false;
         public void Update()

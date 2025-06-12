@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 48497920668604122, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+      propertyPath: dir.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 48497920668604122, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+      propertyPath: mask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 2489793915678708998, guid: c0444599123cf4848bd479c6146ac678, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2482014
@@ -54,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
       propertyPath: m_Name
-      value: Rocket
+      value: Rocket(Player)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

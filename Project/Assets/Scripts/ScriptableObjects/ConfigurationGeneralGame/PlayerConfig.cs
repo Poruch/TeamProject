@@ -1,12 +1,25 @@
 
 using UnityEngine.Animations;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Scriptable Objects/PlayerConfig")]
 public class PlayerConfig : ScriptableObject
 {
+    [Serializable]
+    public class BulletPack
+    {
+        [SerializeField]
+        GameObject bullet;
+        [SerializeField]
+        int levelReg = 0;
+
+        public GameObject Bullet { get => bullet; set => bullet = value; }
+        public int LevelReg { get => levelReg; set => levelReg = value; }
+    }
+
     [SerializeField]
-    GameObject bullet;
+    BulletPack[] bullets;
 
     [SerializeField]
     Sprite sprite;
@@ -18,7 +31,7 @@ public class PlayerConfig : ScriptableObject
     [SerializeField] float speed;
     [SerializeField] float atkSpeed;
 
-    public GameObject Bullet { get => bullet; }
+    public BulletPack[] Bullets { get => bullets; }
     public float Hp { get => hp; set => hp = value; }
     public float Speed { get => speed; set => speed = value; }
     public float AtkSpeed { get => atkSpeed; set => atkSpeed = value; }

@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using MyTypes;
 using UnityEngine.Events;
 using Assets.Scripts.Accessory;
@@ -27,24 +26,44 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             get => isLife;
         }
 
-        UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(100);
 
+
+        UnityEvent onDeath = new UnityEvent();
+        PointStruct hp = new PointStruct(30);
+        Timer shieldTimer = TimeManager.Instance.CreateTimer(1);
+        PointStruct shield = new PointStruct(10);
         
+
+        UnityEvent<float> onHPChange = new UnityEvent<float>();
+        UnityEvent<float> onShieldChange = new UnityEvent<float>();
         public Vector2 Position
         {
             get => playerEntity.Position;
             set => playerEntity.Position = value;
         }
-        public UnityEvent OnDeath { get => onDeath; set => onDeath = value; }
+        public UnityEvent OnDeath { get => onDeath; }
+        public UnityEvent<GameObject> OnChangeWeapon { get => onChangeWeapon;  }
+        public UnityEvent<float> OnHPChange { get => onHPChange; }
+        public UnityEvent<float> OnShieldChange { get => onShieldChange; }
 
         // Системы персонажа
         GameObject playerGameObject;
         PlayerEntity playerEntity;
         PlayerInput playerInput;        
         PlayerAnimationController playerAnimationController;
-        Gun gun;
+        PlayerGun gun;
 
+
+        public void OnStartNewLevel(int levelID)
+        {
+            gun.UpdateBullets(levelID);
+        }
+
+        UnityEvent<GameObject> onChangeWeapon = new();
+        public void ChangeWeapon()
+        {
+            OnChangeWeapon.Invoke(gun.ChangeWeapon());
+        }
         public Player(PlayerConfig config)
         {
             ///
@@ -61,7 +80,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
             // player physics
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
-            playerEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
+            playerEntity.OnCollide.AddListener(() => 
+            { 
+                if(shield.isEmpty())
+                    hp.Reduce(1);
+                else
+                    shield.Reduce(3);
+            });
             playerEntity.Speed = new PointStruct(config.Speed);
 
 
@@ -69,10 +94,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerInput = new PlayerInput();
 
             // Gunning
-            gun = new Gun(playerGameObject, config.Bullet, 0.05f);
+            gun = new PlayerGun(playerGameObject, config.Bullets, 0.05f);
             playerInput.OnAttack.AddListener(gun.StartAttack);
             playerInput.InAttack.AddListener(gun.ProcessingAttack);
             playerInput.AfterAttack.AddListener(gun.StopAttack);
+            playerInput.OnChangeWeapon.AddListener(ChangeWeapon);
             //
 
             // Move methods
@@ -90,19 +116,24 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             });
             //
 
-            hp.OnEmpty.AddListener(() => IsLife = false);            
+            hp.OnEmpty.AddListener(() => IsLife = false);
+            hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(hp.GetRatio()); });
+            shield.OnValueChange.AddListener((float current, float delta) => { OnShieldChange.Invoke(shield.GetRatio()); });
         }
-        
+
         /// <summary>
         /// Действия который происходят каждый кадр
         /// </summary>
         public void Update()
         {
-            playerInput.Update();            
+            playerInput.Update();
+            if(shieldTimer.IsTime)
+                shield.Increase(2);
         }
         public void Destroy()
         {
             Destroyer.Instance.Destroy(playerGameObject);
+            playerInput.Dispose();
         }
     }
 }

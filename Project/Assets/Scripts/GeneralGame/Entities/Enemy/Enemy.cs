@@ -30,7 +30,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             get => enemyEntity.Position;
             set => enemyEntity.Position = value;
         }
+
+        UnityEvent<float> onHPChange = new UnityEvent<float>();
         public UnityEvent OnDeath { get => onDeath; set => onDeath = value; }
+        public UnityEvent<float> OnHPChange { get => onHPChange; set => onHPChange = value; }
+        public GameObject EnemyGameObject { get => enemyGameObject; private set => enemyGameObject = value; }
 
         // Системы врага
         SpriteRenderer spriteRenderer;        
@@ -43,11 +47,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         {
             hp = new PointStruct(config.Hp);
 
-            enemyGameObject = new GameObject(name);
-            enemyGameObject.layer = 6;
-            enemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+            EnemyGameObject = new GameObject(name);
+            EnemyGameObject.layer = 6;
+            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
 
-            enemyEntity = enemyGameObject.AddComponent<EnemyEntity>();
+            enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
             enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
             enemyEntity.Speed = new PointStruct(config.Speed);
 
@@ -56,13 +60,14 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             enemyEntity.Position.Normalize();
 
             hp.OnEmpty.AddListener(() => IsLife = false);
+            hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(hp.GetRatio()); });
 
             enemyController = new EnemyController(enemyEntity);
 
-            spriteRenderer = enemyGameObject.AddComponent<SpriteRenderer>();
+            spriteRenderer = EnemyGameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = config.Sprite;
 
-            enemyGun = new EnemyGun(enemyGameObject, config.GunDots);
+            enemyGun = new EnemyGun(EnemyGameObject, config.GunDots);
         }
 
         /// <summary>
@@ -77,7 +82,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         public void Destroy()
         {
-            Destroyer.Instance.Destroy(enemyGameObject);
+            Destroyer.Instance.Destroy(EnemyGameObject);
         }
     }
 }

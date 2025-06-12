@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.LevelControls;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
@@ -25,6 +26,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         
         public int CountEnemies => enemies.Count;
 
+        public UnityEvent<Enemy> OnCreateEnemy { get => onCreateEnemy; set => onCreateEnemy = value; }
+
 
         /// <summary>
         /// Add new type enemy which can be created soon
@@ -42,6 +45,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             }
         }
 
+
+        UnityEvent<Enemy> onCreateEnemy = new UnityEvent<Enemy>();
         /// <summary>
         /// Create enemy with key-name
         /// </summary>
@@ -56,6 +61,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             Enemy newEnemy = new Enemy(enemiesBlueprints[name], position, individualName);
             enemies.Add(individualName, newEnemy);
             newEnemy.OnDeath.AddListener(() => DestroyEnemy(individualName));
+            OnCreateEnemy.Invoke(newEnemy);
             return newEnemy;
         }
         private Enemy CreateEnemyByLevel(int enemyLevel, Vector2 position)

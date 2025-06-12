@@ -14,7 +14,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         List<Level> levels;
         UnityEvent completeGame = new UnityEvent();
         UnityEvent onLevelComplete = new UnityEvent();
-        private UnityEvent onLevelStart = new UnityEvent();
+        private UnityEvent<int> onLevelStart = new UnityEvent<int>();
 
         int currentLevel = 0; 
 
@@ -24,23 +24,29 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         public LevelSystem(LevelConfig levelConfig)
         {
-            enemyManager = new EnemyManager();
+            EnemyManager = new EnemyManager();
             weatherSystem = new WeatherSystem();
             foreach (EnemyConfig config in levelConfig.Enemies)
             {
-                enemyManager.AddEnemy(config.name, config);
+                EnemyManager.AddEnemy(config.name, config);
             }
             levels = new List<Level>(levelConfig.Levels);
-            currentLevel = 0;
+            CurrentLevel = 0;            
         }
         public void Clear()
         {
-            enemyManager.DestroyAll();
-            currentLevel = 0;
-            levels[currentLevel].SetActive(renderer);
-            OnLevelStart.AddListener(() =>{
+            EnemyManager.DestroyAll();
+            CurrentLevel = 0;
+
+            levels[CurrentLevel].SetActive(renderer);
+
+            OnLevelStart.RemoveAllListeners();
+            OnLevelComplete.RemoveAllListeners();
+            WaveOverTime.RemoveAllListeners();
+
+            OnLevelStart.AddListener((int currentLevel) => {
                 levels[currentLevel].SetActive(renderer);
-                enemyManager.DestroyAll();
+                EnemyManager.DestroyAll();
             });
         }
 
@@ -48,7 +54,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         public UnityEvent CompleteGame { get => completeGame; set => completeGame = value; }
         public UnityEvent OnLevelComplete { get => onLevelComplete; set => onLevelComplete = value; }
-        public UnityEvent OnLevelStart { get => onLevelStart; set => onLevelStart = value; }
+        public UnityEvent<int> OnLevelStart { get => onLevelStart; set => onLevelStart = value; }
 
         public void SetBackGroundRenderer(SpriteRenderer renderer)
         {
@@ -61,33 +67,35 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         public float CurrentWaveTime => timerWave.DeltaTime;
         public UnityEvent WaveOverTime { get => waveOverTime; set => waveOverTime = value; }
+        public int CurrentLevel { get => currentLevel; private set => currentLevel = value; }
+        internal EnemyManager EnemyManager { get => enemyManager; set => enemyManager = value; }
 
         public void Update()
         {
             weatherSystem.Update();
-            enemyManager.Update();
+            EnemyManager.Update();
             if (timerWave.IsTime)
             {
                 WaveOverTime.Invoke();                
             }
-            if(enemyManager.CountEnemies == 0)
+            if(EnemyManager.CountEnemies == 0)
             {
-                var spawners = levels[currentLevel].GetWaveSpawners();
+                var spawners = levels[CurrentLevel].GetWaveSpawners();
                 if (spawners != null)
                 {
-                    enemyManager.CreateEnemyWave(spawners);
+                    EnemyManager.CreateEnemyWave(spawners);
                     timerWave.Reset();
                 }
                 else
                 {
-                    currentLevel++;
-                    if (currentLevel >= levels.Count)
+                    CurrentLevel++;
+                    if (CurrentLevel >= levels.Count)
                     {
                         CompleteGame.Invoke();
                         return;
                     }
                     OnLevelComplete.Invoke();
-                    //OnLevelStart.Invoke();
+                    //OnLevelStart.Invoke(CurrentLevel);
                 }
             }
         }

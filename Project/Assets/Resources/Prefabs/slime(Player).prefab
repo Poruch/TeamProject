@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7870674047008071417}
   - component: {fileID: 8145282553259225245}
   - component: {fileID: 7779188777382671485}
-  - component: {fileID: 4513586517592726821}
+  - component: {fileID: 1803535335312935492}
   m_Layer: 0
-  m_Name: slime
+  m_Name: slime(Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.234375
---- !u!114 &4513586517592726821
+--- !u!114 &1803535335312935492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,12 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c934092e7794943aabf1e5c6a79514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: {x: -1, y: 0}
+  dir: {x: 1, y: 0}
   speed:
     currentPoint: 1
   mask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
   shellRadius: 0.01
   contactFilter:
     useTriggers: 0

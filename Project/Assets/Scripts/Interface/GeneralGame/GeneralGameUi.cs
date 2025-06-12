@@ -9,13 +9,15 @@ using UnityEngine.UI;
 using System;
 using Assets.Scripts.Interface.GeneralGame;
 using System.Diagnostics;
+using System.Linq;
 
 public class GeneralGameUi : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     GameObject pauseMenu;
-    
+    [SerializeField]
+    GameObject gameMenu;
     //События при открытии и закрытии интерфейса паузы
     UnityEvent onOpenUI = new UnityEvent();
     UnityEvent onCloseUI = new UnityEvent();
@@ -55,10 +57,12 @@ public class GeneralGameUi : MonoBehaviour
     public void OpenPauseMenu()
     {
         pauseMenu.SetActive(true);
+        gameMenu.SetActive(false);
     }
     public void ClosePauseMenu()
     {
         pauseMenu.SetActive(false);
+        gameMenu.SetActive(true);
     }
     List<Button> pauseButtons;
     void Start()
@@ -68,6 +72,8 @@ public class GeneralGameUi : MonoBehaviour
         pauseButtons[0].onClick.AddListener(RestartGame);
         pauseButtons[2].onClick.AddListener(ExitGame);
         pauseButtons[3].onClick.AddListener(OpenManual);
+
+
 
         CloseDeathScreen();
         ClosePauseMenu();
@@ -116,17 +122,58 @@ public class GeneralGameUi : MonoBehaviour
         proc.Start();
         IsOpen = true;
     }
+
+    [SerializeField]
+    Image weaponSprite = null;
+    public void SetWeaponSprite(GameObject gameObject)
+    {
+        weaponSprite.sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+    }
+
+
+    [SerializeField]
+    ImageFiller playerHeathBar = null;
+    public ImageFiller PlayerHeathBar => playerHeathBar;
+    [SerializeField]
+    ImageFiller playerShieldBar = null;
+    public ImageFiller PlayerShieldBar => playerShieldBar;
     public void OpenDeathScreen()
     {
         deathScreen.SetActive(true);
         texts.ForEach(x => x.Disable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+        ClearEnemyHealthBars();
+        IsOpen = true;
+    }
+
+
+    List<GameObject> enemyHealthBars = new List<GameObject>();
+    [SerializeField]
+    GameObject enemyHealth;
+    public ImageFiller CreateEnemyHeathBar(GameObject enemy)
+    {
+        var gameObject = Instantiate(enemyHealth, this.gameObject.transform);
+        gameObject.transform.SetParent(transform, false);
+        gameObject.transform.SetSiblingIndex(0);
+        gameObject.GetComponent<FolowObject>().Following = enemy;
+        enemyHealthBars.Add(gameObject);
+        return gameObject.GetComponent <ImageFiller>();
     }
     public void CloseDeathScreen()
     {
         deathScreen.SetActive(false);
         texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+        IsOpen = false;
+    }
+
+    public void ClearEnemyHealthBars()
+    {
+        foreach (GameObject enemy in enemyHealthBars.Where(x => x != null))
+        {
+            Destroyer.Instance.Destroy(enemy);
+        }
+        enemyHealthBars.Clear();
     }
 
     public void OpenWinScreen()
@@ -134,12 +181,15 @@ public class GeneralGameUi : MonoBehaviour
         winScreen.SetActive(true);
         texts.ForEach(x => x.Disable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -150, 0);
+        ClearEnemyHealthBars();
+        IsOpen = true;
     }
     public void CloseWinScreen()
     {
         winScreen.SetActive(false);
         texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+        IsOpen = false;
     }
 
     
