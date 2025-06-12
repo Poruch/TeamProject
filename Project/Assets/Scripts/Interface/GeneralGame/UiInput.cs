@@ -18,7 +18,7 @@ namespace Assets.Scripts.GeneralGame
 
 
         public UnityEvent OnDownPause { get => onDownPause; set => onDownPause = value; }
-        public UnityEvent OnWownPauseExit { get => onDownPauseExit; set => onDownPauseExit = value; }
+        public UnityEvent OnDownPauseExit { get => onDownPauseExit; set => onDownPauseExit = value; }
 
         public UiInput(GeneralGameUi general)
         {
@@ -49,7 +49,7 @@ namespace Assets.Scripts.GeneralGame
             }
             else
             {
-                OnWownPauseExit.Invoke();
+                OnDownPauseExit.Invoke();
                 generalGameUi.IsOpen = false;
             }         
         }

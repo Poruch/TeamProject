@@ -622,7 +622,27 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI (carve.photos)_0: 6198551520082572528
+      UI (carve.photos)_1: 178159672912903960
+      UI (carve.photos)_10: 7668606315286538053
+      UI (carve.photos)_11: 5699706675368293671
+      UI (carve.photos)_12: -8936068444119674316
+      UI (carve.photos)_13: -9159854602683960308
+      UI (carve.photos)_14: 5197225232613780159
+      UI (carve.photos)_15: -7987078351254844970
+      UI (carve.photos)_16: -3029390295669118991
+      UI (carve.photos)_17: 3534910579726451835
+      UI (carve.photos)_18: -2926985716837151566
+      UI (carve.photos)_19: -5707642067332512464
+      UI (carve.photos)_2: -8233766554297553360
+      UI (carve.photos)_3: 5601265822893852557
+      UI (carve.photos)_4: 281900156122265128
+      UI (carve.photos)_5: 3474923698348936670
+      UI (carve.photos)_6: -6388476908293521979
+      UI (carve.photos)_7: 4332074932525642380
+      UI (carve.photos)_8: -8235171551558511113
+      UI (carve.photos)_9: 5073951422028042660
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

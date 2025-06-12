@@ -52,7 +52,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 player.Destroy();
                 pauseUi.IsOpen = true;
                 pauseUi.OpenWinScreen();
-                uiInput.OnWownPauseExit.RemoveAllListeners();
+                uiInput.OnDownPauseExit.RemoveAllListeners();
             });
 
             
@@ -131,7 +131,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             player.Destroy();
             pauseUi.IsOpen = true;
             pauseUi.OpenDeathScreen();
-            uiInput.OnWownPauseExit.RemoveAllListeners();
+            uiInput.OnDownPauseExit.RemoveAllListeners();
         }
 
         private void StartGame()
