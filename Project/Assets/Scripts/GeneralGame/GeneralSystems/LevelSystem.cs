@@ -72,7 +72,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         }
 
         UnityEvent waveOverTime = new UnityEvent();
-        public const int WaveTime = 10;
+        public const int WaveTime = 60;
         Timer timerWave = TimeManager.Instance.CreateTimer(WaveTime);
 
         public float CurrentWaveTime => timerWave.DeltaTime;

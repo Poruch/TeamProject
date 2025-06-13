@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb51b56cfe4b904eafde0c053eb4fd5, type: 3}
-  m_Name: DefaultEnemy
+  m_Name: Lincor
   m_EditorClassIdentifier: 
-  enemyName: Default
-  enemyLevel: 1
-  sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
+  enemyName: Lincor
+  enemyLevel: 3
+  sprite: {fileID: 1850078875523080360, guid: 4a8a98fa1b5d6e0438a5e847b7306214, type: 3}
+  angleSprite: 180
   gunDots:
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 2
+  - bullet: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}
+    atkSpeed: 5
     position: {x: 0, y: 0}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 10
+    atkSpeed: 3
     position: {x: 0, y: 2}
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 10
+    atkSpeed: 3
     position: {x: 0, y: -2}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 5
-    position: {x: 0, y: 3}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 5
-    position: {x: 0, y: -3}
-  hp: 100
+  - bullet: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
+    atkSpeed: 1
+    position: {x: 0, y: 4}
+  - bullet: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
+    atkSpeed: 1
+    position: {x: 0, y: -4}
+  hp: 200
   speed: 0
-  AtkSpeed: 2
+  AtkSpeed: 0

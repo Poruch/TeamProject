@@ -19,9 +19,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             
         }
 
-        
-    
-
         Vector2 lastPos = Vector2.zero;
         
         public UnityEvent OnCollide { get => onCollide; set => onCollide = value; }

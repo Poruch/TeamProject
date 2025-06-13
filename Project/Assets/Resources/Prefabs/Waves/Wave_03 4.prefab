@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711559a26415b849814cccc3f6e6ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 0
+  enemyLevel: 1
 --- !u!1 &3634951873404467477
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711559a26415b849814cccc3f6e6ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 0
+  enemyLevel: 1
 --- !u!1 &6558722684092217372
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7246134901403556065}
   m_Layer: 0
-  m_Name: Wave_03 1
+  m_Name: Wave_03 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711559a26415b849814cccc3f6e6ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 0
+  enemyLevel: 1
 --- !u!1 &8229412860813763892
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711559a26415b849814cccc3f6e6ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 1
+  enemyLevel: 3
 --- !u!1 &8817406845717816465
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,4 +260,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711559a26415b849814cccc3f6e6ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 0
+  enemyLevel: 1

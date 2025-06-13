@@ -29,7 +29,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             {
                 if (dot.Timer.IsTime)
                 {
-                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y),Vector2.left, Quaternion.Euler(0, 0, 180));                    
+                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y),Vector2.left, Quaternion.Euler(new Vector3(0, 0, 180)));                    
                     //PhysicsBullet move = GameObject.Instantiate(dot.Bullet.gameObject, parent.transform.position + new Vector3(dot.Position.x, dot.Position.y), Quaternion.Euler(0, 0, 180)).GetComponent<PhysicsBullet>();
                     //move.Speed = new PointStruct(10);
                     //move.Dir = Vector2.left;

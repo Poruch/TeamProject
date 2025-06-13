@@ -10,15 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb51b56cfe4b904eafde0c053eb4fd5, type: 3}
-  m_Name: DefaultEnemyBeam
+  m_Name: DefaultEnemy
   m_EditorClassIdentifier: 
   enemyName: Default
-  enemyLevel: 1
+  enemyLevel: 2
   sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
+  angleSprite: 90
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
     atkSpeed: 2
     position: {x: 0, y: 0}
+  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 10
+    position: {x: 0, y: 2}
+  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 10
+    position: {x: 0, y: -2}
+  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 5
+    position: {x: 0, y: 3}
+  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 5
+    position: {x: 0, y: -3}
   hp: 100
   speed: 0
   AtkSpeed: 2

@@ -64,7 +64,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
 
         bool isPause = false;
-        public void Awake()
+        public void Start()
         {
             CreatePlayer();
 
@@ -151,10 +151,11 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             player.Destroy();
             CreatePlayer();
 
-            player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);
-            
+            player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);            
             player.OnHPChange.AddListener(pauseUi.PlayerHeathBar.OnValueChange);
+            pauseUi.PlayerHeathBar.OnValueChange(1);
             player.OnShieldChange.AddListener(pauseUi.PlayerShieldBar.OnValueChange);
+            pauseUi.PlayerShieldBar.OnValueChange(1);
             levelSystem.Clear();
 
 

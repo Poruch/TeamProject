@@ -55,8 +55,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         private Enemy CreateEnemy(string name, Vector2 position)
         {
             if (!enemiesBlueprints.ContainsKey(name)) return null;
-            int num = countAllEnemies;
-            countAllEnemies++;
+            int num = countAllEnemies++;
             string individualName = name + $"_{num}";
             Enemy newEnemy = new Enemy(enemiesBlueprints[name], position, individualName);
             enemies.Add(individualName, newEnemy);

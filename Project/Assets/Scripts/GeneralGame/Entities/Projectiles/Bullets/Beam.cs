@@ -43,9 +43,10 @@ public class Beam : Bullet
 
     public Beam CreateBeam(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
     {
-        var beam = (Beam)Instantiate(gameObject, parent).GetComponent<PhysicsBullet>();
+        var beam = (Beam)Instantiate(gameObject, position,quaternion).GetComponent<PhysicsBullet>();
+        beam.transform.SetParent(parent);
         beam.transform.position = new Vector2(parent.position.x, parent.position.y) + position;
-        Destroyer.Instance.Destroy(beam.gameObject, lifeTimer);
+        Destroyer.Instance.Destroy(beam.gameObject, beam.lifeTimer);
         beam.Dir = direction;
         return beam;
     }
