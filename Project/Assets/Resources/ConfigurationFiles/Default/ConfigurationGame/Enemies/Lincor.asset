@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Lincor
   enemyLevel: 3
   sprite: {fileID: 1850078875523080360, guid: 4a8a98fa1b5d6e0438a5e847b7306214, type: 3}
+  deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 180
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}

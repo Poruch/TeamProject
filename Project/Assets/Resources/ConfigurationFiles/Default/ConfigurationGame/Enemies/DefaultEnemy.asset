@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Default
   enemyLevel: 2
   sprite: {fileID: 5416513392013817499, guid: a1ddb7eff2ffcbe47811e2e686c03d69, type: 3}
+  deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 90
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}

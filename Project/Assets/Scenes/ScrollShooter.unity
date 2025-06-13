@@ -7479,6 +7479,13 @@ MonoBehaviour:
   deathScreen: {fileID: 848992652}
   winScreen: {fileID: 518054842}
   loadScreen: {fileID: 1163733711}
+  textPrefab: {fileID: 7018770682354167336, guid: 810888323a434ab4da5df1d50351787a, type: 3}
+  targetCanvas: {fileID: 2057177621}
+  fadeInDuration: 0.3
+  displayDuration: 1.5
+  fadeOutDuration: 0.7
+  spawnOffset: {x: 0, y: 1}
+  moveSpeed: 30
   textInput: {fileID: 6567790498974124807, guid: 2d5a36d272f667d42ad9bcae8fa0ab51, type: 3}
   weaponSprite: {fileID: 860962864}
   playerHeathBar: {fileID: 1218678934}

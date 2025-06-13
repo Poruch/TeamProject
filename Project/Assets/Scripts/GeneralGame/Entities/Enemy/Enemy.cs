@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿
 using UnityEngine;
 using MyTypes;
-using NUnit.Framework;
 using UnityEngine.Events;
 using Assets.Scripts.Accessory;
+
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     /// <summary>
@@ -52,7 +52,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, config.AngleSprite);
 
             enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
-            enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });
+            enemyEntity.OnCollide.AddListener(() => {
+                Color color = new Color(Random.Range(0f, 1f), Random.Range(0, 1f), Random.Range(0, 1f),1f);
+                FloatingTextManager.Instance.CreateFloatingText("-1", Position, color);
+                hp.Reduce(1); 
+            });
             enemyEntity.Speed = new PointStruct(config.Speed);
 
             enemyEntity.Position = position;
@@ -60,6 +64,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             enemyEntity.Position.Normalize();
 
             hp.OnEmpty.AddListener(() => IsLife = false);
+            OnDeath.AddListener(() => { GameObject.Instantiate(config.DeathEffect, enemyGameObject.transform.position,Quaternion.identity); });
             hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(hp.GetRatio()); });
 
             enemyController = new EnemyController(enemyEntity);

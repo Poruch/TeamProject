@@ -31,6 +31,15 @@ public class GeneralGameUi : MonoBehaviour
 
     [SerializeField]
     Image loadScreen;
+    [Header("Floating text settings")]
+    [SerializeField] private GameObject textPrefab;
+    [SerializeField] private Canvas targetCanvas;
+    [SerializeField] private float fadeInDuration = 0.3f;
+    [SerializeField] private float displayDuration = 1.5f;
+    [SerializeField] private float fadeOutDuration = 0.7f;
+    [SerializeField] private Vector2 spawnOffset = new Vector2(0, 50f);
+    [SerializeField] private float moveSpeed = 30f;
+    FloatingTextManager floatingTextManager;
     /// <summary>
     /// При передаче true открывает интерфейс, при false закрывает
     /// </summary>
@@ -65,7 +74,7 @@ public class GeneralGameUi : MonoBehaviour
         gameMenu.SetActive(true);
     }
     List<Button> pauseButtons;
-    void Start()
+    void Awake()
     {
         pauseButtons = new List<Button>(pauseMenu.GetComponentsInChildren<Button>());
 
@@ -73,7 +82,7 @@ public class GeneralGameUi : MonoBehaviour
         pauseButtons[2].onClick.AddListener(ExitGame);
         pauseButtons[3].onClick.AddListener(OpenManual);
 
-
+        FloatingTextManager.Initialize(this,textPrefab,targetCanvas,fadeInDuration,displayDuration,fadeOutDuration,spawnOffset,moveSpeed);
 
         CloseDeathScreen();
         ClosePauseMenu();

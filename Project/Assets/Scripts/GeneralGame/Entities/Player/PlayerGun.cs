@@ -55,7 +55,16 @@ public class PlayerGun
     {
         for (int i = 0; i <=  Mathf.Min(currentLevel,allBullets.Length - 1); i++)
         {
-            currentBullets = currentBullets.Union(allBullets[i].Select(x => x.GetComponent<Bullet>())).ToList();
+            int y = 0;
+            foreach(var item in allBullets[i])
+            {
+                if (!currentBullets.Contains(item.GetComponent<Bullet>()))
+                {
+                    FloatingTextManager.Instance.CreateFloatingText("Доступно новое оружие - " + item.name, new Vector2(0, y), Color.magenta);
+                    y += 2;
+                    currentBullets.Add(item.GetComponent<Bullet>());
+                }
+            }
             cuurentGuns = currentBullets.Select(x => x.GetGun()).ToList();
         }
     }

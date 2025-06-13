@@ -15,6 +15,8 @@ MonoBehaviour:
   enemyName: Vraf
   enemyLevel: 0
   sprite: {fileID: -8450460449515856699, guid: 8fd734370e20d634dbd915c23b88500c, type: 3}
+  deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
+  angleSprite: 90
   gunDots:
   - bullet: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}
     atkSpeed: 1

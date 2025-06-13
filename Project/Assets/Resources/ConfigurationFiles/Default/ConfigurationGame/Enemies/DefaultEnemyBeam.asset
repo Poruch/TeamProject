@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: DefaultBeam
   enemyLevel: 1
   sprite: {fileID: 2773011542754946025, guid: d44b74dc8deb5cb4082cc517b0ae3e4f, type: 3}
+  deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 0
   gunDots:
   - bullet: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
