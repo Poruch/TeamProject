@@ -9,10 +9,22 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
 {
     public class Bullet : PhysicsBullet
     {
-        public virtual void Shot(Transform parent, Vector2 direction)
+        public abstract class Gun
         {
-            //return null;
+
+            public virtual Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
+            {
+                return null;
+            }
         }
+        public virtual Gun GetGun()
+        {
+            return null;
+        }
+        //public virtual Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
+        //{
+        //    return null;
+        //}
         public bool IsAfter = false;
         public bool IsBefore = true;
         public bool IsProcess = true;

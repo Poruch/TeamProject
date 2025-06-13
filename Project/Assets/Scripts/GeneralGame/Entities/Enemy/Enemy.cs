@@ -49,7 +49,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
             EnemyGameObject = new GameObject(name);
             EnemyGameObject.layer = 6;
-            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, config.AngleSprite);
 
             enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
             enemyEntity.OnCollide.AddListener(() => { hp.Reduce(1); });

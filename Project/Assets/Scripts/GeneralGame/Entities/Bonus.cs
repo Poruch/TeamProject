@@ -1,0 +1,66 @@
+﻿using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace Assets.Scripts.GeneralGame.Entities
+{
+    public class Bonus : Moveable
+    {
+        [SerializeField]
+        LayerMask mask;
+
+        [SerializeField]
+        protected float shellRadius = 0.01f;
+
+        [SerializeField]
+        protected ContactFilter2D contactFilter;
+
+
+        protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+        protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
+
+        protected Vector2 lastDelta = Vector2.zero;
+
+        protected override void AddAwake()
+        {
+            contactFilter.SetLayerMask(mask);
+            contactFilter.useLayerMask = true;
+            Speed = new MyTypes.PointStruct(4) ;
+        }
+
+
+        /// <summary>
+        /// Просчет столкновений
+        /// </summary>
+        protected override void AddFixedUpdate()
+        {
+            float distance = lastDelta.magnitude;
+            int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+            for (int i = 0; i < count; i++)
+            {
+                Entity doll = hitBuffer[i].collider.gameObject.GetComponent<Entity>();
+                if (doll != null)
+                {
+                    //doll.Collide();
+                    OnCollide(doll.gameObject);
+                }
+            }
+            lastDelta = move;
+        }
+        public void SetContact(LayerMask newMask)
+        {
+            contactFilter.SetLayerMask(newMask);
+        }
+
+        protected virtual void OnCollide(GameObject otherGameObject)
+        {
+            Destroyer.Instance.Destroy(gameObject);
+        }
+
+    }
+}

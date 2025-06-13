@@ -13,4 +13,5 @@ public class GeneralGameConfig : ScriptableObject
     public PlayerConfig PlayerConfig { get => playerConfig; set => playerConfig = value; }
     public Vector2 StartPosition { get => startPosition; set => startPosition = value; }
     public LevelConfig LevelConfig { get => levelConfig; set => levelConfig = value; }
+    
 }

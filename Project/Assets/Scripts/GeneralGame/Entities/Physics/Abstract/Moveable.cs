@@ -29,7 +29,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
         private void FixedUpdate()
         {
             if (IsPause) return;
-            move = Dir * Speed.currentPoint * 0.02f;
+            move = Dir * Speed.CurrentPoint * 0.02f;
             AddFixedUpdate();
             Position += move;
         }

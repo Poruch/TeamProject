@@ -11,7 +11,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         public WeatherSystem() 
         {
-            meteor = (GameObject)Resources.Load("Prefabs/Meteor");
+            meteor = (GameObject)Resources.Load("Prefabs/Meteor");            
             if (meteor == null)
                 Debug.Log("Error miss meteor prefab");
         }
@@ -32,6 +32,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             {
                 var met = GameObject.Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
                 met.Dir = Vector2.left;
+                Destroyer.Instance.Destroy(met.gameObject, TimeManager.Instance.CreateTimer(GameManager.AreaWidth / met.Speed.MaxPoint));
             }
         }
     }

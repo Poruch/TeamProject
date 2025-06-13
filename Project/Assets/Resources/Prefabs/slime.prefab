@@ -167,7 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dir: {x: -1, y: 0}
   speed:
-    currentPoint: 1
+    maxPoint: 10
+    cccurrentPoint: 10
   mask:
     serializedVersion: 2
     m_Bits: 8
@@ -186,4 +187,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  IsAfter: 0
+  IsBefore: 1
+  IsProcess: 1
   Explosion: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}

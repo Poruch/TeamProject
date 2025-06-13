@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
 using System;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         [SerializeField]
         GameObject bullet;
 
+        Bullet.Gun gun;
         [SerializeField]
         float atkSpeed;
 
@@ -21,19 +23,21 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         public GunDot(GameObject bullet, float atkSpeed, Vector2 position)
         {
-            Bullet = bullet;
+            this.bullet = bullet;
+            gun = this.bullet.GetComponent<Bullet>().GetGun();
             AtkSpeed = atkSpeed;
             Position = position;
             timer = TimeManager.Instance.CreateTimer(1/AtkSpeed);
         }
         public GunDot(GunDot gunDot) 
         {
-            Bullet = gunDot.Bullet;
+            bullet = gunDot.bullet;
+            gun = bullet.GetComponent<Bullet>().GetGun();
             AtkSpeed = gunDot.AtkSpeed;
             Position = gunDot.Position;
             timer = TimeManager.Instance.CreateTimer(gunDot.Timer);
         }
-        public GameObject Bullet { get => bullet; set => bullet = value; }
+        public Bullet.Gun Gun { get => gun; }
         public Timer Timer
         {
             get

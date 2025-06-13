@@ -14,7 +14,8 @@ public class EnemyConfig : ScriptableObject
     int enemyLevel;
     [SerializeField]
     Sprite sprite;
-
+    [SerializeField]
+    float angleSprite = 90;
     [SerializeField]
     List<GunDot> gunDots;    
 
@@ -27,6 +28,7 @@ public class EnemyConfig : ScriptableObject
     public string Name { get => enemyName; set => enemyName = value; }
     public float AtkSpeed1 { get => AtkSpeed; set => AtkSpeed = value; }
     public int EnemyLevel { get => enemyLevel; set => enemyLevel = value; }
+    public float AngleSprite { get => angleSprite; set => angleSprite = value; }
     internal List<GunDot> GunDots { get => gunDots; set => gunDots = value; }
 }
 

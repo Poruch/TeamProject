@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.Serialization;
-using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Events;
 namespace MyTypes
 {
@@ -13,14 +13,18 @@ namespace MyTypes
         public PointStruct(float maxPoint)
         {
             MaxPoint = maxPoint;
-            currentPoint = MaxPoint;
+            CurrentPoint = MaxPoint;
         }
         [NonSerialized]
         UnityEvent onEmpty = new UnityEvent(); 
         [NonSerialized]
         UnityEvent<float, float> onValueChange = new UnityEvent<float, float>();
-        public readonly float MaxPoint;
-        public float currentPoint;
+        [SerializeField]
+        float maxPoint = 0;
+        public float MaxPoint { get => maxPoint; private set => maxPoint= value; }
+        [SerializeField]
+        float cccurrentPoint = 0;
+        public float CurrentPoint { get => cccurrentPoint; private set => cccurrentPoint = value; }
 
         public UnityEvent OnEmpty { get => onEmpty; set => onEmpty = value; }
         public UnityEvent<float, float> OnValueChange { get => onValueChange; set => onValueChange = value; }
@@ -31,12 +35,12 @@ namespace MyTypes
         /// <param name="count"></param>
         public void Reduce(float count)
         {
-            float current = currentPoint;
-            currentPoint -= MathF.Abs(count);
-            OnValueChange.Invoke(currentPoint, currentPoint - current);
-            if (currentPoint <= 0)
+            float current = CurrentPoint;
+            CurrentPoint -= MathF.Abs(count);
+            OnValueChange.Invoke(CurrentPoint, CurrentPoint - current);
+            if (CurrentPoint <= 0)
             {
-                currentPoint = 0;
+                CurrentPoint = 0;
                 OnEmpty.Invoke();
             }
         }
@@ -47,27 +51,27 @@ namespace MyTypes
         /// <param name="count"></param>
         public void Increase(float count)
         {
-            float current = currentPoint;
-            currentPoint = Math.Clamp(currentPoint + MathF.Abs(count), 0, MaxPoint);
-            OnValueChange.Invoke(currentPoint,currentPoint - current);
+            float current = CurrentPoint;
+            CurrentPoint = Math.Clamp(CurrentPoint + MathF.Abs(count), 0, MaxPoint);
+            OnValueChange.Invoke(CurrentPoint,CurrentPoint - current);
         }
         public void Reset()
         {
-            currentPoint = 0;
-            OnValueChange.Invoke(0, currentPoint);
+            CurrentPoint = 0;
+            OnValueChange.Invoke(0, CurrentPoint);
         }
         public void Recover()
         {
-            OnValueChange.Invoke(MaxPoint - currentPoint, MaxPoint);
-            currentPoint = MaxPoint;
+            OnValueChange.Invoke(MaxPoint - CurrentPoint, MaxPoint);
+            CurrentPoint = MaxPoint;
         }
         public bool isEmpty()
         {
-            return currentPoint == 0;
+            return CurrentPoint == 0;
         }
         public float GetRatio()
         {
-            return currentPoint / MaxPoint;
+            return CurrentPoint / MaxPoint;
         }
 
 

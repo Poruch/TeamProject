@@ -13,21 +13,30 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles
         GameObject Explosion;
 
 
-        private void CreateRocket(Vector3 position)
+        private Bullet CreateRocket(Vector2 position, Vector2 direction, Quaternion quaternion)
         {
-            PhysicsBullet physicsBullet = GameObject.Instantiate(gameObject, position, Quaternion.identity)
-                 .GetComponent<PhysicsBullet>();
-            physicsBullet.Dir = Vector2.right;
-            physicsBullet.Speed = new PointStruct(20);
+            Bullet physicsBullet = GameObject.Instantiate(gameObject, position, quaternion)
+                 .GetComponent<Bullet>();
+            physicsBullet.Dir = direction;
+            //physicsBullet.Speed = new PointStruct(20);
             Destroyer.Instance.Destroy(physicsBullet.gameObject, TimeManager.Instance.CreateTimer(20 / physicsBullet.Speed.MaxPoint));
-            
+            return physicsBullet;
         }
-
-        public override void Shot(Transform parent, Vector2 direction)
+        class RocketLauncher : Gun
         {
-            CreateRocket(parent.position + Vector3.right + Vector3.down * 0.5f);
-            CreateRocket(parent.position + Vector3.right + Vector3.up * 0.5f * 0.5f);
-            //return physicsBullet.gameObject;
+            Rocket rocket1 = null;
+            public RocketLauncher(Rocket rocket)
+            {
+                rocket1 = rocket;
+            }
+            public override Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
+            {
+                return new Bullet[] { rocket1.CreateRocket(new Vector2(parent.position.x, parent.position.y) + position, direction, quaternion) };
+            }
+        }
+        public override Gun GetGun()
+        {
+            return new RocketLauncher(this); 
         }
         protected override void OnCollide(GameObject otherGameObject)
         {

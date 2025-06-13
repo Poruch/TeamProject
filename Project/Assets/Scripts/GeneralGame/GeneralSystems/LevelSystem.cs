@@ -21,11 +21,21 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         //Удаление или создание врагов
         EnemyManager enemyManager;
         WeatherSystem weatherSystem;
-
+        BonusManager bonusManager = null;
         public LevelSystem(LevelConfig levelConfig)
         {
             EnemyManager = new EnemyManager();
             weatherSystem = new WeatherSystem();
+            bonusManager = new BonusManager(levelConfig.BonusConfig);
+
+            enemyManager.OnCreateEnemy.AddListener((Enemy e) => 
+            {
+                for (int i = 0; i < Random.Range(0,4); i++)
+                {
+                    e.OnDeath.AddListener(() => { bonusManager.CreateBonus(e.Position + new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f))); });
+                }
+            });
+
             foreach (EnemyConfig config in levelConfig.Enemies)
             {
                 EnemyManager.AddEnemy(config.name, config);

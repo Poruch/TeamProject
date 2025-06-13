@@ -10,7 +10,11 @@ public class LevelConfig : ScriptableObject
     EnemyConfig[] enemies;
     [SerializeField]
     Level[] levels;
+
+    [SerializeField]
+    BonusConfig bonusConfig;
     public EnemyConfig[] Enemies { get => enemies; set => enemies = value; }
     internal Level[] Levels { get => levels; set => levels = value; }
+    public BonusConfig BonusConfig { get => bonusConfig; set => bonusConfig = value; }
 }
 

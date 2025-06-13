@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
+using Assets.Scripts.GeneralGame.GeneralSystems;
 
 
 /// <summary>
@@ -19,6 +20,7 @@ public class PlayerGun
     int currentBullet = 0;
 
     List<Bullet> currentBullets = new List<Bullet>();
+    List<Bullet.Gun> cuurentGuns = new List<Bullet.Gun>();
     GameObject[][] allBullets;
     GameObject player;
     public PlayerGun(GameObject player, PlayerConfig.BulletPack[] bullets, float atkSpeed)
@@ -54,6 +56,7 @@ public class PlayerGun
         for (int i = 0; i <=  Mathf.Min(currentLevel,allBullets.Length - 1); i++)
         {
             currentBullets = currentBullets.Union(allBullets[i].Select(x => x.GetComponent<Bullet>())).ToList();
+            cuurentGuns = currentBullets.Select(x => x.GetGun()).ToList();
         }
     }
 
@@ -66,7 +69,7 @@ public class PlayerGun
                  .GetComponent<PhysicsBullet>();
         physicsBullet.Dir = Vector2.right;
         physicsBullet.Speed = new PointStruct(20);
-        Destroyer.Instance.Destroy(physicsBullet.gameObject, TimeManager.Instance.CreateTimer(20 / physicsBullet.Speed.MaxPoint));
+        Destroyer.Instance.Destroy(physicsBullet.gameObject, TimeManager.Instance.CreateTimer(GameManager.AreaWidth / physicsBullet.Speed.MaxPoint));
     }
     public virtual void StartAttack()
     {
@@ -74,7 +77,8 @@ public class PlayerGun
         {
             //CreateBullet
             //if(currentBullets[currentBullet].IsBefore)
-            currentBullets[currentBullet].Shot(player.transform, Vector2.right);
+            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.down * 0.5f, Vector2.right,Quaternion.identity);
+            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.up * 0.5f * 0.5f, Vector2.right, Quaternion.identity);
             //currentBullets[currentBullet].Shot(player.transform.position + Vector3.right + Vector3.up * 0.5f, Vector2.right);
             //CreateBullet(player.transform.position + Vector3.right + Vector3.up * 0.5f);
         }
@@ -87,7 +91,8 @@ public class PlayerGun
         {
             timerAfterAttack.IsStopped = true;
             //if(currentBullets[currentBullet].IsProcess)
-            currentBullets[currentBullet].Shot(player.transform, Vector2.right);
+            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.down * 0.5f, Vector2.right, Quaternion.identity);
+            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.up * 0.5f * 0.5f, Vector2.right,Quaternion.identity);
             //currentBullets[currentBullet].Shot(player.transform.position + Vector3.right + Vector3.up * 0.5f, Vector2.right);
         }
     }

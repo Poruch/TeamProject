@@ -10,11 +10,41 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
 {
+
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠉⠉⠛⠻⢿⣿⠿⠛⠋⠁⠈⠙
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠴⣿⠟⠉⠄⠄⠈⡀⠄⠄⠄⠄⠄⠄
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠄⣾⣿⣿⣿⣿⣿⠿⠿⠿⠛⠛⠉⠉⠄⠄⠄⠄⠄⠄⠄⠉⢁⠄⠄⠈⠄⠄⠄⠄⢀⡇⠄⠄⠄⠄⠄⠄
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠄⠄⣀⣿⠿⠛⠉⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢠⡀⠄⠄⠄⢀⣠⣾⣿⠄⠄⠐⢦⡀⠄
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣠⡾⠋⠁⠄⠄⠄⠄⠄⠄⠄⠄⣤⣤⣄⣀⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠛⠻⠿⠿⠟⠛⠋⢷⣄⠄⠄⠹⣦
+    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡟⠛⠛⠛⠛⠯⠶⣤⣀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠻⣷⣤⡀⠘
+    //⣿⣿⣿⣿⣿⣿⣿⡿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡇⠄⠄⠄⠄⠄⠄⠄⠉⠑⠢⣀⠈⠢⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣷
+    //⣿⣿⣿⣿⣿⣿⠏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢰⠄⠄⡇⠄⠄⠄⣀⠄⠒⠄⠄⠄⠄⠄⠑⠢⡙⡳⣄⠄⠄⠄⠈⠄⠄⠄⠄⠈⠻⣿
+    //⣿⣿⣿⣿⡿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⡆⠄⠃⢀⡴⠚⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠱⠈⠳⡄⠄⠄⠄⢂⠄⠄⠄⠄⠘
+    //⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⣾⡀⢐⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣀⣀⣴⡀⠁⠄⠙⢦⠄⠄⠈⣧⡀⠄⠄⠄
+    //⣿⣿⣿⠃⠄⠄⠄⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡏⠳⡈⡀⠄⠄⠄⠄⠄⢀⣤⣶⣿⡿⠿⠽⠿⠿⣿⣷⣶⣌⡳⡀⠄⢹⣷⡄⠄⠄
+    //⣿⡟⠁⠄⠄⠄⠄⣷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢸⠄⠑⢥⠄⠄⡾⠋⣰⡿⡟⠊⠄⠚⣿⣿⣿⣶⣄⠄⠉⢹⠄⢳⠄⢸⣿⣿⡄⠄
+    //⣿⠇⠄⠄⠄⠄⠄⢹⣇⠄⠄⠄⠂⠄⠄⠄⠄⠄⠄⠄⠘⡄⠄⠈⠄⠈⠄⠰⢻⠋⠄⣀⣀⣠⣿⣿⣿⣿⣿⣇⠄⠈⠄⠄⢃⢘⡏⢿⣿⡄
+    //⡿⠄⠄⠄⠄⠄⠄⣿⠈⠣⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢃⠄⠄⠄⠄⠄⠄⠋⠄⠄⢿⣿⣿⣿⣿⣿⡿⠟⠁⠄⠄⠄⠄⠘⣼⡇⠈⢿⣿
+    //⡇⠄⠄⠄⠄⡆⠄⣿⠄⠄⡨⠂⠄⡀⠄⠄⠄⠠⣀⠄⠄⠘⡄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠙⠻⠿⠛⠁⠄⠄⠄⠄⠄⠄⠄⠄⣿⠄⠄⠈⣿
+    //⡇⠄⠄⠄⠄⠄⠄⢸⠄⣐⠊⠄⠄⠄⢉⠶⠶⢂⠈⠙⠒⠂⠠⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠇⠄⠄⠄⠸
+    //⠄⣀⠂⢣⡀⠄⠄⠘⣠⠃⠄⠄⠄⠄⣠⣴⣾⠷⠤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⡀⡙⠄⠈⢧⠄⠡⡀⢉⠄⠄⠄⠄⣴⣿⡫⣋⣥⣤⣀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⡗⠃⠐⠄⠈⣷⡀⢳⡄⠂⠄⠄⣸⣿⡛⠑⠛⢿⣿⣿⣷⡄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⡇⡀⠂⡀⠄⣸⢱⡈⠇⠐⠄⡠⣿⡟⠁⠄⠄⣸⣿⣿⣿⡟⠄⠄⠄⠄⠈⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⣿⡐⡀⠄⢠⠏⠄⢳⡘⡄⠈⠄⢿⡿⠄⢻⣿⣿⣿⡿⠋⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⣿⣧⠐⢀⡏⠄⠄⠄⢳⡴⡀⠄⢸⣿⡄⠄⠉⠛⠋⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣶⣶⣶⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⣿⣿⣆⠄⠐⡀⠄⠄⠄⢻⣷⡀⠄⠃⠙⠂⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢿⣿⣿⣿⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
+    //⣿⣿⣿⣆⠄⠙⣄⠄⠄⠄⠱⣕⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠻⣿⣿⣿⣦⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣴
+    //⣿⣿⣿⣿⣧⡀⠘⢦⡀⠄⠄⠈⢢⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⠿⣿⣿⣇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣾⣿
+    //⣿⣿⣿⣿⣿⣷⢄⠈⠻⣆⠄⠄⠄⠑⢄⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠛⠿⠄⠄⠄⠄⠄⠄⠄⠄⢀⣴⣾⣿⣿⣿
+
     /// <summary>
     /// Класс с основным игровым циклом и основными игровыми объектами
     /// </summary>
     internal class GameManager : MonoBehaviour
-    {       
+    {
+        public const float AreaWidth = 20;
+        public const float AreaHeight = 10;
         //
         [SerializeField]
         GeneralGameUi pauseUi = null;        
@@ -25,6 +55,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         [SerializeField]
         GeneralGameConfig config;
 
+        
         LevelSystem levelSystem = null;
         Player player;
 
@@ -93,10 +124,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                     textWriter.TextMeshProUGUI.color = Color.white;
                 return result;
             },
-            0, new Vector2(0, 190), new Vector2(200 * 0.75f, 50 * 0.75f));            
-
-            
-
+            0, new Vector2(0, 190), new Vector2(200 * 0.75f, 50 * 0.75f));     
         }        
 
 
@@ -122,9 +150,11 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             Destroyer.Instance.DestroyAll();
             player.Destroy();
             CreatePlayer();
+
             player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);
+            
             player.OnHPChange.AddListener(pauseUi.PlayerHeathBar.OnValueChange);
-            player.OnShieldChange.AddListener(pauseUi.PlayerShieldBar.OnValueChange);            
+            player.OnShieldChange.AddListener(pauseUi.PlayerShieldBar.OnValueChange);
             levelSystem.Clear();
 
 

@@ -2,6 +2,7 @@ using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
 using MyTypes;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,25 +41,39 @@ public class Beam : Bullet
         transform.localScale = new Vector3(1,Mathf.Clamp(1 - lifeTimer.GetRatio(),0,1), 1); ;
     }
 
-
-
-    Beam beam = null;
-    public override void Shot(Transform parent, Vector2 direction)
+    public Beam CreateBeam(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
     {
-        base.Shot(parent, direction);
-        if (beam == null)
-        {
-            beam = (Beam)Instantiate(gameObject, parent)
-                 .GetComponent<PhysicsBullet>();
-            beam.transform.position = parent.transform.position; 
-            Destroyer.Instance.Destroy(beam.gameObject, lifeTimer);
-            beam.Dir = direction;
-            beam.Speed = new PointStruct(0);
-        }
-        else
-            beam.lifeTimer.Reset();
-        //return beam.gameObject;
+        var beam = (Beam)Instantiate(gameObject, parent).GetComponent<PhysicsBullet>();
+        beam.transform.position = new Vector2(parent.position.x, parent.position.y) + position;
+        Destroyer.Instance.Destroy(beam.gameObject, lifeTimer);
+        beam.Dir = direction;
+        return beam;
     }
+    class BeamGun : Gun
+    {
+        Beam beam = null;
+        Beam construct;
+        public BeamGun(Beam beam)
+        {
+            construct = beam;
+        }
+        public override Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
+        {
+            if (beam == null)
+            {
+                beam = construct.CreateBeam(parent, position, direction, quaternion);   
+            }
+            else
+                beam.lifeTimer.Reset();
+            return new Bullet[] { beam };
+        }
+    }
+
+    public override Gun GetGun()
+    {
+        return new BeamGun(this);
+    }
+
 
 
     protected override void OnCollide(GameObject otherGameObject)

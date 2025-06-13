@@ -18,6 +18,7 @@ MonoBehaviour:
   levels:
   - backGroundSprite: {fileID: 6963322998463068953, guid: 3e0a3564190bbf246a6144d54122f4b9, type: 3}
     waves:
+    - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
     - prefab: {fileID: 5009668917255228728, guid: d2cd74b1574a4f3429430a400ed22c18, type: 3}
     - prefab: {fileID: 6558722684092217372, guid: 012890152ccd10b46bec3b598bca66d3, type: 3}
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
@@ -34,3 +35,4 @@ MonoBehaviour:
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
     - prefab: {fileID: 9110848152966955477, guid: d315f12f810f75e44a2039f7e126a467, type: 3}
     - prefab: {fileID: 6558722684092217372, guid: 6ca4b2cada829784da438280e6bb635b, type: 3}
+  bonusConfig: {fileID: 11400000, guid: 5dc2ebd2ac9b337408fb13a77c15aaa8, type: 2}
