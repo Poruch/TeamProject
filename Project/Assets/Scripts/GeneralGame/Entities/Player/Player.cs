@@ -29,9 +29,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
 
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(30);
-        Timer shieldTimer = TimeManager.Instance.CreateTimer(1);
-        PointStruct shield = new PointStruct(10);
         
 
         UnityEvent<float> onHPChange = new UnityEvent<float>();
@@ -51,6 +48,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         PlayerEntity playerEntity;
         PlayerInput playerInput;        
         PlayerAnimationController playerAnimationController;
+        PlayerDamageable playerDamageable;
         PlayerGun gun;
 
 
@@ -71,6 +69,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerGameObject = new GameObject("Player");
             playerGameObject.transform.localScale *= 1.5f;
             playerAnimationController = playerGameObject.AddComponent<PlayerAnimationController>();
+            playerDamageable = playerGameObject.AddComponent<PlayerDamageable>();
+            playerDamageable.Hp = new PointStruct(config.Hp);
+            playerDamageable.Shield = new PointStruct(config.Shield);
             ///
 
             //player animation
@@ -80,13 +81,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
             // player physics
             playerEntity = playerGameObject.AddComponent<PlayerEntity>();
-            playerEntity.OnCollide.AddListener(() => 
-            { 
-                if(shield.isEmpty())
-                    hp.Reduce(1);
-                else
-                    shield.Reduce(3);
-            });
+            //playerEntity.OnCollide.AddListener(() => 
+            //{ 
+            //    if(shield.isEmpty())
+            //        hp.Reduce(1);
+            //    else
+            //        shield.Reduce(3);
+            //});
             playerEntity.Speed = new PointStruct(config.Speed);
 
 
@@ -116,9 +117,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             });
             //
 
-            hp.OnEmpty.AddListener(() => IsLife = false);
-            hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(hp.GetRatio()); });
-            shield.OnValueChange.AddListener((float current, float delta) => { OnShieldChange.Invoke(shield.GetRatio()); });
+            playerDamageable.Hp.OnEmpty.AddListener(() => IsLife = false);
+            playerDamageable.Hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(playerDamageable.Hp.GetRatio()); });
+            playerDamageable.Shield.OnValueChange.AddListener((float current, float delta) => { OnShieldChange.Invoke(playerDamageable.Shield.GetRatio()); });
         }
 
         /// <summary>
@@ -127,8 +128,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public void Update()
         {
             playerInput.Update();
-            if(shieldTimer.IsTime)
-                shield.Increase(2);
+            playerDamageable.NewUpdate();
         }
         public void Destroy()
         {

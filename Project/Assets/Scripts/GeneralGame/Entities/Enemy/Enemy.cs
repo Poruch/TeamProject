@@ -3,6 +3,7 @@ using UnityEngine;
 using MyTypes;
 using UnityEngine.Events;
 using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Player;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
@@ -23,8 +24,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             get => isLife;
         }
         UnityEvent onDeath = new UnityEvent();
-        PointStruct hp = new PointStruct(10);
-        
         public Vector2 Position
         {
             get => enemyEntity.Position;
@@ -32,9 +31,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         }
 
         UnityEvent<float> onHPChange = new UnityEvent<float>();
+        UnityEvent<float> onShieldChange = new UnityEvent<float>();
         public UnityEvent OnDeath { get => onDeath; set => onDeath = value; }
         public UnityEvent<float> OnHPChange { get => onHPChange; set => onHPChange = value; }
         public GameObject EnemyGameObject { get => enemyGameObject; private set => enemyGameObject = value; }
+        public UnityEvent<float> OnShieldChange { get => onShieldChange; set => onShieldChange = value; }
+
 
         // Системы врага
         SpriteRenderer spriteRenderer;        
@@ -42,20 +44,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         EnemyEntity enemyEntity;
         EnemyGun enemyGun;
         EnemyController enemyController;
-
+        EnemyDamageable enemyDamageable;
         public Enemy(EnemyConfig config,Vector2 position, string name)
         {
-            hp = new PointStruct(config.Hp);
-
             EnemyGameObject = new GameObject(name);
             EnemyGameObject.layer = 6;
             EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, config.AngleSprite);
 
             enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
+            enemyDamageable = EnemyGameObject.AddComponent<EnemyDamageable>();
+            enemyDamageable.Hp = new PointStruct(config.Hp);
+            enemyDamageable.Shield = new PointStruct(config.Shield);
             enemyEntity.OnCollide.AddListener(() => {
-                Color color = new Color(Random.Range(0f, 1f), Random.Range(0, 1f), Random.Range(0, 1f),1f);
-                FloatingTextManager.Instance.CreateFloatingText("-1", Position, color);
-                hp.Reduce(1); 
+                
             });
             enemyEntity.Speed = new PointStruct(config.Speed);
 
@@ -63,9 +64,15 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
             enemyEntity.Position.Normalize();
 
-            hp.OnEmpty.AddListener(() => IsLife = false);
+            enemyDamageable.Hp.OnEmpty.AddListener(() => IsLife = false);
             OnDeath.AddListener(() => { GameObject.Instantiate(config.DeathEffect, enemyGameObject.transform.position,Quaternion.identity); });
-            hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(hp.GetRatio()); });
+            
+            enemyDamageable.Hp.OnValueChange.AddListener((float current, float delta) =>
+            { OnHPChange.Invoke(enemyDamageable.Hp.GetRatio()); });
+
+            enemyDamageable.Shield.OnValueChange.AddListener((float current, float delta) =>
+            { OnShieldChange.Invoke(enemyDamageable.Shield.GetRatio()); });
+            
 
             enemyController = new EnemyController(enemyEntity);
 
@@ -74,7 +81,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
             enemyGun = new EnemyGun(EnemyGameObject, config.GunDots);
         }
-
+        public void ResetStats()
+        {
+            enemyDamageable.Hp.Recover();
+            enemyDamageable.Shield.Recover();
+        }
         /// <summary>
         /// Действия который происходят каждый кадр
         /// </summary>
@@ -82,6 +93,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         {
             enemyGun.Update();
             enemyController.Update();
+            enemyDamageable.NewUpdate();
         }
 
 

@@ -61,6 +61,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             enemies.Add(individualName, newEnemy);
             newEnemy.OnDeath.AddListener(() => DestroyEnemy(individualName));
             OnCreateEnemy.Invoke(newEnemy);
+            newEnemy.ResetStats();
             return newEnemy;
         }
         private Enemy CreateEnemyByLevel(int enemyLevel, Vector2 position)

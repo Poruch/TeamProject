@@ -2,6 +2,7 @@ using Assets.Scripts.GeneralGame;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -159,14 +160,26 @@ public class GeneralGameUi : MonoBehaviour
     List<GameObject> enemyHealthBars = new List<GameObject>();
     [SerializeField]
     GameObject enemyHealth;
-    public ImageFiller CreateEnemyHeathBar(GameObject enemy)
+    [SerializeField]
+    GameObject enemyShield;
+    public ImageFiller[] CreateEnemyBars(GameObject enemy)
     {
+        ImageFiller[] result = new ImageFiller[2];
         var gameObject = Instantiate(enemyHealth, this.gameObject.transform);
         gameObject.transform.SetParent(transform, false);
         gameObject.transform.SetSiblingIndex(0);
         gameObject.GetComponent<FolowObject>().Following = enemy;
+        result[0] = gameObject.GetComponent<ImageFiller>();
         enemyHealthBars.Add(gameObject);
-        return gameObject.GetComponent <ImageFiller>();
+        
+        var gameObject2 = Instantiate(enemyShield, this.gameObject.transform);
+        gameObject2.transform.SetParent(transform, false);
+        gameObject2.transform.SetSiblingIndex(0);
+        gameObject2.GetComponent<FolowObject>().Following = enemy;
+        enemyHealthBars.Add(gameObject2);
+        result[1] = gameObject2.GetComponent<ImageFiller>();
+        
+        return result;
     }
     public void CloseDeathScreen()
     {

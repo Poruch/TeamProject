@@ -78,9 +78,12 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             levelSystem = new LevelSystem(config.LevelConfig);
             levelSystem.EnemyManager.OnCreateEnemy.AddListener((Enemy e) => 
             {
-                var filler = pauseUi.CreateEnemyHeathBar(e.EnemyGameObject);
-                e.OnHPChange.AddListener(filler.OnValueChange);
-                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler.gameObject); });
+                var filler = pauseUi.CreateEnemyBars(e.EnemyGameObject);
+                e.OnHPChange.AddListener(filler[0].OnValueChange);
+                e.OnShieldChange.AddListener(filler[1].OnValueChange);
+
+                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler[0].gameObject); });
+                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler[1].gameObject); });
             });
             levelSystem.SetBackGroundRenderer(backGround.GetComponent<SpriteRenderer>());
             levelSystem.CompleteGame.AddListener(() =>

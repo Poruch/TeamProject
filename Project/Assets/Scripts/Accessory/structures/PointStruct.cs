@@ -55,11 +55,18 @@ namespace MyTypes
             CurrentPoint = Math.Clamp(CurrentPoint + MathF.Abs(count), 0, MaxPoint);
             OnValueChange.Invoke(CurrentPoint,CurrentPoint - current);
         }
+        public void IncreaseByProcent(float count)
+        {
+            float current = CurrentPoint;
+            CurrentPoint = Math.Clamp(CurrentPoint + MathF.Abs(MaxPoint / 100 * count), 0, MaxPoint);
+            OnValueChange.Invoke(CurrentPoint, CurrentPoint - current);
+        }
         public void Reset()
         {
             CurrentPoint = 0;
             OnValueChange.Invoke(0, CurrentPoint);
         }
+
         public void Recover()
         {
             OnValueChange.Invoke(MaxPoint - CurrentPoint, MaxPoint);
@@ -71,6 +78,8 @@ namespace MyTypes
         }
         public float GetRatio()
         {
+            if(MaxPoint == 0)
+                return 0;
             return CurrentPoint / MaxPoint;
         }
 

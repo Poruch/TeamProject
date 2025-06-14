@@ -47,6 +47,7 @@ public class PhysicsBullet : Moveable
             {
                 doll.Collide();
                 OnCollide(doll.gameObject);
+
             }
         }
         lastDelta = move;

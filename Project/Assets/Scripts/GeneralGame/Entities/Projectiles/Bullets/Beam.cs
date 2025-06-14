@@ -1,6 +1,7 @@
 using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
+using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using MyTypes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 public class Beam : Bullet
 {
+
     protected Timer atkSpeed = TimeManager.Instance.CreateTimer(0.1f);
     protected Timer lifeTimer = TimeManager.Instance.CreateTimer(1);
     protected override void AddAwake()

@@ -71,15 +71,6 @@ public class PlayerGun
 
     public GameObject CurrentBullet { get => currentBullets[currentBullet].gameObject;}
 
-
-    private void CreateBullet(Vector3 position)
-    {
-        PhysicsBullet physicsBullet = GameObject.Instantiate(currentBullets[currentBullet], position, Quaternion.identity)
-                 .GetComponent<PhysicsBullet>();
-        physicsBullet.Dir = Vector2.right;
-        physicsBullet.Speed = new PointStruct(20);
-        Destroyer.Instance.Destroy(physicsBullet.gameObject, TimeManager.Instance.CreateTimer(GameManager.AreaWidth / physicsBullet.Speed.MaxPoint));
-    }
     public virtual void StartAttack()
     {
         if (timerAfterAttack.IsTime)

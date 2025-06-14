@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 using Assets.Scripts.Accessory;
-using System.Runtime.InteropServices;
-using static UnityEngine.GraphicsBuffer;
 
 public class FloatingTextManager 
 {
@@ -58,7 +56,8 @@ public class FloatingTextManager
         // Настраиваем текст
         textComponent.text = message;
         textComponent.color = color ?? Color.white; // Используем белый цвет по умолчанию
-        textComponent.rectTransform.anchoredPosition =  new Vector2(x,y);
+        textComponent.gameObject.transform.position = (Vector2)worldPosition + spawnOffset + new Vector2(Random.Range(0f, 0.3f), Random.Range(0f, 0.3f));
+        //textComponent.rectTransform.anchoredPosition =  new Vector2(x,y);
 
         // Запускаем анимацию
         ui.StartCoroutine(FloatAndFade(textInstance, textComponent));

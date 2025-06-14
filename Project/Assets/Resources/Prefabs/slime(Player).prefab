@@ -187,6 +187,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  damageArgs:
+    damage: 10
   IsAfter: 0
   IsBefore: 1
   IsProcess: 1

@@ -28,6 +28,7 @@ public class PlayerConfig : ScriptableObject
     RuntimeAnimatorController animator;
 
     [SerializeField] float hp;
+    [SerializeField] float shield;
     [SerializeField] float speed;
     [SerializeField] float atkSpeed;
 
@@ -37,4 +38,5 @@ public class PlayerConfig : ScriptableObject
     public float AtkSpeed { get => atkSpeed; set => atkSpeed = value; }
     public Sprite Sprite { get => sprite; set => sprite = value; }
     public RuntimeAnimatorController Animator { get => animator; set => animator = value; }
+    public float Shield { get => shield; set => shield = value; }
 }

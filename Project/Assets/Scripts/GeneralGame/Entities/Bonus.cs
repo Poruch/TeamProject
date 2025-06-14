@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
+using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,11 @@ namespace Assets.Scripts.GeneralGame.Entities
 
         protected virtual void OnCollide(GameObject otherGameObject)
         {
+            IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.Hp.IncreaseByProcent(3);
+            }
             Destroyer.Instance.Destroy(gameObject);
         }
 

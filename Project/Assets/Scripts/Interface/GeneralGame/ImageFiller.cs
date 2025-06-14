@@ -8,6 +8,7 @@ public class ImageFiller : MonoBehaviour
     Image image;
     void Start()
     {
+        if (image == null)
         image = GetComponent<Image>();
     }
 
@@ -20,6 +21,8 @@ public class ImageFiller : MonoBehaviour
     }
     public void OnValueChange(float value)
     {
+        if (image == null)
+            image = GetComponent<Image>();
         image.fillAmount = value;
     }
 
