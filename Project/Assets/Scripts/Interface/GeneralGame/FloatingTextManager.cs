@@ -22,12 +22,12 @@ public class FloatingTextManager
             return instance;
         }
     }
-    GeneralGameUi ui;
+    MonoBehaviour ui;
     private FloatingTextManager()
     {
 
     }
-    public static void Initialize(GeneralGameUi ui,GameObject textPrefab, Canvas targetCanvas, float fadeInDuration, float displayDuration, float fadeOutDuration, Vector2 spawnOffset, float moveSpeed)
+    public static void Initialize(MonoBehaviour ui,GameObject textPrefab, Canvas targetCanvas, float fadeInDuration, float displayDuration, float fadeOutDuration, Vector2 spawnOffset, float moveSpeed)
     {
         Instance.textPrefab = textPrefab;
         Instance.targetCanvas = targetCanvas;

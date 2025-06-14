@@ -29,7 +29,10 @@ namespace Assets.Scripts.GeneralGame
             control.Menu.Manual.performed += ManualPerformed;
             control.Enable();
         }
-
+        public void Dispose()
+        {
+            control.Dispose();
+        }
         private void ManualPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";

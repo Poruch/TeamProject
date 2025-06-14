@@ -18,21 +18,22 @@ MonoBehaviour:
   deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 90
   gunDots:
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 2
+  - bulletObj: {fileID: 8984210130473625433, guid: da81ae54c4f797b4b8406288b8e629a6, type: 3}
+    atkSpeed: 1
     position: {x: 0, y: 0}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 10
+  - bulletObj: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 3
     position: {x: 0, y: 2}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 10
+  - bulletObj: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 3
     position: {x: 0, y: -2}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 5
+  - bulletObj: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 2
     position: {x: 0, y: 3}
-  - bullet: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
-    atkSpeed: 5
+  - bulletObj: {fileID: 8984210130473625433, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+    atkSpeed: 2
     position: {x: 0, y: -3}
-  hp: 100
+  hp: 1000
+  shield: 300
   speed: 0
   AtkSpeed: 2

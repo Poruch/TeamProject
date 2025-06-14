@@ -8,6 +8,24 @@ public class InitialUI : MonoBehaviour
     [SerializeField] GameObject settings;
     [SerializeField] GameObject backButton;
     [SerializeField] GameObject manualButton;
+
+
+    [Header("Floating text settings")]
+    [SerializeField] private GameObject textPrefab;
+    [SerializeField] private Canvas targetCanvas;
+    [SerializeField] private float fadeInDuration = 0.3f;
+    [SerializeField] private float displayDuration = 1.5f;
+    [SerializeField] private float fadeOutDuration = 0.7f;
+    [SerializeField] private Vector2 spawnOffset = new Vector2(0, 50f);
+    [SerializeField] private float moveSpeed = 30f;
+
+    private void Awake()
+    {
+        FloatingTextManager.Initialize(this, textPrefab, targetCanvas, fadeInDuration, displayDuration, fadeOutDuration, Vector2.zero, moveSpeed);
+    }
+
+
+
     GameObject CurrentActive;
     private bool DefaultUI
     {

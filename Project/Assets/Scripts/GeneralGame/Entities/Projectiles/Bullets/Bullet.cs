@@ -1,16 +1,12 @@
 ﻿using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
 {
     public class Bullet : PhysicsBullet
     {
-        [SerializeField] protected DamageArgs damageArgs;
+        [SerializeField] private DamageArgs damageArgs;
         public abstract class Gun
         {
             public virtual Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
@@ -22,13 +18,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
         {
             return null;
         }
-        //public virtual Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
-        //{
-        //    return null;
-        //}
+
         public bool IsAfter = false;
         public bool IsBefore = true;
         public bool IsProcess = true;
+
+        public DamageArgs DamageArgs { get => damageArgs; set => damageArgs = value; }
 
         protected override void OnCollide(GameObject otherGameObject)
         {
@@ -36,7 +31,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
             IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.Damage(damageArgs);
+                damageable.Damage(DamageArgs);
             }
         }
     }

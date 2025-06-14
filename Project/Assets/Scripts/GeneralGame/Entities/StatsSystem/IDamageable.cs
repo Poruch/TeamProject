@@ -15,11 +15,8 @@ namespace Assets.Scripts.GeneralGame.Entities.StatsSystem
         Timer shieldTimer = TimeManager.Instance.CreateTimer(1);
         bool isAttecked;
         bool isRegen = true;
-        Timer isAtteckedTimerStopRegen = TimeManager.Instance.CreateTimer(5);
-        private void Awake()
-        {
-            
-        }
+        Timer isAtteckedTimerStopRegen = TimeManager.Instance.CreateTimer(2);
+        
         public PointStruct Hp { 
             get => hp; 
             set

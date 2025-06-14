@@ -17,8 +17,16 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 48497920668604122, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+      propertyPath: speed.maxPoint
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 48497920668604122, guid: c0444599123cf4848bd479c6146ac678, type: 3}
       propertyPath: damageArgs.damage
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 48497920668604122, guid: c0444599123cf4848bd479c6146ac678, type: 3}
+      propertyPath: speed.cccurrentPoint
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2489793915678708998, guid: c0444599123cf4848bd479c6146ac678, type: 3}
       propertyPath: m_LocalPosition.x

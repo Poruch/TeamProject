@@ -18,9 +18,10 @@ MonoBehaviour:
   deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 0
   gunDots:
-  - bullet: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
+  - bulletObj: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
     atkSpeed: 0.5
     position: {x: 0, y: 0}
-  hp: 20
+  hp: 50
+  shield: 200
   speed: 0
   AtkSpeed: 0.2

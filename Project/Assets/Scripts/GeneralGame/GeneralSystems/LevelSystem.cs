@@ -93,6 +93,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 var spawners = levels[CurrentLevel].GetWaveSpawners();
                 if (spawners != null)
                 {
+                    FloatingTextManager.Instance.CreateFloatingText($"Волна {levels[currentLevel].CurrentWave}/{levels[currentLevel].CountWave}",new Vector3(0,2),Color.magenta);
                     EnemyManager.CreateEnemyWave(spawners);
                     timerWave.Reset();
                 }

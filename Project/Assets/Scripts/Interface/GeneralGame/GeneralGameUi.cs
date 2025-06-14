@@ -79,9 +79,10 @@ public class GeneralGameUi : MonoBehaviour
     {
         pauseButtons = new List<Button>(pauseMenu.GetComponentsInChildren<Button>());
 
-        pauseButtons[0].onClick.AddListener(RestartGame);
-        pauseButtons[2].onClick.AddListener(ExitGame);
-        pauseButtons[3].onClick.AddListener(OpenManual);
+        //pauseButtons[0].onClick.AddListener(Continue);
+        //pauseButtons[1].onClick.AddListener(RestartGame);
+        //pauseButtons[2].onClick.AddListener(ExitGame);
+        //pauseButtons[3].onClick.AddListener(OpenManual);
 
         FloatingTextManager.Initialize(this,textPrefab,targetCanvas,fadeInDuration,displayDuration,fadeOutDuration,spawnOffset,moveSpeed);
 
@@ -126,7 +127,7 @@ public class GeneralGameUi : MonoBehaviour
     public void OpenManual()
     {
         string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";
-        var proc = new System.Diagnostics.Process();
+        var proc = new Process();
         proc.StartInfo.FileName = commandText;
         proc.StartInfo.UseShellExecute = true;
         proc.Start();
@@ -251,7 +252,10 @@ public class GeneralGameUi : MonoBehaviour
     {
         OnGameRestart.Invoke();
     }
-
+    public void Continue()
+    {
+        IsOpen = false;
+    }
     public void ExitGame()
     {
         OnExit.Invoke();

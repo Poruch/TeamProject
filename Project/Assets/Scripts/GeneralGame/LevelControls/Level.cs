@@ -14,19 +14,22 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         int currentWave = 0;
 
+        public int CurrentWave { get => currentWave; set => currentWave = value; }
+        public int CountWave => waves.Length;
+
         public void SetActive(SpriteRenderer backGroundRenderer)
         {
-            currentWave = 0;
+            CurrentWave = 0;
             backGroundRenderer.sprite = backGroundSprite;
         }
         public EnemySpawDot[] GetWaveSpawners()
         {
-            if (currentWave >= waves.Length)
+            if (CurrentWave >= waves.Length)
             {
-                currentWave = 0;
+                CurrentWave = 0;
                 return null;
             }
-            return waves[currentWave++].GetEnemySpawnDots();
+            return waves[CurrentWave++].GetEnemySpawnDots();
         }
 
     }

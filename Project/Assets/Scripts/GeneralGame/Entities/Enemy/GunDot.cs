@@ -9,8 +9,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     internal class GunDot
     {
         [SerializeField]
-        GameObject bullet;
-
+        GameObject bulletObj;
+        Bullet bullet = null;
         Bullet.Gun gun;
         [SerializeField]
         float atkSpeed;
@@ -23,20 +23,23 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
         public GunDot(GameObject bullet, float atkSpeed, Vector2 position)
         {
-            this.bullet = bullet;
-            gun = this.bullet.GetComponent<Bullet>().GetGun();
+            this.bulletObj = bullet;
+            this.bullet = bulletObj.GetComponent<Bullet>();
+            gun = this.bullet.GetGun();
             AtkSpeed = atkSpeed;
             Position = position;
             timer = TimeManager.Instance.CreateTimer(1/AtkSpeed);
         }
         public GunDot(GunDot gunDot) 
         {
-            bullet = gunDot.bullet;
-            gun = bullet.GetComponent<Bullet>().GetGun();
+            bulletObj = gunDot.bulletObj;
+            this.bullet = bulletObj.GetComponent<Bullet>();
+            gun = this.bullet.GetGun();
             AtkSpeed = gunDot.AtkSpeed;
             Position = gunDot.Position;
             timer = TimeManager.Instance.CreateTimer(gunDot.Timer);
         }
+        public Bullet Bullet { get => bullet; }
         public Bullet.Gun Gun { get => gun; }
         public Timer Timer
         {
@@ -48,6 +51,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             }
         }
         public Vector2 Position { get => position; set => position = value; }
-        public float AtkSpeed { get => atkSpeed; set => atkSpeed = value; }
+        public float AtkSpeed { get => atkSpeed; set 
+            { 
+                atkSpeed = value;
+                timer = TimeManager.Instance.CreateTimer(1 / AtkSpeed);
+            } 
+        }
     }
 }

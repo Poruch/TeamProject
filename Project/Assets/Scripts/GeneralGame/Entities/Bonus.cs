@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.StatsSystem;
+using Assets.Scripts.GeneralGame.GeneralSystems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace Assets.Scripts.GeneralGame.Entities
             IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.Hp.IncreaseByProcent(3);
+                damageable.Hp.IncreaseByProcent(10 - GameManager.CurrentDificult);
             }
             Destroyer.Instance.Destroy(gameObject);
         }

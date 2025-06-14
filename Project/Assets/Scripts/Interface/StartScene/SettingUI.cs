@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI fpsInput;
+    [SerializeField] GeneralGameConfig config;
 
     public void Init()
     {
@@ -17,5 +18,22 @@ public class SettingUI : MonoBehaviour
         if (!int.TryParse(fpsInput.text.Substring(0,fpsInput.text.Length-1), out fps))
             Debug.LogWarning("Неправильный формат ввода кадров в секунду " + fpsInput.text);
         SettingManager.Instance.SetFrameRate(fps);
+    }
+
+
+    public void Easy()
+    {
+        FloatingTextManager.Instance.CreateFloatingText("Сложность легкая", transform.position + Vector3.up, Color.green);
+        config.DificultLevel = 0;
+    }
+    public void Middle()
+    {
+        FloatingTextManager.Instance.CreateFloatingText("Сложность средняя", transform.position , Color.blue);
+        config.DificultLevel = 5;
+    }
+    public void Hard()
+    {
+        FloatingTextManager.Instance.CreateFloatingText("Сложность сложная", transform.position + Vector3.down, Color.red);
+        config.DificultLevel = 10;
     }
 }

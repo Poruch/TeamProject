@@ -1,7 +1,4 @@
-﻿
-using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
-using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
+﻿using Assets.Scripts.GeneralGame.GeneralSystems;
 using MyTypes;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +17,10 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             {
                 dots.Add(new GunDot(g));
             }
+            foreach (GunDot g in dots)
+            {
+                g.AtkSpeed = g.AtkSpeed * (5 * GameManager.CurrentDificult / 100 + 1);
+            }
             this.parent = parent;
         }
 
@@ -29,11 +30,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             {
                 if (dot.Timer.IsTime)
                 {
-                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y),Vector2.left, Quaternion.Euler(new Vector3(0, 0, 180)));                    
-                    //PhysicsBullet move = GameObject.Instantiate(dot.Bullet.gameObject, parent.transform.position + new Vector3(dot.Position.x, dot.Position.y), Quaternion.Euler(0, 0, 180)).GetComponent<PhysicsBullet>();
-                    //move.Speed = new PointStruct(10);
-                    //move.Dir = Vector2.left;
-                    //Destroyer.Instance.Destroy(move.gameObject, TimeManager.Instance.CreateTimer(20 / move.Speed.MaxPoint));
+                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y),Vector2.left, Quaternion.Euler(new Vector3(0, 0, 180)));
+                    foreach(var bullet in bullets)
+                    {
+                        
+                        bullet.DamageArgs.Damage += GameManager.CurrentDificult;
+                        bullet.Speed = new PointStruct(bullet.Speed.MaxPoint * (5 * GameManager.CurrentDificult / 100 + 1));
+                    }
                 }
             }
         }

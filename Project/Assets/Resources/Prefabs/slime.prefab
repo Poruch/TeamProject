@@ -167,8 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dir: {x: -1, y: 0}
   speed:
-    maxPoint: 10
-    cccurrentPoint: 10
+    maxPoint: 5
+    cccurrentPoint: 5
   mask:
     serializedVersion: 2
     m_Bits: 8
@@ -188,7 +188,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   damageArgs:
-    damage: 10
+    damage: 15
   IsAfter: 0
   IsBefore: 1
   IsProcess: 1
