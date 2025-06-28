@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
 {
 
     protected Rigidbody2D rb2d;
-    
+
     public Vector2 Position
     {
         get
@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
         }
         set
         {
-            transform.position = new Vector3(value.x,value.y);
+            transform.position = new Vector3(value.x, value.y);
         }
     }
     protected virtual void AddAwake()
@@ -28,8 +28,8 @@ public class Entity : MonoBehaviour
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        if(!rb2d)
-            rb2d= gameObject.AddComponent<Rigidbody2D>();
+        if (!rb2d)
+            rb2d = gameObject.AddComponent<Rigidbody2D>();
         rb2d.bodyType = RigidbodyType2D.Kinematic;
         rb2d.useFullKinematicContacts = false;
         AddAwake();
@@ -37,8 +37,8 @@ public class Entity : MonoBehaviour
 
     public virtual void Collide()
     {
-        
+
     }
 
-    
+
 }

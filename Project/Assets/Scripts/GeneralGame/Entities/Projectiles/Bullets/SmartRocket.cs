@@ -13,13 +13,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles
         {
             float angle = Time.deltaTime;
             Dir = new Vector2(Dir.x * Mathf.Cos(angle) - Dir.y * Mathf.Sin(angle), Dir.x * Mathf.Sin(angle) + Dir.y * Mathf.Cos(angle));
-            transform.Rotate(0,0,angle * 57);
+            transform.Rotate(0, 0, angle * 57);
             base.AddFixedUpdate();
         }
         protected override void OnCollide(GameObject otherGameObject)
         {
             base.OnCollide(otherGameObject);
-            Instantiate(Explosion,transform.position,Quaternion.identity);
+            Instantiate(Explosion, transform.position, Quaternion.identity);
         }
     }
 }

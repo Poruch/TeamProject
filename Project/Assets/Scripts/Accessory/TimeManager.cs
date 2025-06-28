@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Accessory;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Assets.Scripts.GeneralGame
 {
@@ -16,19 +15,19 @@ namespace Assets.Scripts.GeneralGame
         {
             get
             {
-                if(instance != null)
+                if (instance != null)
                     return instance;
                 instance = new TimeManager();
                 return instance;
             }
         }
 
-        private TimeManager() 
+        private TimeManager()
         {
 
         }
 
-        public Timer CreateTimer(float time,bool isTime = false)
+        public Timer CreateTimer(float time, bool isTime = false)
         {
             TimerConstruct timer = new TimerConstruct(time, isTime);
             timers.Add(timer);
@@ -49,7 +48,7 @@ namespace Assets.Scripts.GeneralGame
         }
         public void AllReset()
         {
-            foreach(TimerConstruct timer in timers)
+            foreach (TimerConstruct timer in timers)
             {
                 timer.Reset();
             }
@@ -57,7 +56,7 @@ namespace Assets.Scripts.GeneralGame
 
         private class TimerConstruct : Timer
         {
-            public TimerConstruct(float time,bool isTime) : base(time,isTime) { }
+            public TimerConstruct(float time, bool isTime) : base(time, isTime) { }
             public TimerConstruct(Timer timer) : base(timer) { }
 
             public new void Tick()

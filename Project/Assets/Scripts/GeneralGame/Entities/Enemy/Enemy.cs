@@ -1,9 +1,8 @@
 ﻿
-using UnityEngine;
-using MyTypes;
-using UnityEngine.Events;
 using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.Entities.Player;
+using MyTypes;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
@@ -39,45 +38,51 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
 
 
         // Системы врага
-        SpriteRenderer spriteRenderer;        
+        SpriteRenderer spriteRenderer;
         GameObject enemyGameObject;
         EnemyEntity enemyEntity;
         EnemyGun enemyGun;
         EnemyController enemyController;
         EnemyDamageable enemyDamageable;
-        public Enemy(EnemyConfig config,Vector2 position, string name)
+        public void SetStrongCoefficient(float coefficient)
         {
-            EnemyGameObject = new GameObject(name);
+            enemyDamageable.Hp.SetNewMax(enemyDamageable.Hp.MaxPoint * coefficient);
+            enemyDamageable.Shield.SetNewMax(enemyDamageable.Shield.MaxPoint * coefficient);
+            enemyGun.DamageCoefficient = coefficient;
+        }
+        public Enemy(EnemyConfig config, Vector2 position, string name)
+        {
+            EnemyGameObject = GameObject.Instantiate(config.EnemyObject);
             EnemyGameObject.layer = 6;
-            EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, config.AngleSprite);
-
-            enemyEntity = EnemyGameObject.AddComponent<EnemyEntity>();
-            enemyDamageable = EnemyGameObject.AddComponent<EnemyDamageable>();
+            //EnemyGameObject.transform.rotation = Quaternion.Euler(0, 0, config.AngleSprite);
+            EnemyGameObject.name = name;
+            enemyEntity = EnemyGameObject.GetComponent<EnemyEntity>();
+            enemyDamageable = EnemyGameObject.GetComponent<EnemyDamageable>();
             enemyDamageable.Hp = new PointStruct(config.Hp);
             enemyDamageable.Shield = new PointStruct(config.Shield);
-            enemyEntity.OnCollide.AddListener(() => {
-                
+            enemyEntity.OnCollide.AddListener(() =>
+            {
+
             });
             enemyEntity.Speed = new PointStruct(config.Speed);
 
             enemyEntity.Position = position;
-
             enemyEntity.Position.Normalize();
 
             enemyDamageable.Hp.OnEmpty.AddListener(() => IsLife = false);
-            OnDeath.AddListener(() => { GameObject.Instantiate(config.DeathEffect, enemyGameObject.transform.position,Quaternion.identity); });
-            
+            OnDeath.AddListener(() => { GameObject.Instantiate(config.DeathEffect, enemyGameObject.transform.position, Quaternion.identity); });
+
             enemyDamageable.Hp.OnValueChange.AddListener((float current, float delta) =>
             { OnHPChange.Invoke(enemyDamageable.Hp.GetRatio()); });
 
             enemyDamageable.Shield.OnValueChange.AddListener((float current, float delta) =>
             { OnShieldChange.Invoke(enemyDamageable.Shield.GetRatio()); });
-            
+
 
             enemyController = new EnemyController(enemyEntity);
 
-            spriteRenderer = EnemyGameObject.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = config.Sprite;
+            spriteRenderer = EnemyGameObject.GetComponent<SpriteRenderer>();
+            //spriteRenderer.sprite = config.Sprite;
 
             enemyGun = new EnemyGun(EnemyGameObject, config.GunDots);
         }

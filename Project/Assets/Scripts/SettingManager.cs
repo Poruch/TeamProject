@@ -16,7 +16,7 @@ namespace ApplicationSettings
 
         public void SetFrameRate(int fps)
         {
-            if (fps < 30 || fps > 300) 
+            if (fps < 30 || fps > 300)
             {
                 Debug.LogWarning("Fps is has not been change because not correct value");
                 return;

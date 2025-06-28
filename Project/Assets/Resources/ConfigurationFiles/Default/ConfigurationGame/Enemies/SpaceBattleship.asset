@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb51b56cfe4b904eafde0c053eb4fd5, type: 3}
-  m_Name: Lincor
+  m_Name: SpaceBattleship
   m_EditorClassIdentifier: 
   enemyName: Lincor
   enemyLevel: 3
-  sprite: {fileID: 1850078875523080360, guid: 4a8a98fa1b5d6e0438a5e847b7306214, type: 3}
+  enemyObject: {fileID: 3065110401910651384, guid: 6249d752175895c4b9f81607c2630447, type: 3}
   deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 180
   gunDots:
@@ -33,7 +33,13 @@ MonoBehaviour:
   - bulletObj: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
     atkSpeed: 1
     position: {x: 0, y: -4}
-  hp: 2000
-  shield: 500
+  - bulletObj: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
+    atkSpeed: 1
+    position: {x: 0, y: 6}
+  - bulletObj: {fileID: 5067757108198512318, guid: efdbc38eb191e154597c31bc9ccea392, type: 3}
+    atkSpeed: 1
+    position: {x: 0, y: -6}
+  hp: 5000
+  shield: 1000
   speed: 0
   AtkSpeed: 0

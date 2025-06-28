@@ -1,4 +1,6 @@
 ﻿
+using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.GeneralSystems
@@ -22,13 +24,14 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         GameObject[] bonuses = null;
         public void SetConfig()
         {
-           
+
         }
 
         public void CreateBonus(Vector2 position)
         {
             int bonus = Random.Range(0, bonuses.Length);
-            GameObject.Instantiate(bonuses[bonus], position, Quaternion.identity);
+            var met = GameObject.Instantiate(bonuses[bonus], position, Quaternion.identity).GetComponent<Moveable>();
+            Destroyer.Instance.Destroy(met.gameObject, TimeManager.Instance.CreateTimer(GameManager.AreaWidth / met.Speed.MaxPoint));
         }
 
     }

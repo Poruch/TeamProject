@@ -7,8 +7,8 @@ namespace Assets.Scripts.GeneralGame.Entities.StatsSystem
     public class DamageArgs
     {
         [SerializeField]
-        int damage = 0;
-        public int Damage { get => damage; set => damage = value; }
+        float damage = 0;
+        public float Damage { get => damage; set => damage = value; }
 
     }
 }

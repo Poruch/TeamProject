@@ -9,7 +9,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     {
         [SerializeField]
         Sprite backGroundSprite;
-        [SerializeField] 
+        [SerializeField]
         Wave[] waves;
 
         int currentWave = 0;

@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.STP;
 
-public class InitialUI : MonoBehaviour 
+public class InitialUI : MonoBehaviour
 {
     [SerializeField] GameObject saves;
     [SerializeField] GameObject defaultUI;
@@ -10,6 +11,7 @@ public class InitialUI : MonoBehaviour
     [SerializeField] GameObject manualButton;
 
 
+    [SerializeField] GeneralGameConfig config;
     [Header("Floating text settings")]
     [SerializeField] private GameObject textPrefab;
     [SerializeField] private Canvas targetCanvas;
@@ -54,8 +56,8 @@ public class InitialUI : MonoBehaviour
                 CurrentActive = saves;
                 DefaultUI = false;
             }
-            else             
-                DefaultUI = false;            
+            else
+                DefaultUI = false;
         }
     }
     private bool Settings
@@ -68,8 +70,8 @@ public class InitialUI : MonoBehaviour
                 CurrentActive = settings;
                 DefaultUI = false;
             }
-            else            
-                DefaultUI = false;            
+            else
+                DefaultUI = false;
         }
     }
     public void Init(LanguageConfig config)
@@ -79,11 +81,16 @@ public class InitialUI : MonoBehaviour
     }
     public void StartGame()
     {
-        //Saves = true;
+        config.LevelConfig.IsEndless = false;
+        SceneManager.LoadScene("ScrollShooter");
+    }
+    public void StartEndlessGame()
+    {
+        config.LevelConfig.IsEndless = true;
         SceneManager.LoadScene("ScrollShooter");
     }
 
-    public void OpenSettings() 
+    public void OpenSettings()
     {
         Settings = true;
     }

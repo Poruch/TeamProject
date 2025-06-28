@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Xml.Linq;
-using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.LevelControls;
+﻿using Assets.Scripts.GeneralGame.LevelControls;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,18 +13,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     {
         EnemyConfig enemyConfig;
         static int countAllEnemies = 0;
-        Dictionary<string,Enemy> enemies = new Dictionary<string, Enemy>();
-        Dictionary<string,EnemyConfig> enemiesBlueprints = new Dictionary<string,EnemyConfig>();   
+        Dictionary<string, Enemy> enemies = new Dictionary<string, Enemy>();
+        Dictionary<string, EnemyConfig> enemiesBlueprints = new Dictionary<string, EnemyConfig>();
         Dictionary<int, List<string>> enemiesByLevel = new Dictionary<int, List<string>>();
-        public EnemyManager()//EnemyConfig config) 
+        public EnemyManager()
         {
-            //enemyConfig = config;            
-            //AddEnemy("Default", config);
         }
-        
+
+        float enemyStrong = 1;
+
         public int CountEnemies => enemies.Count;
 
         public UnityEvent<Enemy> OnCreateEnemy { get => onCreateEnemy; set => onCreateEnemy = value; }
+        public float EnemyStrong { get => enemyStrong; set => enemyStrong = value; }
 
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
                 enemiesByLevel[config.EnemyLevel].Add(name);
             else
             {
-                enemiesByLevel.Add(config.EnemyLevel,new List<string>() { name });
+                enemiesByLevel.Add(config.EnemyLevel, new List<string>() { name });
             }
         }
 
@@ -58,6 +57,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             int num = countAllEnemies++;
             string individualName = name + $"_{num}";
             Enemy newEnemy = new Enemy(enemiesBlueprints[name], position, individualName);
+            newEnemy.SetStrongCoefficient(EnemyStrong);
             enemies.Add(individualName, newEnemy);
             newEnemy.OnDeath.AddListener(() => DestroyEnemy(individualName));
             OnCreateEnemy.Invoke(newEnemy);
@@ -75,7 +75,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         {
             for (int i = 0; i < dots.Length; i++)
             {
-                CreateEnemyByLevel(dots[i].EnemyLevel,dots[i].Position);
+                CreateEnemyByLevel(dots[i].EnemyLevel, dots[i].Position);
             }
         }
         /// <summary>
@@ -85,8 +85,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         /// <returns></returns>
         public void DestroyEnemy(string name)
         {
-            enemies[name].Destroy();
-            enemies.Remove(name);
+            if (enemies.ContainsKey(name))
+            {
+                enemies[name].Destroy();
+                enemies.Remove(name);
+            }
         }
 
 

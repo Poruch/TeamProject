@@ -2,16 +2,12 @@
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using Assets.Scripts.GeneralGame.GeneralSystems;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities
 {
-    public class Bonus : Moveable
+    public class HpBonus : Moveable
     {
         [SerializeField]
         LayerMask mask;
@@ -32,7 +28,7 @@ namespace Assets.Scripts.GeneralGame.Entities
         {
             contactFilter.SetLayerMask(mask);
             contactFilter.useLayerMask = true;
-            Speed = new MyTypes.PointStruct(4) ;
+            Speed = new MyTypes.PointStruct(4);
         }
 
 
@@ -64,7 +60,7 @@ namespace Assets.Scripts.GeneralGame.Entities
             IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.Hp.IncreaseByProcent(10 - GameManager.CurrentDificult);
+                damageable.Hp.IncreaseByProcent(10 - 5 * (GameManager.CurrentDificult / 10));
             }
             Destroyer.Instance.Destroy(gameObject);
         }

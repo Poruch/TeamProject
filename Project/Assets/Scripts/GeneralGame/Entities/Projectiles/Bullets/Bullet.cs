@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.GeneralGame.Entities.StatsSystem;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
@@ -9,6 +8,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets
         [SerializeField] private DamageArgs damageArgs;
         public abstract class Gun
         {
+            public bool isMultiple = true;
             public virtual Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
             {
                 return null;

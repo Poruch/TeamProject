@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5067432661591267753}
   - component: {fileID: 984206243803129824}
-  - component: {fileID: 7245810045797696945}
   - component: {fileID: 579158584073213743}
   - component: {fileID: 9122889283749381656}
+  - component: {fileID: 6709194463141304559}
   m_Layer: 0
   m_Name: 51907_57
   m_TagString: Untagged
@@ -90,39 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7245810045797696945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6306156482367742305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50bf877c68e4ba440979c92e06f3d69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: {x: -1, y: 0}
-  speed:
-    currentPoint: 1
-  mask:
-    serializedVersion: 2
-    m_Bits: 8
-  shellRadius: 0.01
-  contactFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
 --- !u!58 &579158584073213743
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,3 +153,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6709194463141304559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306156482367742305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10b7d1fdb748674a89b3feb24fbf5a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: {x: -1, y: 0}
+  speed:
+    maxPoint: 1
+    cccurrentPoint: 1
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
+  shellRadius: 0.01
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0

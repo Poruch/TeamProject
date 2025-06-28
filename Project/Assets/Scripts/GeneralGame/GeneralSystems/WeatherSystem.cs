@@ -7,13 +7,15 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
     internal class WeatherSystem
     {
         Timer meteorTimer = TimeManager.Instance.CreateTimer(4);
+        Timer bonus = TimeManager.Instance.CreateTimer(8);
         GameObject meteor = null;
-
-        public WeatherSystem() 
+        BonusManager bonusManager = null;
+        public WeatherSystem(BonusManager manager)
         {
-            meteor = (GameObject)Resources.Load("Prefabs/Meteor");            
+            meteor = (GameObject)Resources.Load("Prefabs/Meteor");
             if (meteor == null)
                 Debug.Log("Error miss meteor prefab");
+            bonusManager = manager;
         }
         /// <summary>
         /// 
@@ -33,6 +35,10 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 var met = GameObject.Instantiate(meteor, new Vector3(10, Random.Range(-6, 6), 0), Quaternion.identity).GetComponent<PhysicsBullet>();
                 met.Dir = Vector2.left;
                 Destroyer.Instance.Destroy(met.gameObject, TimeManager.Instance.CreateTimer(GameManager.AreaWidth / met.Speed.MaxPoint));
+            }
+            if (bonus.IsTime)
+            {
+                bonusManager.CreateBonus(new Vector3(10, Random.Range(-6, 6), 0));
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.GeneralGame.GeneralSystems;
 using MyTypes;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
@@ -10,7 +9,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
     {
         List<GunDot> dots;
         GameObject parent;
-        public EnemyGun(GameObject parent,IEnumerable<GunDot> gunDots) 
+        float damageCoefficient = 1;
+        public EnemyGun(GameObject parent, IEnumerable<GunDot> gunDots)
         {
             dots = new List<GunDot>();
             foreach (GunDot g in gunDots)
@@ -24,22 +24,24 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             this.parent = parent;
         }
 
+        public float DamageCoefficient { get => damageCoefficient; set => damageCoefficient = value; }
+
         public void Update()
         {
             foreach (var dot in dots)
             {
                 if (dot.Timer.IsTime)
                 {
-                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y),Vector2.left, Quaternion.Euler(new Vector3(0, 0, 180)));
-                    foreach(var bullet in bullets)
+                    var bullets = dot.Gun.Shot(parent.transform, new Vector3(dot.Position.x, dot.Position.y), Vector2.left, Quaternion.Euler(new Vector3(0, 0, 180)));
+                    foreach (var bullet in bullets)
                     {
-                        
                         bullet.DamageArgs.Damage += GameManager.CurrentDificult;
+                        bullet.DamageArgs.Damage *= damageCoefficient;
                         bullet.Speed = new PointStruct(bullet.Speed.MaxPoint * (5 * GameManager.CurrentDificult / 100 + 1));
                     }
                 }
             }
         }
-        
+
     }
 }

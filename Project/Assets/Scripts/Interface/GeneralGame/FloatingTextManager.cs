@@ -1,9 +1,9 @@
-using UnityEngine;
+using Assets.Scripts.Accessory;
 using System.Collections;
 using TMPro;
-using Assets.Scripts.Accessory;
+using UnityEngine;
 
-public class FloatingTextManager 
+public class FloatingTextManager
 {
     private GameObject textPrefab;
     private Canvas targetCanvas;
@@ -27,7 +27,7 @@ public class FloatingTextManager
     {
 
     }
-    public static void Initialize(MonoBehaviour ui,GameObject textPrefab, Canvas targetCanvas, float fadeInDuration, float displayDuration, float fadeOutDuration, Vector2 spawnOffset, float moveSpeed)
+    public static void Initialize(MonoBehaviour ui, GameObject textPrefab, Canvas targetCanvas, float fadeInDuration, float displayDuration, float fadeOutDuration, Vector2 spawnOffset, float moveSpeed)
     {
         Instance.textPrefab = textPrefab;
         Instance.targetCanvas = targetCanvas;
@@ -44,15 +44,15 @@ public class FloatingTextManager
     {
         // Конвертируем мировые координаты в экранные
         float s = targetCanvas.scaleFactor;
-        Vector3 screenPos = Camera.main.WorldToScreenPoint((Vector2)worldPosition + spawnOffset + new Vector2(Random.Range(0f, 0.3f),Random.Range(0f,0.3f))) / s;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint((Vector2)worldPosition + spawnOffset + new Vector2(Random.Range(0f, 0.3f), Random.Range(0f, 0.3f))) / s;
         float h = Screen.height;
         float w = Screen.width;
         float x = screenPos.x - (w / 2);
         float y = screenPos.y - (h / 2);
         // Создаем новый экземпляр текста
-        GameObject textInstance =  GameObject.Instantiate(textPrefab, targetCanvas.transform);
+        GameObject textInstance = GameObject.Instantiate(textPrefab, targetCanvas.transform);
         TextMeshProUGUI textComponent = textInstance.GetComponent<TextMeshProUGUI>();
-        
+
         // Настраиваем текст
         textComponent.text = message;
         textComponent.color = color ?? Color.white; // Используем белый цвет по умолчанию

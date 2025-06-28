@@ -21,6 +21,6 @@ namespace Assets.Scripts.GeneralGame.LevelControls
             }
             return enemySpawDot;
         }
-        
+
     }
 }

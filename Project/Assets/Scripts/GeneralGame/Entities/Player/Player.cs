@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Accessory;
 using MyTypes;
+using UnityEngine;
 using UnityEngine.Events;
-using Assets.Scripts.Accessory;
 
 
 namespace Assets.Scripts.GeneralGame.Entities.Player
@@ -12,7 +12,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
     internal class Player
     {
         private bool isLife = true;
-        
+
         public bool IsLife
         {
             set
@@ -20,7 +20,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 isLife = value;
                 if (!isLife)
                 {
-                    playerAnimationController.Animator.SetBool("IsDestroy",true);    
+                    playerAnimationController.Animator.SetBool("IsDestroy", true);
                 }
             }
             get => isLife;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
 
         UnityEvent onDeath = new UnityEvent();
-        
+
 
         UnityEvent<float> onHPChange = new UnityEvent<float>();
         UnityEvent<float> onShieldChange = new UnityEvent<float>();
@@ -39,19 +39,20 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             set => playerEntity.Position = value;
         }
         public UnityEvent OnDeath { get => onDeath; }
-        public UnityEvent<GameObject> OnChangeWeapon { get => onChangeWeapon;  }
+        public UnityEvent<GameObject> OnChangeWeapon { get => onChangeWeapon; }
         public UnityEvent<float> OnHPChange { get => onHPChange; }
         public UnityEvent<float> OnShieldChange { get => onShieldChange; }
 
         // Системы персонажа
         GameObject playerGameObject;
         PlayerEntity playerEntity;
-        PlayerInput playerInput;        
+        PlayerInput playerInput;
         PlayerAnimationController playerAnimationController;
         PlayerDamageable playerDamageable;
         PlayerGun gun;
+        PlayerStats playerStats;
 
-
+        float configSpeed = 0;
         public void OnStartNewLevel(int levelID)
         {
             gun.UpdateBullets(levelID);
@@ -68,8 +69,11 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             //Creating player game object
             playerGameObject = new GameObject("Player");
             playerGameObject.transform.localScale *= 1.5f;
+
             playerAnimationController = playerGameObject.AddComponent<PlayerAnimationController>();
             playerDamageable = playerGameObject.AddComponent<PlayerDamageable>();
+            playerStats = playerGameObject.AddComponent<PlayerStats>();
+            playerStats.SetIDemageable(playerDamageable);
             playerDamageable.Hp = new PointStruct(config.Hp);
             playerDamageable.Shield = new PointStruct(config.Shield);
             ///
@@ -89,7 +93,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             //        shield.Reduce(3);
             //});
             playerEntity.Speed = new PointStruct(config.Speed);
-
+            configSpeed = config.Speed;
 
             //Привязка системы ввода к другим системам
             playerInput = new PlayerInput();
@@ -102,8 +106,19 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerInput.OnChangeWeapon.AddListener(ChangeWeapon);
             //
 
+            //OnLevelUp
+            playerStats.OnLevelGrow.AddListener((int currLevel) =>
+            {
+                //if(currLevel % 2 == 0)
+                gun.IncreaseBulletLines();
+                playerDamageable.Hp.SetNewMax(playerDamageable.Hp.MaxPoint * (1 + (currLevel + 10) / 100));
+                playerDamageable.Hp.IncreaseByProcent(10);
+            });
+            //
+
             // Move methods
-            playerInput.OnStartMove.AddListener(()=> {
+            playerInput.OnStartMove.AddListener(() =>
+            {
                 if (playerInput.Direction == Vector2.zero)
                 {
                     playerEntity.Speed.Reset();
@@ -113,9 +128,16 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             playerInput.InMove.AddListener(() =>
             {
                 playerEntity.Dir = playerInput.Direction;
+                playerEntity.Speed.SetNewMax(configSpeed);
+                gun.ReturnSpred();
                 playerEntity.Speed.Increase(playerEntity.Speed.MaxPoint / 20);
             });
-            //
+            playerInput.OnSlowMove.AddListener(() =>
+            {
+                gun.CutSpread();
+                playerEntity.Speed.SetNewMax(configSpeed / 3);
+            });
+
 
             playerDamageable.Hp.OnEmpty.AddListener(() => IsLife = false);
             playerDamageable.Hp.OnValueChange.AddListener((float current, float delta) => { OnHPChange.Invoke(playerDamageable.Hp.GetRatio()); });

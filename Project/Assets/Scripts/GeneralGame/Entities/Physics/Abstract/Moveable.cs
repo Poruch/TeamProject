@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using MyTypes;
+﻿using MyTypes;
+using UnityEngine;
 namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
 {
 
-/// <summary>
-/// Класс для движущихся объектов
-/// </summary>
-    public class Moveable :Entity
+    /// <summary>
+    /// Класс для движущихся объектов
+    /// </summary>
+    public class Moveable : Entity
     {
         static bool isPause = false;
 
@@ -35,5 +35,5 @@ namespace Assets.Scripts.GeneralGame.Entities.Physics.Abstract
         }
     }
 
-   
+
 }

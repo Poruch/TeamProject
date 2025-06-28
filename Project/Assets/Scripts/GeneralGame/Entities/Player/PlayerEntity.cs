@@ -1,6 +1,6 @@
 ﻿//#define MyTest
-using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.Accessory;
+using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,12 +15,12 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         private void Start()
         {
             gameObject.layer = 3;
-            gameObject.AddComponent<CircleCollider2D>().radius = 0.5f;  
-            
+            gameObject.AddComponent<CircleCollider2D>().radius = 0.3f;
+
         }
 
         Vector2 lastPos = Vector2.zero;
-        
+
         public UnityEvent OnCollide { get => onCollide; set => onCollide = value; }
 
         private void Update()

@@ -7523,6 +7523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 854904627}
+  continueButton: {fileID: 890487046}
   gameMenu: {fileID: 350166689}
   deathScreen: {fileID: 848992652}
   winScreen: {fileID: 518054842}

@@ -1,11 +1,8 @@
 using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
-using Assets.Scripts.GeneralGame.Entities.StatsSystem;
 using MyTypes;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Beam : Bullet
 {
@@ -21,7 +18,7 @@ public class Beam : Bullet
     bool isAttack = false;
 
     protected override void AddFixedUpdate()
-    {        
+    {
         float distance = lastDelta.magnitude;
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
@@ -29,7 +26,7 @@ public class Beam : Bullet
             Entity doll = hitBuffer[i].collider.gameObject.GetComponent<Entity>();
             if (doll != null)
             {
-                if(atkSpeed.IsTime)
+                if (atkSpeed.IsTime)
                     isAttack = true;
                 if (isAttack)
                 {
@@ -40,12 +37,12 @@ public class Beam : Bullet
         }
         isAttack = false;
         lastDelta = move;
-        transform.localScale = new Vector3(1,Mathf.Clamp(1 - lifeTimer.GetRatio(),0,1), 1); ;
+        transform.localScale = new Vector3(1, Mathf.Clamp(1 - lifeTimer.GetRatio(), 0, 1), 1); ;
     }
 
     public Beam CreateBeam(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
     {
-        var beam = (Beam)Instantiate(gameObject, position,quaternion).GetComponent<PhysicsBullet>();
+        var beam = (Beam)Instantiate(gameObject, position, quaternion).GetComponent<PhysicsBullet>();
         beam.transform.SetParent(parent);
         beam.transform.position = new Vector2(parent.position.x, parent.position.y) + position;
         Destroyer.Instance.Destroy(beam.gameObject, beam.lifeTimer);
@@ -59,12 +56,13 @@ public class Beam : Bullet
         public BeamGun(Beam beam)
         {
             construct = beam;
+            isMultiple = false;
         }
         public override Bullet[] Shot(Transform parent, Vector2 position, Vector2 direction, Quaternion quaternion)
         {
             if (beam == null)
             {
-                beam = construct.CreateBeam(parent, position, direction, quaternion);   
+                beam = construct.CreateBeam(parent, position, direction, quaternion);
             }
             else
                 beam.lifeTimer.Reset();
@@ -81,6 +79,7 @@ public class Beam : Bullet
 
     protected override void OnCollide(GameObject otherGameObject)
     {
-        
+        base.OnCollide(otherGameObject);
+        isAttack = false;
     }
 }

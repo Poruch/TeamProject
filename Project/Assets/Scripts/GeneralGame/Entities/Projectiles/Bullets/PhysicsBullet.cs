@@ -1,10 +1,6 @@
-using Assets.Scripts.Accessory;
-using UnityEngine;
-using MyTypes;
-using System.Collections.Generic;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
-using Assets.Scripts.GeneralGame;
-using Assets.Scripts.GeneralGame.Entities.Projectiles;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Класс для объекта летящего в 1 сторону, который может сталкиваться с другими сущностями
@@ -29,7 +25,7 @@ public class PhysicsBullet : Moveable
     protected override void AddAwake()
     {
         contactFilter.SetLayerMask(mask);
-        contactFilter.useLayerMask = true;        
+        contactFilter.useLayerMask = true;
     }
 
 
@@ -38,7 +34,7 @@ public class PhysicsBullet : Moveable
     /// </summary>
     protected override void AddFixedUpdate()
     {
-        float distance = lastDelta.magnitude;        
+        float distance = lastDelta.magnitude;
         int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
         for (int i = 0; i < count; i++)
         {
@@ -47,11 +43,11 @@ public class PhysicsBullet : Moveable
             {
                 doll.Collide();
                 OnCollide(doll.gameObject);
-
             }
         }
         lastDelta = move;
     }
+
     public void SetContact(LayerMask newMask)
     {
         contactFilter.SetLayerMask(newMask);
@@ -59,6 +55,6 @@ public class PhysicsBullet : Moveable
 
     protected virtual void OnCollide(GameObject otherGameObject)
     {
-        
+
     }
 }

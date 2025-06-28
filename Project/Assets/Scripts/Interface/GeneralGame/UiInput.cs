@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 
 namespace Assets.Scripts.GeneralGame
 {
@@ -36,10 +30,10 @@ namespace Assets.Scripts.GeneralGame
         private void ManualPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             string commandText = @"Manual,_Катаргин,_Киладзе,_Мальшаков_РИС24_4.chm";
-	        var proc = new System.Diagnostics.Process();
- 	        proc.StartInfo.FileName = commandText;
- 	        proc.StartInfo.UseShellExecute = true;
- 	        proc.Start();
+            var proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = commandText;
+            proc.StartInfo.UseShellExecute = true;
+            proc.Start();
             PausePerformed(obj);
         }
 
@@ -54,7 +48,7 @@ namespace Assets.Scripts.GeneralGame
             {
                 OnDownPauseExit.Invoke();
                 generalGameUi.IsOpen = false;
-            }         
+            }
         }
 
 

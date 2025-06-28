@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Accessory
 {
@@ -59,7 +58,7 @@ namespace Assets.Scripts.Accessory
             {
                 isTime = true;
             }
-            if(!IsStopped)
+            if (!IsStopped)
                 DeltaTime += UnityEngine.Time.deltaTime;
         }
 

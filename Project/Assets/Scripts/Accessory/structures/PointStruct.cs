@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 namespace MyTypes
@@ -10,18 +9,28 @@ namespace MyTypes
     [Serializable]
     public class PointStruct
     {
-        public PointStruct(float maxPoint)
+        public PointStruct(float maxPoint, bool isEmpty = false)
         {
             MaxPoint = maxPoint;
-            CurrentPoint = MaxPoint;
+            if (isEmpty)
+                CurrentPoint = 0;
+            else
+                CurrentPoint = MaxPoint;
+        }
+
+        public void SetNewMax(float newMax)
+        {
+            maxPoint = newMax;
+            if (CurrentPoint > maxPoint)
+                CurrentPoint = maxPoint;
         }
         [NonSerialized]
-        UnityEvent onEmpty = new UnityEvent(); 
+        UnityEvent onEmpty = new UnityEvent();
         [NonSerialized]
         UnityEvent<float, float> onValueChange = new UnityEvent<float, float>();
         [SerializeField]
         float maxPoint = 0;
-        public float MaxPoint { get => maxPoint; private set => maxPoint= value; }
+        public float MaxPoint { get => maxPoint; private set => maxPoint = value; }
         [SerializeField]
         float cccurrentPoint = 0;
         public float CurrentPoint { get => cccurrentPoint; private set => cccurrentPoint = value; }
@@ -49,11 +58,12 @@ namespace MyTypes
         /// Grow point on absolute value
         /// </summary>
         /// <param name="count"></param>
-        public void Increase(float count)
+        public float Increase(float count)
         {
             float current = CurrentPoint;
             CurrentPoint = Math.Clamp(CurrentPoint + MathF.Abs(count), 0, MaxPoint);
-            OnValueChange.Invoke(CurrentPoint,CurrentPoint - current);
+            OnValueChange.Invoke(CurrentPoint, CurrentPoint - current);
+            return current + MathF.Abs(count) - CurrentPoint;
         }
         public void IncreaseByProcent(float count)
         {
@@ -76,9 +86,13 @@ namespace MyTypes
         {
             return CurrentPoint == 0;
         }
+        public bool isFull()
+        {
+            return CurrentPoint == MaxPoint;
+        }
         public float GetRatio()
         {
-            if(MaxPoint == 0)
+            if (MaxPoint == 0)
                 return 0;
             return CurrentPoint / MaxPoint;
         }

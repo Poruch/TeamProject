@@ -1,5 +1,5 @@
-using UnityEngine;
 using Assets.Scripts.Accessory;
+using UnityEngine;
 public class ExplosionAnimation : StateMachineBehaviour
 {
 

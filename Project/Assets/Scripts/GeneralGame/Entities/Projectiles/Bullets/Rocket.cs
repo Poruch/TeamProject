@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.Entities.Player;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
-using MyTypes;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.GeneralGame.Entities.Projectiles
 {
@@ -36,7 +33,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles
         }
         public override Gun GetGun()
         {
-            return new RocketLauncher(this); 
+            return new RocketLauncher(this);
         }
         protected override void OnCollide(GameObject otherGameObject)
         {
@@ -45,6 +42,6 @@ namespace Assets.Scripts.GeneralGame.Entities.Projectiles
             Destroyer.Instance.Destroy(gameObject);
         }
     }
-    
+
 
 }

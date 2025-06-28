@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: DefaultBeam
   enemyLevel: 1
-  sprite: {fileID: 2773011542754946025, guid: d44b74dc8deb5cb4082cc517b0ae3e4f, type: 3}
+  enemyObject: {fileID: 3065110401910651384, guid: 879644902ba0f1a4094a102a2f80385d, type: 3}
   deathEffect: {fileID: 6437604233656485790, guid: 1acfc280d707c2b478d3b9ce0938215e, type: 3}
   angleSprite: 0
   gunDots:
@@ -22,6 +22,6 @@ MonoBehaviour:
     atkSpeed: 0.5
     position: {x: 0, y: 0}
   hp: 50
-  shield: 200
+  shield: 400
   speed: 0
   AtkSpeed: 0.2

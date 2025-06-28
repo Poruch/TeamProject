@@ -9,5 +9,5 @@ public class Doll : Entity
     {
         Debug.Log("Кукла атакована");
     }
-    
+
 }

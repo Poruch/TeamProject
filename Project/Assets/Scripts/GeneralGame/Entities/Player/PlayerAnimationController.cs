@@ -22,7 +22,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             for (int i = 0; i < Animator.runtimeAnimatorController.animationClips.Length; i++)
             {
                 AnimationClip clip = Animator.runtimeAnimatorController.animationClips[i];
-                
+
                 AnimationEvent animationStartEvent = new AnimationEvent();
                 animationStartEvent.time = 0;
                 animationStartEvent.objectReferenceParameter = this;
@@ -52,8 +52,8 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         }
         public void AnimationCompleteHandler(string name)
         {
-            
-            if(name == "DestroyShipAnimation" && OnCompleteDeathAnimation != null)
+
+            if (name == "DestroyShipAnimation" && OnCompleteDeathAnimation != null)
             {
                 OnCompleteDeathAnimation.Invoke();
             }

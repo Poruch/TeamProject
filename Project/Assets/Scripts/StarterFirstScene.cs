@@ -1,5 +1,4 @@
 using ApplicationSettings;
-using DataManage;
 using UnityEngine;
 
 public class StarterFirstScene : MonoBehaviour
@@ -9,7 +8,6 @@ public class StarterFirstScene : MonoBehaviour
 
     private void Awake()
     {
-        SaveManager.Instance.SetConfig(settings.SavesConfig);
         SettingManager.Instance.SetConfig(settings.SettingsConfig);
         initialUI.Init(settings.LanguageConfig);
     }

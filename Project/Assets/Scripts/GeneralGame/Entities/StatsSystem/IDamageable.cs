@@ -1,24 +1,25 @@
-﻿using Assets.Scripts.GeneralGame.Entities.Player;
+﻿using Assets.Scripts.Accessory;
 using MyTypes;
-using Assets.Scripts.Accessory;
 using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.StatsSystem
 {
     internal class IDamageable : MonoBehaviour
     {
+        [SerializeField]
         PointStruct hp;
+        [SerializeField]
         PointStruct shield;
-
         float shieldRegen = 2;
 
         Timer shieldTimer = TimeManager.Instance.CreateTimer(1);
         bool isAttecked;
         bool isRegen = true;
         Timer isAtteckedTimerStopRegen = TimeManager.Instance.CreateTimer(2);
-        
-        public PointStruct Hp { 
-            get => hp; 
+
+        public PointStruct Hp
+        {
+            get => hp;
             set
             {
                 hp = value;
@@ -28,12 +29,13 @@ namespace Assets.Scripts.GeneralGame.Entities.StatsSystem
                     shieldTimer.IsStopped = true;
                     isAtteckedTimerStopRegen.Reset();
                     isAtteckedTimerStopRegen.IsStopped = false;
-                });                
-            } 
+                });
+            }
         }
-        public PointStruct Shield { 
+        public PointStruct Shield
+        {
             get => shield;
-            set 
+            set
             {
                 shield = value;
                 Shield.OnEmpty.AddListener(() =>

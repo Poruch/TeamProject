@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Accessory;
-using MyTypes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
 {
@@ -14,7 +12,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Creatures.Environment
             base.AddFixedUpdate();
             transform.Rotate(new Vector3(0, 0, 180) * Time.fixedDeltaTime);
         }
-        
+
         Animator animator;
         protected override void AddAwake()
         {

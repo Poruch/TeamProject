@@ -1,5 +1,4 @@
-﻿using MyTypes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,17 +11,17 @@ namespace Assets.Scripts.Accessory
     {
         int countInstance = 0;
         static Destroyer instance;
-        public static Destroyer Instance 
-        { 
-            get 
-            { 
-                if(instance == null)
+        public static Destroyer Instance
+        {
+            get
+            {
+                if (instance == null)
                     instance = new Destroyer();
                 return instance;
             }
         }
 
-        Dictionary<GameObject,Timer> destroyed = new Dictionary<GameObject,Timer>();
+        Dictionary<GameObject, Timer> destroyed = new Dictionary<GameObject, Timer>();
         private Destroyer()
         {
             countInstance++;
@@ -65,7 +64,7 @@ namespace Assets.Scripts.Accessory
         public void Update()
         {
             var keys = destroyed.Keys.ToArray();
-            foreach (GameObject @object in keys) 
+            foreach (GameObject @object in keys)
             {
                 if (destroyed[@object].IsTime)
                 {

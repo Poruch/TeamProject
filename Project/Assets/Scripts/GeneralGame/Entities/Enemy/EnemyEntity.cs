@@ -1,8 +1,6 @@
 ﻿using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
-using UnityEngine.Events;
 using UnityEngine;
-using MyTypes;
-using System;
+using UnityEngine.Events;
 namespace Assets.Scripts.GeneralGame.Entities.Enemy
 {
     internal class EnemyEntity : Moveable
@@ -12,7 +10,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
         private void Start()
         {
             gameObject.layer = 6;
-            gameObject.AddComponent<CircleCollider2D>();
+            //gameObject.AddComponent<CircleCollider2D>();
         }
         Vector2 lastPos = Vector2.zero;
 
@@ -29,7 +27,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             timer.Tick();
 #endif
         }
-        
+
         public override void Collide()
         {
             onCollide.Invoke();

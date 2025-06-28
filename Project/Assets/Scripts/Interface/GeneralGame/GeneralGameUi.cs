@@ -1,22 +1,24 @@
+using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame;
+using Assets.Scripts.GeneralGame.GeneralSystems;
+using Assets.Scripts.Interface.GeneralGame;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Accessory;
-using Assets.Scripts.GeneralGame.Entities.StatsSystem;
+using System.Diagnostics;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using System;
-using Assets.Scripts.Interface.GeneralGame;
-using System.Diagnostics;
-using System.Linq;
 
 public class GeneralGameUi : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     GameObject pauseMenu;
+    [SerializeField]
+    GameObject continueButton;
     [SerializeField]
     GameObject gameMenu;
     //События при открытии и закрытии интерфейса паузы
@@ -84,7 +86,7 @@ public class GeneralGameUi : MonoBehaviour
         //pauseButtons[2].onClick.AddListener(ExitGame);
         //pauseButtons[3].onClick.AddListener(OpenManual);
 
-        FloatingTextManager.Initialize(this,textPrefab,targetCanvas,fadeInDuration,displayDuration,fadeOutDuration,spawnOffset,moveSpeed);
+        FloatingTextManager.Initialize(this, textPrefab, targetCanvas, fadeInDuration, displayDuration, fadeOutDuration, spawnOffset, moveSpeed);
 
         CloseDeathScreen();
         ClosePauseMenu();
@@ -95,16 +97,16 @@ public class GeneralGameUi : MonoBehaviour
     List<TextWriter> texts = new List<TextWriter>();
     [SerializeField]
     GameObject textInput;
-    public void CreateTextOutput(Func<TextWriter, string> output,int time, Vector2 coords, Vector2 size)
+    public void CreateTextOutput(Func<TextWriter, string> output, int time, Vector2 coords, Vector2 size)
     {
-        GameObject gameObject = Instantiate(textInput, Vector2.zero,Quaternion.identity);
+        GameObject gameObject = Instantiate(textInput, Vector2.zero, Quaternion.identity);
         gameObject.transform.SetParent(transform, false);
         gameObject.transform.SetSiblingIndex(0);
         RectTransform pos = gameObject.GetComponent<RectTransform>();
         pos.sizeDelta = size;
         pos.anchoredPosition = coords;
         var writer = gameObject.GetComponent<TextWriter>();
-        writer.Instantiate(output,TimeManager.Instance.CreateTimer(time));
+        writer.Instantiate(output, TimeManager.Instance.CreateTimer(time));
         texts.Add(writer);
     }
 
@@ -152,9 +154,19 @@ public class GeneralGameUi : MonoBehaviour
     {
         deathScreen.SetActive(true);
         texts.ForEach(x => x.Disable());
-        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+        pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -150, 0);
         ClearEnemyHealthBars();
         IsOpen = true;
+        if (GameManager.isEndless)
+        {
+            continueButton.GetComponent<Button>().interactable = false;
+            continueButton.GetComponent<Image>().enabled = false;
+            continueButton.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.score.ToString();
+        }
+        else
+        {
+            continueButton.gameObject.SetActive(false);
+        }
     }
 
 
@@ -172,14 +184,14 @@ public class GeneralGameUi : MonoBehaviour
         gameObject.GetComponent<FolowObject>().Following = enemy;
         result[0] = gameObject.GetComponent<ImageFiller>();
         enemyHealthBars.Add(gameObject);
-        
+
         var gameObject2 = Instantiate(enemyShield, this.gameObject.transform);
         gameObject2.transform.SetParent(transform, false);
         gameObject2.transform.SetSiblingIndex(0);
         gameObject2.GetComponent<FolowObject>().Following = enemy;
         enemyHealthBars.Add(gameObject2);
         result[1] = gameObject2.GetComponent<ImageFiller>();
-        
+
         return result;
     }
     public void CloseDeathScreen()
@@ -188,6 +200,17 @@ public class GeneralGameUi : MonoBehaviour
         texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
         IsOpen = false;
+
+        if (GameManager.isEndless)
+        {
+            continueButton.GetComponent<Button>().interactable = true;
+            continueButton.GetComponent<Image>().enabled = true;
+            continueButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
+        }
+        else
+        {
+            continueButton.gameObject.SetActive(true);
+        }
     }
 
     public void ClearEnemyHealthBars()
@@ -206,6 +229,16 @@ public class GeneralGameUi : MonoBehaviour
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -150, 0);
         ClearEnemyHealthBars();
         IsOpen = true;
+        if (GameManager.isEndless)
+        {
+            continueButton.GetComponent<Button>().interactable = false;
+            continueButton.GetComponent<Image>().enabled = false;
+            continueButton.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.score.ToString();
+        }
+        else
+        {
+            continueButton.gameObject.SetActive(false);
+        }
     }
     public void CloseWinScreen()
     {
@@ -213,9 +246,20 @@ public class GeneralGameUi : MonoBehaviour
         texts.ForEach(x => x.Enable());
         pauseMenu.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
         IsOpen = false;
+        if (GameManager.isEndless)
+        {
+            continueButton.GetComponent<Button>().interactable = true;
+            continueButton.GetComponent<Image>().enabled = true;
+            continueButton.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
+        }
+        else
+        {
+            continueButton.gameObject.SetActive(true);
+        }
+
     }
 
-    
+
     public void StartLoadAnimation(bool right)
     {
         loadScreen.gameObject.SetActive(true);
@@ -232,7 +276,7 @@ public class GeneralGameUi : MonoBehaviour
         int countIteration = 100;
         for (int i = 0; i <= countIteration; i++)
         {
-            if(right)
+            if (right)
                 loadScreen.fillAmount = (1 - (float)i / countIteration);
             else
                 loadScreen.fillAmount = (float)i / countIteration;

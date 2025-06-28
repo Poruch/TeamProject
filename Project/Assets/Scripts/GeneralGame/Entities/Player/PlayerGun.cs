@@ -1,11 +1,9 @@
-using Assets.Scripts.GeneralGame;
-using MyTypes;
 using Assets.Scripts.Accessory;
-using UnityEngine;
-using System.Linq;
-using System.Collections.Generic;
+using Assets.Scripts.GeneralGame;
 using Assets.Scripts.GeneralGame.Entities.Projectiles.Bullets;
-using Assets.Scripts.GeneralGame.GeneralSystems;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 
 /// <summary>
@@ -20,7 +18,7 @@ public class PlayerGun
     int currentBullet = 0;
 
     List<Bullet> currentBullets = new List<Bullet>();
-    List<Bullet.Gun> cuurentGuns = new List<Bullet.Gun>();
+    List<KeyValuePair<Bullet.Gun, int>> currentGuns = new();
     GameObject[][] allBullets;
     GameObject player;
     public PlayerGun(GameObject player, PlayerConfig.BulletPack[] bullets, float atkSpeed)
@@ -28,15 +26,15 @@ public class PlayerGun
         this.player = player;
         this.atkSpeed = atkSpeed;
         timer = TimeManager.Instance.CreateTimer(atkSpeed);
-        timerAfterAttack = TimeManager.Instance.CreateTimer(atkSpeed,true);
+        timerAfterAttack = TimeManager.Instance.CreateTimer(atkSpeed, true);
         int maxLevel = bullets.Max(x => x.LevelReg);
 
         allBullets = new GameObject[maxLevel + 1][];
 
-        foreach(var item in bullets.GroupBy( x => x.LevelReg))
+        foreach (var item in bullets.GroupBy(x => x.LevelReg))
         {
-            allBullets[item.Key] = item.Select(x=>x.Bullet).ToArray();
-        }        
+            allBullets[item.Key] = item.Select(x => x.Bullet).ToArray();
+        }
     }
 
     Timer changeTimer = TimeManager.Instance.CreateTimer(1);
@@ -46,41 +44,71 @@ public class PlayerGun
         {
             currentBullet += 1;
             if (currentBullet >= currentBullets.Count)
-                currentBullet = 0;           
+                currentBullet = 0;
         }
         return CurrentBullet;
     }
 
     public void UpdateBullets(int currentLevel)
     {
-        for (int i = 0; i <=  Mathf.Min(currentLevel,allBullets.Length - 1); i++)
+        for (int i = 0; i <= Mathf.Min(currentLevel, allBullets.Length - 1); i++)
         {
             int y = 0;
-            foreach(var item in allBullets[i])
+            foreach (var item in allBullets[i])
             {
                 if (!currentBullets.Contains(item.GetComponent<Bullet>()))
                 {
-                    FloatingTextManager.Instance.CreateFloatingText("Доступно новое оружие - " + item.name, new Vector2(0, y), Color.magenta);
+                    FloatingTextManager.Instance.CreateFloatingText("Gained access to new weapons- " + item.name, new Vector2(0, y), Color.magenta);
                     y += 2;
                     currentBullets.Add(item.GetComponent<Bullet>());
                 }
             }
-            cuurentGuns = currentBullets.Select(x => x.GetGun()).ToList();
+            currentGuns = currentBullets.Select(x => new KeyValuePair<Bullet.Gun, int>(x.GetGun(), 1)).ToList();
         }
     }
 
-    public GameObject CurrentBullet { get => currentBullets[currentBullet].gameObject;}
+    float spread = 1;
+    int level = 0;
+    public void IncreaseBulletLines()
+    {
+        level++;
+    }
+    public void CutSpread()
+    {
+        spread = 0.5f;
+    }
+    public void ReturnSpred()
+    {
+        spread = 1;
+    }
+    public GameObject CurrentBullet { get => currentBullets[currentBullet].gameObject; }
 
     public virtual void StartAttack()
     {
         if (timerAfterAttack.IsTime)
         {
-            //CreateBullet
-            //if(currentBullets[currentBullet].IsBefore)
-            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.down * 0.5f, Vector2.right,Quaternion.identity);
-            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.up * 0.5f * 0.5f, Vector2.right, Quaternion.identity);
-            //currentBullets[currentBullet].Shot(player.transform.position + Vector3.right + Vector3.up * 0.5f, Vector2.right);
-            //CreateBullet(player.transform.position + Vector3.right + Vector3.up * 0.5f);
+            if (currentGuns[currentBullet].Key.isMultiple)
+                for (int i = 0; i < currentGuns[currentBullet].Value + level / 2; i++)
+                {
+                    Vector3 offset;
+                    if (currentGuns[currentBullet].Value + level / 2 == 1)
+                        offset = Vector3.zero;
+                    else
+                        offset = spread * Vector3.up + spread * 2 * Vector3.down * (i) / (currentGuns[currentBullet].Value + level / 2 - 1);
+                    Bullet[] bullets = currentGuns[currentBullet].Key.Shot(player.transform, Vector3.right + offset, Vector2.right, Quaternion.identity);
+                    foreach (Bullet bullet in bullets)
+                    {
+                        bullet.DamageArgs.Damage += level;
+                    }
+                }
+            else
+            {
+                Bullet[] bullets = currentGuns[currentBullet].Key.Shot(player.transform, Vector3.right, Vector2.right, Quaternion.identity);
+                foreach (Bullet bullet in bullets)
+                {
+                    bullet.DamageArgs.Damage += level;
+                }
+            }
         }
     }
 
@@ -90,10 +118,29 @@ public class PlayerGun
         if (timer.IsTime)
         {
             timerAfterAttack.IsStopped = true;
-            //if(currentBullets[currentBullet].IsProcess)
-            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.down * 0.5f, Vector2.right, Quaternion.identity);
-            cuurentGuns[currentBullet].Shot(player.transform, Vector3.right + Vector3.up * 0.5f * 0.5f, Vector2.right,Quaternion.identity);
-            //currentBullets[currentBullet].Shot(player.transform.position + Vector3.right + Vector3.up * 0.5f, Vector2.right);
+
+            if (currentGuns[currentBullet].Key.isMultiple)
+                for (int i = 0; i < currentGuns[currentBullet].Value + level / 2; i++)
+                {
+                    Vector3 offset;
+                    if (currentGuns[currentBullet].Value + level / 2 == 1)
+                        offset = Vector3.zero;
+                    else
+                        offset = spread * Vector3.up + 2 * spread * Vector3.down * (i) / (currentGuns[currentBullet].Value + level / 2 - 1);
+                    Bullet[] bullets = currentGuns[currentBullet].Key.Shot(player.transform, Vector3.right + offset, Vector2.right, Quaternion.identity);
+                    foreach (Bullet bullet in bullets)
+                    {
+                        bullet.DamageArgs.Damage += level;
+                    }
+                }
+            else
+            {
+                Bullet[] bullets = currentGuns[currentBullet].Key.Shot(player.transform, Vector3.right, Vector2.right, Quaternion.identity);
+                foreach (Bullet bullet in bullets)
+                {
+                    bullet.DamageArgs.Damage += level;
+                }
+            }
         }
     }
 
@@ -103,8 +150,6 @@ public class PlayerGun
         {
             timerAfterAttack = TimeManager.Instance.CreateTimer(timer);
         }
-        //if(currentBullets[currentBullet].IsAfter)
-            //currentBullets[currentBullet].Shot(player.transform, Vector2.right);
         timerAfterAttack.IsStopped = false;
         timer.Reset();
     }

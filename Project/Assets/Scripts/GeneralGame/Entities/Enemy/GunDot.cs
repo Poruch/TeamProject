@@ -28,9 +28,9 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             gun = this.bullet.GetGun();
             AtkSpeed = atkSpeed;
             Position = position;
-            timer = TimeManager.Instance.CreateTimer(1/AtkSpeed);
+            timer = TimeManager.Instance.CreateTimer(1 / AtkSpeed);
         }
-        public GunDot(GunDot gunDot) 
+        public GunDot(GunDot gunDot)
         {
             bulletObj = gunDot.bulletObj;
             this.bullet = bulletObj.GetComponent<Bullet>();
@@ -51,11 +51,13 @@ namespace Assets.Scripts.GeneralGame.Entities.Enemy
             }
         }
         public Vector2 Position { get => position; set => position = value; }
-        public float AtkSpeed { get => atkSpeed; set 
-            { 
+        public float AtkSpeed
+        {
+            get => atkSpeed; set
+            {
                 atkSpeed = value;
                 timer = TimeManager.Instance.CreateTimer(1 / AtkSpeed);
-            } 
+            }
         }
     }
 }

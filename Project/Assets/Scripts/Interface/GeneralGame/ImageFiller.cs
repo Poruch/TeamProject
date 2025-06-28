@@ -1,15 +1,15 @@
+using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Accessory;
 public class ImageFiller : MonoBehaviour
 {
     Image image;
     void Start()
     {
         if (image == null)
-        image = GetComponent<Image>();
+            image = GetComponent<Image>();
     }
 
     Func<int> value;
@@ -30,7 +30,7 @@ public class ImageFiller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(value != null && timer.IsTime)
+        if (value != null && timer.IsTime)
         {
             image.fillAmount = value.Invoke();
         }

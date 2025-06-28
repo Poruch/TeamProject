@@ -1,6 +1,5 @@
-﻿using Assets.Scripts.GeneralGame.Entities.Creatures.Environment;
+﻿using Assets.Scripts.Accessory;
 using Assets.Scripts.GeneralGame.Entities.Enemy;
-using Assets.Scripts.Accessory;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,8 +14,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         UnityEvent completeGame = new UnityEvent();
         UnityEvent onLevelComplete = new UnityEvent();
         private UnityEvent<int> onLevelStart = new UnityEvent<int>();
-
-        int currentLevel = 0; 
+        bool isEndless = false;
+        int currentLevel = 0;
 
         //Удаление или создание врагов
         EnemyManager enemyManager;
@@ -25,12 +24,12 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         public LevelSystem(LevelConfig levelConfig)
         {
             EnemyManager = new EnemyManager();
-            weatherSystem = new WeatherSystem();
             bonusManager = new BonusManager(levelConfig.BonusConfig);
+            weatherSystem = new WeatherSystem(bonusManager);
 
-            enemyManager.OnCreateEnemy.AddListener((Enemy e) => 
+            enemyManager.OnCreateEnemy.AddListener((Enemy e) =>
             {
-                for (int i = 0; i < Random.Range(0,4); i++)
+                for (int i = 0; i < Random.Range(0, 4); i++)
                 {
                     e.OnDeath.AddListener(() => { bonusManager.CreateBonus(e.Position + new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f))); });
                 }
@@ -41,11 +40,12 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 EnemyManager.AddEnemy(config.name, config);
             }
             levels = new List<Level>(levelConfig.Levels);
-            CurrentLevel = 0;            
+            CurrentLevel = 0;
         }
         public void Clear()
         {
             EnemyManager.DestroyAll();
+            EnemyManager.EnemyStrong = 1;
             CurrentLevel = 0;
 
             levels[CurrentLevel].SetActive(renderer);
@@ -54,7 +54,9 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             OnLevelComplete.RemoveAllListeners();
             WaveOverTime.RemoveAllListeners();
 
-            OnLevelStart.AddListener((int currentLevel) => {
+
+            OnLevelStart.AddListener((int currentLevel) =>
+            {
                 levels[currentLevel].SetActive(renderer);
                 EnemyManager.DestroyAll();
             });
@@ -86,27 +88,36 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             EnemyManager.Update();
             if (timerWave.IsTime)
             {
-                WaveOverTime.Invoke();                
+                WaveOverTime.Invoke();
             }
-            if(EnemyManager.CountEnemies == 0)
+            if (EnemyManager.CountEnemies == 0)
             {
                 var spawners = levels[CurrentLevel].GetWaveSpawners();
                 if (spawners != null)
                 {
-                    FloatingTextManager.Instance.CreateFloatingText($"Волна {levels[currentLevel].CurrentWave}/{levels[currentLevel].CountWave}",new Vector3(0,2),Color.magenta);
+                    FloatingTextManager.Instance.CreateFloatingText($"Wave {levels[currentLevel].CurrentWave}/{levels[currentLevel].CountWave}", new Vector3(0, 2), Color.magenta);
                     EnemyManager.CreateEnemyWave(spawners);
+                    if(timerWave.GetRatio() > 0.05f)
+                    GameManager.score += (int) (300 * (1 - timerWave.GetRatio())) * (1 + GameManager.CurrentDificult / 5);
                     timerWave.Reset();
                 }
                 else
                 {
                     CurrentLevel++;
-                    if (CurrentLevel >= levels.Count)
+                    if (CurrentLevel >= levels.Count)                        
                     {
-                        CompleteGame.Invoke();
-                        return;
+                        if (!isEndless)
+                        {
+                            CompleteGame.Invoke();
+                            return;
+                        }
+                        else
+                        {
+                            CurrentLevel = Random.Range(0, levels.Count);
+                        }
                     }
                     OnLevelComplete.Invoke();
-                    //OnLevelStart.Invoke(CurrentLevel);
+                    EnemyManager.EnemyStrong *= 1.15f;
                 }
             }
         }

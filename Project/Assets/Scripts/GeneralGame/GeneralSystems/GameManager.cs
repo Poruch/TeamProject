@@ -2,9 +2,6 @@
 using Assets.Scripts.GeneralGame.Entities.Enemy;
 using Assets.Scripts.GeneralGame.Entities.Physics.Abstract;
 using Assets.Scripts.GeneralGame.Entities.Player;
-using MyTypes;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,7 +45,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         public const float AreaHeight = 10;
         //
         [SerializeField]
-        GeneralGameUi pauseUi = null;        
+        GeneralGameUi pauseUi = null;
         UiInput uiInput = null;
 
         [SerializeField]
@@ -56,7 +53,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         [SerializeField]
         GeneralGameConfig config;
 
-        
+
         LevelSystem levelSystem = null;
         Player player;
 
@@ -65,27 +62,35 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
 
         public static int CurrentDificult = 0;
         bool isPause = false;
+        public static long score = 0;
+        public static bool isEndless = false;
         public void Start()
         {
             CreatePlayer();
             Debug.Log(config.DificultLevel);
             CurrentDificult = config.DificultLevel;
-            var camera = Camera.main;
-
-            leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect,-camera.orthographicSize);
-            rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);           
+            Camera camera = Camera.main;
+            isEndless = config.LevelConfig.IsEndless;
+            leftDownBorder = new Vector2(-camera.orthographicSize * camera.aspect, -camera.orthographicSize);
+            rightUpBorder = new Vector2(camera.orthographicSize * camera.aspect, camera.orthographicSize);
 
             uiInput = new UiInput(pauseUi);
 
             levelSystem = new LevelSystem(config.LevelConfig);
-            levelSystem.EnemyManager.OnCreateEnemy.AddListener((Enemy e) => 
+            levelSystem.EnemyManager.OnCreateEnemy.AddListener((Enemy e) =>
             {
-                var filler = pauseUi.CreateEnemyBars(e.EnemyGameObject);
+                ImageFiller[] filler = pauseUi.CreateEnemyBars(e.EnemyGameObject);
                 e.OnHPChange.AddListener(filler[0].OnValueChange);
                 e.OnShieldChange.AddListener(filler[1].OnValueChange);
 
-                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler[0].gameObject); });
-                e.OnDeath.AddListener(() => { Destroyer.Instance.Destroy(filler[1].gameObject); });
+                e.OnDeath.AddListener(() =>
+                {
+                    Destroyer.Instance.Destroy(filler[0].gameObject);
+                    Destroyer.Instance.Destroy(filler[1].gameObject);
+
+                    score += 100 * (1 + CurrentDificult / 5);
+                });
+
             });
             levelSystem.SetBackGroundRenderer(backGround.GetComponent<SpriteRenderer>());
             levelSystem.CompleteGame.AddListener(() =>
@@ -96,7 +101,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                 uiInput.OnDownPauseExit.RemoveAllListeners();
             });
 
-            
+
             StartGame();
 
 
@@ -106,21 +111,24 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
             //Событие при рестарте игры
             pauseUi.OnGameRestart.AddListener(StartGame);
             //Событие при выходе из игры
-            pauseUi.OnExit.AddListener(() => {
+            pauseUi.OnExit.AddListener(() =>
+            {
                 isPause = false;
                 Moveable.IsPause = false;
                 SceneManager.LoadScene("StartScreen");
             });
 
-            //Счетчик фпс
-            //pauseUi.CreateTextOutput((textWriter) => 
-            //{
-            //    return ((int)(1 / Time.deltaTime)).ToString(); 
-            //},
-            //1,new Vector2(360,200),new Vector2(70,32));
+            //Счетчик очков
+            if(config.LevelConfig.IsEndless)
+            pauseUi.CreateTextOutput((textWriter) =>
+            {
+                return ((int)(score)).ToString();
+            },
+            1, new Vector2(-300, 200), new Vector2(150, 32));
 
             //Счетчик времени
-            pauseUi.CreateTextOutput((textWriter) => {
+            pauseUi.CreateTextOutput((textWriter) =>
+            {
                 var result = string.Format($"{{0:f2}}", levelSystem.CurrentWaveTime);
                 textWriter.TextMeshProUGUI.fontSize = 20;
                 if (levelSystem.CurrentWaveTime / LevelSystem.WaveTime > 0.7f)
@@ -129,8 +137,8 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                     textWriter.TextMeshProUGUI.color = Color.white;
                 return result;
             },
-            0, new Vector2(0, 190), new Vector2(200 * 0.75f, 50 * 0.75f));     
-        }        
+            0, new Vector2(0, 190), new Vector2(200 * 0.75f, 50 * 0.75f));
+        }
 
 
 
@@ -154,19 +162,19 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         {
             Destroyer.Instance.DestroyAll();
             player.Destroy();
+            levelSystem.Clear();
             CreatePlayer();
-
-            player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);            
+            score = 0;
+            player.OnChangeWeapon.AddListener(pauseUi.SetWeaponSprite);
             player.OnHPChange.AddListener(pauseUi.PlayerHeathBar.OnValueChange);
             pauseUi.PlayerHeathBar.OnValueChange(1);
             player.OnShieldChange.AddListener(pauseUi.PlayerShieldBar.OnValueChange);
             pauseUi.PlayerShieldBar.OnValueChange(1);
-            levelSystem.Clear();
 
 
-            ///Не трогать этот кусок кода ради бога
             //События при зарешнеии/загрузке уровня
-            levelSystem.OnLevelComplete.AddListener(() => {
+            levelSystem.OnLevelComplete.AddListener(() =>
+            {
                 PauseGame();
                 pauseUi.OnLoadAnimationEnd.AddListener(() =>
                 {
@@ -176,8 +184,10 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                     Destroyer.Instance.DestroyAll();
                 });
                 pauseUi.StartLoadAnimation(false);
+                score += 1000 * (1 + CurrentDificult / 5);
             });
-            levelSystem.OnLevelStart.AddListener((int currentLevel) => {
+            levelSystem.OnLevelStart.AddListener((int currentLevel) =>
+            {
                 pauseUi.OnLoadAnimationEnd.AddListener(() =>
                 {
                     ContinueGame();
@@ -224,7 +234,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
         {
             if (isPause) return;
             //Сначала идут объекты окружения 
-            
+
 
             //Объект игрока
             if (player.IsLife)
@@ -234,7 +244,7 @@ namespace Assets.Scripts.GeneralGame.GeneralSystems
                                               Mathf.Clamp(player.Position.y, leftDownBorder.y, rightUpBorder.y));
             }
             //Уровень
-            levelSystem.Update();           
+            levelSystem.Update();
 
             //Службы которые используются в коде
             Destroyer.Instance.Update();

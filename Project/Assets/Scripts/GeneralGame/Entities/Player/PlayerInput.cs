@@ -22,6 +22,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
         UnityEvent afterMove = new UnityEvent();
 
+        UnityEvent onSlowMove = new();
 
         UnityEvent onChangeWeapon = new UnityEvent();
 
@@ -32,6 +33,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             control.Enable();
             control.Movement.Move.performed += MovePerformed;
             control.Iteract.ChangeWeapon.performed += ChangeWeaponPerformed;
+            //control.Iteract.SlowMove.performed += SlowMovePerformed;
         }
 
         public void Dispose()
@@ -59,7 +61,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
 
         public Vector2 Direction
         {
-            get => control.Movement.Move.ReadValue<Vector2>();            
+            get => control.Movement.Move.ReadValue<Vector2>();
         }
 
         public UnityEvent OnStartMove => onStartMove;
@@ -69,6 +71,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
         public UnityEvent AfterAttack { get => afterAttack; set => afterAttack = value; }
         public UnityEvent InMove { get => inMove; set => inMove = value; }
         public UnityEvent OnChangeWeapon { get => onChangeWeapon; set => onChangeWeapon = value; }
+        public UnityEvent OnSlowMove { get => onSlowMove; set => onSlowMove = value; }
 
         bool isSwitch = false;
         public void Update()
@@ -76,10 +79,14 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
             if (control.Movement.Move.IsPressed())
             {
                 InMove.Invoke();
+                if (control.Iteract.SlowMove.IsPressed())
+                {
+                    onSlowMove.Invoke();
+                }
             }
             if (control.Iteract.Attack.IsPressed())
-            { 
-                if(!isSwitch)
+            {
+                if (!isSwitch)
                     OnAttack.Invoke();
                 isSwitch = true;
                 InAttack.Invoke();
@@ -89,6 +96,7 @@ namespace Assets.Scripts.GeneralGame.Entities.Player
                 isSwitch = false;
                 AfterAttack.Invoke();
             }
+
         }
 
 
